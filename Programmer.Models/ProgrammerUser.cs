@@ -12,6 +12,7 @@
 
         public ProgrammerUser()
         {
+            this.Id = Guid.NewGuid().ToString();
             this.Courses = new HashSet<Course>();
             this.Events = new HashSet<Event>();
             this.Documentations = new HashSet<Documentation>();

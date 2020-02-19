@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Programmer.Data;
 
-namespace ProgrammerDemo.Data.Migrations
+namespace Programmer.Data.Migrations
 {
     [DbContext(typeof(ProgrammerDbContext))]
-    [Migration("20200219084304_AddUserWithRoles")]
-    partial class AddUserWithRoles
+    partial class ProgrammerDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,6 +123,43 @@ namespace ProgrammerDemo.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Programmer.Models.AdditionalActivityCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("BaseTimeNeeded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DocumentationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("HardSkillReward")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RequiredEnergy")
+                        .HasColumnType("int");
+
+                    b.Property<double>("SoftSkillReward")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentationId");
+
+                    b.HasIndex("EventId");
+
+                    b.ToTable("AdditionalActivityCategories");
+                });
+
             modelBuilder.Entity("Programmer.Models.Course", b =>
                 {
                     b.Property<int>("Id")
@@ -132,14 +167,35 @@ namespace ProgrammerDemo.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<TimeSpan>("BaseTimeNeeded")
+                        .HasColumnType("time");
+
+                    b.Property<double>("HardSkillReward")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("ProgrammerUserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("RequiredEnergy")
+                        .HasColumnType("int");
+
+                    b.Property<double>("SoftSkillReward")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProgrammerUserId");
 
-                    b.ToTable("Course");
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("Programmer.Models.Documentation", b =>
@@ -149,14 +205,20 @@ namespace ProgrammerDemo.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ProgrammerUserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("XpReward")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProgrammerUserId");
 
-                    b.ToTable("Documentation");
+                    b.ToTable("Documentations");
                 });
 
             modelBuilder.Entity("Programmer.Models.Event", b =>
@@ -166,14 +228,50 @@ namespace ProgrammerDemo.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ProgrammerUserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("XpReward")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProgrammerUserId");
 
-                    b.ToTable("Event");
+                    b.ToTable("Events");
+                });
+
+            modelBuilder.Entity("Programmer.Models.Exam", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<TimeSpan>("BaseTimeNeeded")
+                        .HasColumnType("time");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("RequiredCodingSkill")
+                        .HasColumnType("float");
+
+                    b.Property<int>("RequiredEnergy")
+                        .HasColumnType("int");
+
+                    b.Property<double>("RequiredHardSkill")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId")
+                        .IsUnique();
+
+                    b.ToTable("Exams");
                 });
 
             modelBuilder.Entity("Programmer.Models.JobTask", b =>
@@ -183,14 +281,54 @@ namespace ProgrammerDemo.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<decimal>("MoneyReward")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ProgrammerUserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("RequiredEnergy")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RequiredSkillId")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("TimeNeeded")
+                        .HasColumnType("time");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProgrammerUserId");
 
-                    b.ToTable("JobTask");
+                    b.HasIndex("RequiredSkillId");
+
+                    b.ToTable("JobTasks");
+                });
+
+            modelBuilder.Entity("Programmer.Models.Lecture", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("XpReward")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("Lectures");
                 });
 
             modelBuilder.Entity("Programmer.Models.ProgrammerRole", b =>
@@ -365,6 +503,27 @@ namespace ProgrammerDemo.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Programmer.Models.RequiredSkill", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("RequiredHardSkillOne")
+                        .HasColumnType("float");
+
+                    b.Property<double>("RequiredHardSkillTwo")
+                        .HasColumnType("float");
+
+                    b.Property<double>("ReuqiredSoftSkill")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RequiredSkills");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Programmer.Models.ProgrammerRole", null)
@@ -416,32 +575,75 @@ namespace ProgrammerDemo.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Programmer.Models.AdditionalActivityCategory", b =>
+                {
+                    b.HasOne("Programmer.Models.Documentation", "Documentation")
+                        .WithMany("Categories")
+                        .HasForeignKey("DocumentationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Programmer.Models.Event", "Event")
+                        .WithMany("Categories")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Programmer.Models.Course", b =>
                 {
-                    b.HasOne("Programmer.Models.ProgrammerUser", null)
+                    b.HasOne("Programmer.Models.ProgrammerUser", "Player")
                         .WithMany("Courses")
-                        .HasForeignKey("ProgrammerUserId");
+                        .HasForeignKey("ProgrammerUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Programmer.Models.Documentation", b =>
                 {
-                    b.HasOne("Programmer.Models.ProgrammerUser", null)
+                    b.HasOne("Programmer.Models.ProgrammerUser", "Player")
                         .WithMany("Documentations")
-                        .HasForeignKey("ProgrammerUserId");
+                        .HasForeignKey("ProgrammerUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Programmer.Models.Event", b =>
                 {
-                    b.HasOne("Programmer.Models.ProgrammerUser", null)
+                    b.HasOne("Programmer.Models.ProgrammerUser", "Player")
                         .WithMany("Events")
-                        .HasForeignKey("ProgrammerUserId");
+                        .HasForeignKey("ProgrammerUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Programmer.Models.Exam", b =>
+                {
+                    b.HasOne("Programmer.Models.Course", "Course")
+                        .WithOne("Exam")
+                        .HasForeignKey("Programmer.Models.Exam", "CourseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Programmer.Models.JobTask", b =>
                 {
-                    b.HasOne("Programmer.Models.ProgrammerUser", null)
+                    b.HasOne("Programmer.Models.ProgrammerUser", "Player")
                         .WithMany("JobTasks")
-                        .HasForeignKey("ProgrammerUserId");
+                        .HasForeignKey("ProgrammerUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Programmer.Models.RequiredSkill", "RequiredSkills")
+                        .WithMany("JobTasks")
+                        .HasForeignKey("RequiredSkillId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Programmer.Models.Lecture", b =>
+                {
+                    b.HasOne("Programmer.Models.Course", "Course")
+                        .WithMany("Lectures")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Programmer.Models.ProgrammerRole", b =>
