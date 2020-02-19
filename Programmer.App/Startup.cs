@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Programmer.Data;
 using Programmer.Models;
+using Programmer.Services;
 
 namespace ProgrammerDemo
 {
@@ -38,6 +39,8 @@ namespace ProgrammerDemo
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddTransient<IOfficeService, OfficeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

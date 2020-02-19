@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Programmer.App.Models.Office;
+using Programmer.Services;
 using ProgrammerDemo.Models;
 
 namespace ProgrammerDemo.Controllers
@@ -12,15 +15,40 @@ namespace ProgrammerDemo.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IOfficeService officeService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IOfficeService officeService)
         {
             _logger = logger;
+            this.officeService = officeService;
         }
 
         public IActionResult Index()
         {
+            if (this.User.Identity.IsAuthenticated)
+            {
+                return this.Redirect("/Home/Office");
+            }
+
             return View();
+        }
+
+        public IActionResult Office()
+        {
+            var user = this.officeService.GetUserForHome(this.User.Identity.Name);
+
+            OfficeViewModel viewModel = new OfficeViewModel
+            {
+                Xp = user.Xp,
+                XpForNextLevel = user.XpForNextLevel,
+                Bitcoins = user.Bitcoins,
+                Energy = user.Energy,
+                Level = user.Level,
+                Money = user.Money,
+                UserStats = user.UserStats,
+            };
+
+            return this.View(viewModel);
         }
 
         public IActionResult Privacy()
