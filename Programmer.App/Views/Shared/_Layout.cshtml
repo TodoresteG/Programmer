@@ -1,0 +1,140 @@
+﻿@{
+    Uri url = new Uri(String.Format("{0}://{1}{2}{3}", Context.Request.Scheme, Context.Request.Host, Context.Request.Path, Context.Request.QueryString));
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Freelancer - Start Bootstrap Theme</title>
+
+    <!-- Custom fonts for this theme -->
+    <link href="~/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Theme CSS -->
+    <link href="~/css/freelancer.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+        @if (url.PathAndQuery == "/")
+        {
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" href="#page-top">Programmer</a>
+                <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">About</a>
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#academy">Academy</a>
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#googling">Googling</a>
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#events">Events</a>
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#job">Job</a>
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/Identity/Account/Login">Login</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        }
+        else if (url.PathAndQuery != "/" && !this.User.Identity.IsAuthenticated)
+        {
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" href="/">Programmer</a>
+                <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/Identity/Account/Login">Login</a>
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/Identity/Account/Register">Register</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        }
+
+    </nav>
+    <main class="mt-3">
+        <div class="">
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer class="footer py-4">
+        <ul class="d-flex justify-content-center list-unstyled">
+            <li>
+                <a class="btn btn-outline-light btn-social mx-1" href="https://www.facebook.com">
+                    <i class="fab fa-fw fa-facebook-f"></i>
+                </a>
+            </li>
+            <li>
+                <a class="btn btn-outline-light btn-social mx-1" href="https://www.instagram.com">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </li>
+            <li>
+                <a class="btn btn-outline-light btn-social mx-1" href="https://www.linkedin.com/in/todor-gyuzelev-173098138/">
+                    <i class="fab fa-fw fa-linkedin-in"></i>
+                </a>
+            </li>
+            <li>
+                <a class="btn btn-outline-light btn-social mx-1" href="https://github.com/TodoresteG">
+                    <i class="fab fa-github"></i>
+                </a>
+            </li>
+        </ul>
+        <div class="container text-center">
+            <small>&copy;2020 - 2020 <a href="/">Programmer</a> - <a href="/Home/Privacy">Privacy Policy</a></small>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-to-top d-lg-none position-fixed ">
+        <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+    </div>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/freelancer.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+
