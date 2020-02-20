@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Programmer.App.Models.Office;
@@ -33,6 +34,7 @@ namespace ProgrammerDemo.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Office()
         {
             var user = this.officeService.GetUserForHome(this.User.Identity.Name);
