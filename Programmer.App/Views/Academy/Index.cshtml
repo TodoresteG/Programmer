@@ -4,12 +4,36 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<section class="page-section">
-    <h1 class="text-center">Welcome to Online Academy 'Programmer'</h1>
+@using Programmer.Services.Dtos.Academy
+@model AcademyAllCoursesDto
 
-    <p class="text-center lead">Some info about academy. More like an ad. You can copy from SoftUni</p>
+<div class="container-fluid">
+    <section class="page-section row">
+        <div class="col-12">
+            <h1 class="text-center">Welcome to Online Academy 'Programmer'</h1>
+            <p class="text-center lead">Some info about academy. More like an ad. You can copy from SoftUni</p>
+        </div>
 
-    <p class="text-left">Section About Currently available courses.</p>
-    <p class="text-right">Section About your courses active and completed.</p>
-</section>
 
+        <div class="col-6">
+            <h3>All Courses</h3>
+            @foreach (var course in Model.Courses)
+            {
+                @if (!course.IsCompleted && course.Name != "C# Fundamentals")
+                {
+                    <p><a class="btn disabled" href="/Courses/Details?id=@course.Id">@course.Name  - @course.Price $</a></p>
+                }
+                else
+                {
+                    <p><a href="/Courses/Enroll?id=@course.Id">@course.Name  - @course.Price $</a></p>
+                }
+            }
+
+        </div>
+
+        <div class="col-6">
+            <p class="text-right">Section About your courses active and completed.</p>
+        </div>
+
+    </section>
+</div>

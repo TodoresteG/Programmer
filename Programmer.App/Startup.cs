@@ -41,6 +41,8 @@ namespace ProgrammerDemo
             services.AddRazorPages();
 
             services.AddTransient<IOfficeService, OfficeService>();
+            services.AddTransient<IAcademyService, AcademyService>();
+            services.AddTransient<ICourseService, CourseService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

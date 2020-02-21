@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using Programmer.Services.Dtos.Courses
+@model CourseDetailsDto
+
+    <div class="container-fluid">
+        <section class="page-section">
+            <h1>Course Name - @Model.Name</h1>
+            <h2>Course Price - @Model.Price $</h2>
+            <h3>Course C# Skill Reward - @Model.CSharpSkillReward</h3>
+            <h3>Course Coding Skill Reward - @Model.CodingSkillReward</h3>
+            <h3>Course Problem Solving Skill Reward - @Model.ProblemSolvingReward</h3>
+
+
+            <div class="row">
+                @foreach (var lecture in Model.Lectures)
+                {
+                <div class="col-6">
+                    @lecture.Name
+                </div>
+                }
+            </div>
+
+            <a class="btn bg-primary text-center" href="#">Enroll on a course</a>
+        </section>
+    </div>
+
