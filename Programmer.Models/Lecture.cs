@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
 
     public class Lecture
     {
@@ -13,7 +14,7 @@
 
         [NotMapped]
         public TimeSpan TimeNeeded
-            => TimeSpan.FromSeconds(Math.Round(this.Course.Player.Xp / this.Course.Player.Level * this.Course.BaseTimeNeeded.TotalSeconds));
+            => TimeSpan.FromSeconds(Math.Round(this.Course.Users.Sum(u => u.User.Xp / u.User.Level * this.Course.BaseTimeNeeded.TotalSeconds)));
 
         public int XpReward { get; set; }
 

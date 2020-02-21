@@ -15,13 +15,13 @@
         </div>
 
 
-        <div class="col-6">
+        <div class="col-4">
             <h3>All Courses</h3>
-            @foreach (var course in Model.Courses)
+            @foreach (var course in Model.AllCourses)
             {
                 @if (!course.IsCompleted && course.Name != "C# Fundamentals")
                 {
-                    <p><a class="btn disabled" href="/Courses/Details?id=@course.Id">@course.Name  - @course.Price $</a></p>
+                    <p><a class="btn disabled" href="/Courses/Enroll?id=@course.Id">@course.Name  - @course.Price $</a></p>
                 }
                 else
                 {
@@ -31,8 +31,21 @@
 
         </div>
 
-        <div class="col-6">
-            <p class="text-right">Section About your courses active and completed.</p>
+        <div class="col-4">
+            <h3>Enrolled courses</h3>
+            @foreach (var course in Model.EnrolledCourses)
+            {
+                <p class="lead">@course.Name</p>
+            }
+        </div>
+
+        <div class="col-4">
+            <h3>Completed courses</h3>
+
+            @foreach (var course in Model.CompletedCourses)
+            {
+                <p class="lead">@course.Name</p>
+            }
         </div>
 
     </section>

@@ -13,7 +13,7 @@
         public ProgrammerUser()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.Courses = new HashSet<Course>();
+            this.Courses = new HashSet<UserCourse>();
             this.Events = new HashSet<Event>();
             this.Documentations = new HashSet<Documentation>();
             this.JobTasks = new HashSet<JobTask>();
@@ -72,7 +72,7 @@
 
         public double? Css { get; set; }
 
-        public ICollection<Course> Courses { get; set; }
+        public ICollection<UserCourse> Courses { get; set; }
 
         public ICollection<Event> Events { get; set; }
 

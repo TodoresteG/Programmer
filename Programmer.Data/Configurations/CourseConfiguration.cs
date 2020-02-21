@@ -10,6 +10,12 @@
         public void Configure(EntityTypeBuilder<Course> course)
         {
             course
+                .HasMany(c => c.Users)
+                .WithOne(u => u.Course)
+                .HasForeignKey(u => u.CourseId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            course
                 .HasMany(c => c.Lectures)
                 .WithOne(l => l.Course)
                 .HasForeignKey(l => l.CourseId)

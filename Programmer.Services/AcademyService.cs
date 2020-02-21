@@ -13,9 +13,9 @@
             this.context = context;
         }
 
-        public AcademyAllCoursesDto GetAllCourses()
+        public AcademyAllCoursesDto GetAllCourses(string userId)
         {
-            var courses = this.context.Courses
+            var allCourses = this.context.Courses
                 .Select(c => new AcademyCourseDto
                 {
                     Id = c.Id,
@@ -25,7 +25,28 @@
                 })
                 .ToList();
 
-            var dto = new AcademyAllCoursesDto { Courses = courses };
+            var enrolledCourses = this.context.UserCourses
+                .Where(c => c.ProgrammerUserId == userId)
+                .Select(c => new AcademyEnrolledCourseDto
+                {
+                    Name = c.Course.Name,
+                })
+                .ToList();
+
+            var completedCourses = this.context.Courses
+                .Where(c => c.IsCompleted == true)
+                .Select(c => new AcademyCompletedCourseDto
+                {
+                    Name = c.Name,
+                })
+                .ToList();
+
+            var dto = new AcademyAllCoursesDto
+            {
+                AllCourses = allCourses,
+                EnrolledCourses = enrolledCourses,
+                CompletedCourses = completedCourses,
+            };
 
             return dto;
         }

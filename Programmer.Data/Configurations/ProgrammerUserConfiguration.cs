@@ -11,7 +11,7 @@
         {
             player
                 .HasMany(p => p.Courses)
-                .WithOne(c => c.Player)
+                .WithOne(c => c.User)
                 .HasForeignKey(c => c.ProgrammerUserId)
                 .OnDelete(DeleteBehavior.Restrict);
 

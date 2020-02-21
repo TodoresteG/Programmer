@@ -4,6 +4,6 @@
 
     public interface IAcademyService
     {
-        AcademyAllCoursesDto GetAllCourses();
+        AcademyAllCoursesDto GetAllCourses(string userId);
     }
 }

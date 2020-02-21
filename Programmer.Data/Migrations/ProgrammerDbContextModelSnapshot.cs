@@ -182,9 +182,6 @@ namespace Programmer.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("ProgrammerUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("RequiredEnergy")
                         .HasColumnType("int");
 
@@ -192,8 +189,6 @@ namespace Programmer.Data.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProgrammerUserId");
 
                     b.ToTable("Courses");
                 });
@@ -524,6 +519,21 @@ namespace Programmer.Data.Migrations
                     b.ToTable("RequiredSkills");
                 });
 
+            modelBuilder.Entity("Programmer.Models.UserCourse", b =>
+                {
+                    b.Property<string>("ProgrammerUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProgrammerUserId", "CourseId");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("UserCourses");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Programmer.Models.ProgrammerRole", null)
@@ -590,14 +600,6 @@ namespace Programmer.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Programmer.Models.Course", b =>
-                {
-                    b.HasOne("Programmer.Models.ProgrammerUser", "Player")
-                        .WithMany("Courses")
-                        .HasForeignKey("ProgrammerUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
             modelBuilder.Entity("Programmer.Models.Documentation", b =>
                 {
                     b.HasOne("Programmer.Models.ProgrammerUser", "Player")
@@ -651,6 +653,21 @@ namespace Programmer.Data.Migrations
                     b.HasOne("Programmer.Models.ProgrammerUser", null)
                         .WithMany("Roles")
                         .HasForeignKey("ProgrammerUserId");
+                });
+
+            modelBuilder.Entity("Programmer.Models.UserCourse", b =>
+                {
+                    b.HasOne("Programmer.Models.Course", "Course")
+                        .WithMany("Users")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Programmer.Models.ProgrammerUser", "User")
+                        .WithMany("Courses")
+                        .HasForeignKey("ProgrammerUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

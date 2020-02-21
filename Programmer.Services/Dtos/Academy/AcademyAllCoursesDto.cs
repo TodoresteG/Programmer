@@ -4,6 +4,10 @@
 
     public class AcademyAllCoursesDto
     {
-        public IEnumerable<AcademyCourseDto> Courses { get; set; }
+        public IEnumerable<AcademyCourseDto> AllCourses { get; set; }
+
+        public IEnumerable<AcademyEnrolledCourseDto> EnrolledCourses { get; set; }
+
+        public IEnumerable<AcademyCompletedCourseDto> CompletedCourses { get; set; }
     }
 }

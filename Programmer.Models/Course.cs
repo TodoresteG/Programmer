@@ -10,6 +10,7 @@
         public Course()
         {
             this.Lectures = new HashSet<Lecture>();
+            this.Users = new HashSet<UserCourse>();
         }
 
         [Key]
@@ -36,8 +37,6 @@
 
         public ICollection<Lecture> Lectures { get; set; }
 
-        public string ProgrammerUserId { get; set; }
-
-        public ProgrammerUser Player { get; set; }
+        public ICollection<UserCourse> Users { get; set; }
     }
 }

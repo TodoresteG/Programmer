@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Programmer.Data.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialMigrate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,6 +55,25 @@ namespace Programmer.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Courses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    Price = table.Column<decimal>(nullable: false),
+                    RequiredEnergy = table.Column<int>(nullable: false),
+                    HardSkillReward = table.Column<double>(nullable: false),
+                    SoftSkillReward = table.Column<double>(nullable: false),
+                    BaseTimeNeeded = table.Column<TimeSpan>(nullable: false),
+                    IsCompleted = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Courses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -155,32 +174,6 @@ namespace Programmer.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Courses",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Price = table.Column<decimal>(nullable: false),
-                    RequiredEnergy = table.Column<int>(nullable: false),
-                    HardSkillReward = table.Column<double>(nullable: false),
-                    SoftSkillReward = table.Column<double>(nullable: false),
-                    BaseTimeNeeded = table.Column<TimeSpan>(nullable: false),
-                    IsCompleted = table.Column<bool>(nullable: false),
-                    ProgrammerUserId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Courses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Courses_AspNetUsers_ProgrammerUserId",
-                        column: x => x.ProgrammerUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Documentations",
                 columns: table => new
                 {
@@ -216,6 +209,74 @@ namespace Programmer.Data.Migrations
                     table.PrimaryKey("PK_Events", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Events_AspNetUsers_ProgrammerUserId",
+                        column: x => x.ProgrammerUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Exams",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BaseTimeNeeded = table.Column<TimeSpan>(nullable: false),
+                    RequiredEnergy = table.Column<int>(nullable: false),
+                    RequiredHardSkill = table.Column<double>(nullable: false),
+                    RequiredCodingSkill = table.Column<double>(nullable: false),
+                    CourseId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Exams", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Exams_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Lectures",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    XpReward = table.Column<int>(nullable: false),
+                    CourseId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Lectures", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Lectures_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserCourses",
+                columns: table => new
+                {
+                    ProgrammerUserId = table.Column<string>(nullable: false),
+                    CourseId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserCourses", x => new { x.ProgrammerUserId, x.CourseId });
+                    table.ForeignKey(
+                        name: "FK_UserCourses_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserCourses_AspNetUsers_ProgrammerUserId",
                         column: x => x.ProgrammerUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -295,50 +356,6 @@ namespace Programmer.Data.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Exams",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    BaseTimeNeeded = table.Column<TimeSpan>(nullable: false),
-                    RequiredEnergy = table.Column<int>(nullable: false),
-                    RequiredHardSkill = table.Column<double>(nullable: false),
-                    RequiredCodingSkill = table.Column<double>(nullable: false),
-                    CourseId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Exams", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Exams_Courses_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "Courses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Lectures",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    XpReward = table.Column<int>(nullable: false),
-                    CourseId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Lectures", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Lectures_Courses_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "Courses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -427,11 +444,6 @@ namespace Programmer.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_ProgrammerUserId",
-                table: "Courses",
-                column: "ProgrammerUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Documentations_ProgrammerUserId",
                 table: "Documentations",
                 column: "ProgrammerUserId");
@@ -460,6 +472,11 @@ namespace Programmer.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Lectures_CourseId",
                 table: "Lectures",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserCourses_CourseId",
+                table: "UserCourses",
                 column: "CourseId");
         }
 
@@ -491,6 +508,9 @@ namespace Programmer.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Lectures");
+
+            migrationBuilder.DropTable(
+                name: "UserCourses");
 
             migrationBuilder.DropTable(
                 name: "Documentations");

@@ -5,6 +5,8 @@
 
     public class CourseDetailsDto
     {
+        public int Id { get; set; }
+
         public string Name { get; set; }
 
         public double CSharpSkillReward { get; set; }

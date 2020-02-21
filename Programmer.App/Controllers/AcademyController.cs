@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Programmer.Services;
+    using System.Security.Claims;
 
     public class AcademyController : Controller
     {
@@ -16,7 +17,9 @@
         [Authorize]
         public IActionResult Index() 
         {
-            var viewModel = this.academyService.GetAllCourses();
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var viewModel = this.academyService.GetAllCourses(userId);
 
             return this.View(viewModel);
         }

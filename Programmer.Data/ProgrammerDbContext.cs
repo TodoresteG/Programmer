@@ -28,6 +28,9 @@
 
         public DbSet<RequiredSkill> RequiredSkills { get; set; }
 
+        public DbSet<UserCourse> UserCourses { get; set; }
+        //TODO: configure foreignKeys
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
