@@ -5,7 +5,7 @@
 }
 
 @using Programmer.Services.Dtos.Courses
-@model CourseDetailsDto
+@model CourseEnrollDetailsDto
 
     <div class="container-fluid">
         <section class="page-section">
@@ -17,6 +17,7 @@
 
 
             <div class="row">
+                <h3 class="col-12">Course Lectures:</h3>
                 @foreach (var lecture in Model.Lectures)
                 {
                 <div class="col-6">

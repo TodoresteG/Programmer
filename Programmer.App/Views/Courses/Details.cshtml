@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using Programmer.Services.Dtos.Courses
+@model CourseDetailsDto
+
+<div class="container-fluid">
+    <section class="page-section">
+        <h1>Course Name - @Model.Name</h1>
+
+
+        <div class="row">
+            <h3 class="col-12">Course Lectures:</h3>
+            @foreach (var lecture in Model.Lectures)
+            {
+                <div class="col-6">
+                    <a asp-controller="Lectures" asp-action="Details" asp-route-lectureId="@lecture.Id">@lecture.Name</a>
+                </div>
+            }
+        </div>
+    </section>
+</div>

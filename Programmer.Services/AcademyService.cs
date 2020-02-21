@@ -2,6 +2,7 @@
 {
     using Programmer.Data;
     using Programmer.Services.Dtos.Academy;
+    using Programmer.Services.Dtos.Lectures;
     using System.Linq;
 
     public class AcademyService : IAcademyService
@@ -29,6 +30,7 @@
                 .Where(c => c.ProgrammerUserId == userId)
                 .Select(c => new AcademyEnrolledCourseDto
                 {
+                    Id = c.CourseId,
                     Name = c.Course.Name,
                 })
                 .ToList();

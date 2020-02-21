@@ -35,7 +35,7 @@
             <h3>Enrolled courses</h3>
             @foreach (var course in Model.EnrolledCourses)
             {
-                <p class="lead">@course.Name</p>
+                <a asp-controller="Courses" asp-route-id="@course.Id" asp-action="Details" class="lead">@course.Name</a>
             }
         </div>
 
