@@ -173,9 +173,6 @@ namespace Programmer.Data.Migrations
                     b.Property<double>("HardSkillReward")
                         .HasColumnType("float");
 
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -312,6 +309,9 @@ namespace Programmer.Data.Migrations
 
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -526,6 +526,12 @@ namespace Programmer.Data.Migrations
 
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEnrolled")
+                        .HasColumnType("bit");
 
                     b.HasKey("ProgrammerUserId", "CourseId");
 

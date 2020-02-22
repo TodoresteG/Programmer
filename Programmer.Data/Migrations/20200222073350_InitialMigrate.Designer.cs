@@ -10,7 +10,7 @@ using Programmer.Data;
 namespace Programmer.Data.Migrations
 {
     [DbContext(typeof(ProgrammerDbContext))]
-    [Migration("20200221141203_InitialMigrate")]
+    [Migration("20200222073350_InitialMigrate")]
     partial class InitialMigrate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -175,9 +175,6 @@ namespace Programmer.Data.Migrations
                     b.Property<double>("HardSkillReward")
                         .HasColumnType("float");
 
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -314,6 +311,9 @@ namespace Programmer.Data.Migrations
 
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -528,6 +528,12 @@ namespace Programmer.Data.Migrations
 
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEnrolled")
+                        .HasColumnType("bit");
 
                     b.HasKey("ProgrammerUserId", "CourseId");
 

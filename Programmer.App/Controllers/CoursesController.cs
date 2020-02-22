@@ -17,6 +17,15 @@
         [Authorize]
         public IActionResult Enroll(int id)
         {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var isEnrolled = this.courseService.IsEnrolled(id, userId);
+
+            if (isEnrolled)
+            {
+                return this.Redirect("/Academy/Index");
+            }
+
             var viewModel = this.courseService.GetCourseEnrollDetails(id);
 
             return this.View(viewModel);
@@ -27,7 +36,13 @@
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            this.courseService.EnrollUserToCourse(id, userId);
+            var isEnrolled = this.courseService.EnrollUserToCourse(id, userId);
+
+            if (!isEnrolled)
+            {
+                // TODO: Make a better error
+                return this.Content("Not enough money to enroll on a course");
+            }
 
             return this.Redirect("/Academy/Index");
         }
@@ -35,7 +50,6 @@
         [Authorize]
         public IActionResult Details(int id) 
         {
-            // TODO: Make after you enroll on a course to deactivate enrolling on the same one.
             // TODO: Make taking a lecture to be in order of the course lectures
 
             var viewModel = this.courseService.GetCourseDetails(id);

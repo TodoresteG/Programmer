@@ -43,6 +43,7 @@ namespace ProgrammerDemo
             services.AddTransient<IOfficeService, OfficeService>();
             services.AddTransient<IAcademyService, AcademyService>();
             services.AddTransient<ICourseService, CourseService>();
+            services.AddTransient<ILectureService, LectureService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

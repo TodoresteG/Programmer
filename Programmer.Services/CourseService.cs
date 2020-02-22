@@ -15,16 +15,33 @@
             this.context = context;
         }
 
-        public void EnrollUserToCourse(int id, string userId)
+        // TODO: This is a slow method
+        public bool EnrollUserToCourse(int id, string userId)
         {
             UserCourse userCourse = new UserCourse
             {
                 ProgrammerUserId = userId,
                 CourseId = id,
+                IsEnrolled = true,
             };
 
             this.context.UserCourses.Add(userCourse);
+
+            var course = this.context.Courses.Find(id);
+
+            var user = this.context.Users.Find(userId);
+
+            if (user.Money < course.Price)
+            {
+                return false;
+            }
+
+            user.Money -= userCourse.Course.Price;
+
+            this.context.Update(user);
             this.context.SaveChanges();
+
+            return true;
         }
 
         public CourseDetailsDto GetCourseDetails(int id)
@@ -38,7 +55,8 @@
                     {
                         Id = l.Id,
                         Name = l.Name,
-                    })
+                        IsCompleted = l.IsCompleted,
+                    }).ToList()
                 })
                 .FirstOrDefault();
 
@@ -65,6 +83,14 @@
                 .FirstOrDefault();
 
             return course;
+        }
+
+        public bool IsEnrolled(int id, string userId)
+        {
+            return this.context.UserCourses
+                .Where(c => c.CourseId == id && c.ProgrammerUserId == userId)
+                .Select(c => c.IsEnrolled)
+                .FirstOrDefault();
         }
     }
 }

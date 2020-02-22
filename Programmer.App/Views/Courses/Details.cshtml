@@ -14,11 +14,20 @@
 
         <div class="row">
             <h3 class="col-12">Course Lectures:</h3>
-            @foreach (var lecture in Model.Lectures)
+            @for (int i = 1; i < Model.Lectures.Count() + 1; i++)
             {
-                <div class="col-6">
-                    <a asp-controller="Lectures" asp-action="Details" asp-route-lectureId="@lecture.Id">@lecture.Name</a>
-                </div>
+                @if (!Model.Lectures[i - 1].IsCompleted && i == 1)
+                {
+                    <div class="col-6">
+                        <a asp-controller="Lectures" asp-action="Details" asp-route-lectureId="@Model.Lectures[i - 1].Id">@Model.Lectures[i - 1].Name</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-6">
+                        <a class="btn disabled" asp-controller="Lectures" asp-action="Details" asp-route-lectureId="@Model.Lectures[i - 1].Id">@Model.Lectures[i - 1].Name</a>
+                    </div>
+                }
             }
         </div>
     </section>

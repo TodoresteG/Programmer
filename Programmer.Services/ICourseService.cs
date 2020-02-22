@@ -8,6 +8,8 @@
 
         CourseDetailsDto GetCourseDetails(int id);
 
-        void EnrollUserToCourse(int id, string userId);
+        bool EnrollUserToCourse(int id, string userId);
+
+        bool IsEnrolled(int id, string userId);
     }
 }

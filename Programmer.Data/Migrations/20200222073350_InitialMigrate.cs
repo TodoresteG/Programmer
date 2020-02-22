@@ -68,8 +68,7 @@ namespace Programmer.Data.Migrations
                     RequiredEnergy = table.Column<int>(nullable: false),
                     HardSkillReward = table.Column<double>(nullable: false),
                     SoftSkillReward = table.Column<double>(nullable: false),
-                    BaseTimeNeeded = table.Column<TimeSpan>(nullable: false),
-                    IsCompleted = table.Column<bool>(nullable: false)
+                    BaseTimeNeeded = table.Column<TimeSpan>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -246,6 +245,7 @@ namespace Programmer.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     XpReward = table.Column<int>(nullable: false),
+                    IsCompleted = table.Column<bool>(nullable: false),
                     CourseId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -264,7 +264,9 @@ namespace Programmer.Data.Migrations
                 columns: table => new
                 {
                     ProgrammerUserId = table.Column<string>(nullable: false),
-                    CourseId = table.Column<int>(nullable: false)
+                    CourseId = table.Column<int>(nullable: false),
+                    IsCompleted = table.Column<bool>(nullable: false),
+                    IsEnrolled = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

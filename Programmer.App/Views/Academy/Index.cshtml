@@ -17,15 +17,15 @@
 
         <div class="col-4">
             <h3>All Courses</h3>
-            @foreach (var course in Model.AllCourses)
+            @for (int i = 1; i < Model.AllCourses.Count() + 1; i++)
             {
-                @if (!course.IsCompleted && course.Name != "C# Fundamentals")
+                @if (!Model.AllCourses[i - 1].IsCompleted && Model.AllCourses[i - 1].Name != "C# Fundamentals" || Model.AllCourses[i - 1].IsEnrolled)
                 {
-                    <p><a class="btn disabled" href="/Courses/Enroll?id=@course.Id">@course.Name  - @course.Price $</a></p>
+                    <p><a class="btn disabled" href="/Courses/Enroll?id=@Model.AllCourses[i - 1].Id">@Model.AllCourses[i - 1].Name  - @Model.AllCourses[i - 1].Price $</a></p>
                 }
                 else
                 {
-                    <p><a href="/Courses/Enroll?id=@course.Id">@course.Name  - @course.Price $</a></p>
+                    <p><a href="/Courses/Enroll?id=@Model.AllCourses[i - 1].Id">@Model.AllCourses[i - 1].Name  - @Model.AllCourses[i - 1].Price $</a></p>
                 }
             }
 

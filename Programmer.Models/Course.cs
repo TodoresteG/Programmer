@@ -28,8 +28,6 @@
 
         public TimeSpan BaseTimeNeeded { get; set; }
 
-        public bool IsCompleted { get; set; }
-
         [NotMapped]
         public double Reward { get; set; }
 

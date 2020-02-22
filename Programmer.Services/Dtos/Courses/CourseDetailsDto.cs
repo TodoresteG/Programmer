@@ -7,6 +7,6 @@
     {
         public string Name { get; set; }
 
-        public IEnumerable<LectureCourseDetailsDto> Lectures { get; set; }
+        public IList<LectureCourseDetailsDto> Lectures { get; set; }
     }
 }

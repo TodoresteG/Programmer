@@ -9,5 +9,9 @@
         public int CourseId { get; set; }
 
         public Course Course { get; set; }
+
+        public bool IsCompleted { get; set; }
+
+        public bool IsEnrolled { get; set; }
     }
 }

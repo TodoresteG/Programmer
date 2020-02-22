@@ -22,12 +22,13 @@
                     Id = c.Id,
                     Name = c.Name,
                     Price = c.Price,
-                    IsCompleted = c.IsCompleted,
+                    IsCompleted = c.Users.Select(u => u.IsCompleted).FirstOrDefault(),
+                    IsEnrolled = c.Users.Select(u => u.IsEnrolled).FirstOrDefault(),
                 })
                 .ToList();
 
             var enrolledCourses = this.context.UserCourses
-                .Where(c => c.ProgrammerUserId == userId)
+                .Where(c => c.ProgrammerUserId == userId && c.IsEnrolled == true)
                 .Select(c => new AcademyEnrolledCourseDto
                 {
                     Id = c.CourseId,
@@ -35,11 +36,11 @@
                 })
                 .ToList();
 
-            var completedCourses = this.context.Courses
+            var completedCourses = this.context.UserCourses
                 .Where(c => c.IsCompleted == true)
                 .Select(c => new AcademyCompletedCourseDto
                 {
-                    Name = c.Name,
+                    Name = c.Course.Name,
                 })
                 .ToList();
 
