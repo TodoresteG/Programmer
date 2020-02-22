@@ -12,9 +12,9 @@
 
         public string Name { get; set; }
 
-        [NotMapped]
-        public TimeSpan TimeNeeded
-            => TimeSpan.FromSeconds(Math.Round(this.Course.Users.Sum(u => u.User.Xp / u.User.Level * this.Course.BaseTimeNeeded.TotalSeconds)));
+        //[NotMapped]
+        //public TimeSpan TimeNeeded
+        //    => TimeSpan.FromSeconds(Math.Round(this.Course.Users.Sum(u => u.User.Xp / u.User.Level * this.Course.BaseTimeNeeded.TotalSeconds)));
 
         public int XpReward { get; set; }
 

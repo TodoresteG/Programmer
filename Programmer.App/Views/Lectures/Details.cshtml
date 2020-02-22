@@ -4,5 +4,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+@using Programmer.Services.Dtos.Lectures
+@model LectureDetailsDto
+
+<div class="container">
+    <section class="page-section">
+        <h1>Lecture Name: @Model.Name</h1>
+        <h5>Required Energy: @Model.RequiredEnergy</h5>
+        <h5>Time Needed: @Model.TimeNeeded</h5>
+        <h5>Hard Skill Reward: @Model.HardSkillReward</h5>
+        <h5>Soft Skill Reward: @Model.SoftSkillReward</h5>
+
+        <a asp-controller="Lectures" asp-action="Watch" asp-route-lectureId="@Model.Id" class="btn">Watch it Online</a>
+    </section>
+</div>
 
