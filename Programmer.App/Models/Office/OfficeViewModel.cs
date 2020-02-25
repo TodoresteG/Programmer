@@ -1,5 +1,6 @@
 ﻿namespace Programmer.App.Models.Office
 {
+    using System;
     using System.Collections.Generic;
 
     public class OfficeViewModel
@@ -15,6 +16,8 @@
         public decimal Money { get; set; }
 
         public int Bitcoins { get; set; }
+
+        public TimeSpan? TimeRemaining { get; set; }
 
         public IDictionary<string, double?> UserStats { get; set; }
     }

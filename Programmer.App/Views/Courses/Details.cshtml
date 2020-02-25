@@ -12,23 +12,42 @@
         <h1>Course Name - @Model.Name</h1>
 
 
-        <div class="row">
-            <h3 class="col-12">Course Lectures:</h3>
-            @for (int i = 1; i < Model.Lectures.Count() + 1; i++)
+        <h3 class="col-12">Course Lectures:</h3>
+        <ul class="lectures row list-unstyled">
+            @for (int i = 0; i < Model.Lectures.Count(); i++)
             {
-                @if (!Model.Lectures[i - 1].IsCompleted && i == 1)
+                @if (i == 0)
                 {
-                    <div class="col-6">
-                        <a asp-controller="Lectures" asp-action="Details" asp-route-lectureId="@Model.Lectures[i - 1].Id">@Model.Lectures[i - 1].Name</a>
-                    </div>
+                    <li class="col-6">
+                        <a asp-controller="Lectures" asp-action="Details" asp-route-lectureId="@Model.Lectures[i].Id">@Model.Lectures[i].Name</a>
+                    </li>
+                }
+                else if (Model.Lectures[i - 1].IsCompleted)
+                {
+                    <li class="col-6">
+                        <a asp-controller="Lectures" asp-action="Details" asp-route-lectureId="@Model.Lectures[i].Id">@Model.Lectures[i].Name</a>
+                    </li>
                 }
                 else
                 {
-                    <div class="col-6">
-                        <a class="btn disabled" asp-controller="Lectures" asp-action="Details" asp-route-lectureId="@Model.Lectures[i - 1].Id">@Model.Lectures[i - 1].Name</a>
-                    </div>
+                    <li class="col-6">
+                        <a class="btn disabled" asp-controller="Lectures" asp-action="Details" asp-route-lectureId="@Model.Lectures[i].Id">@Model.Lectures[i].Name</a>
+                    </li>
                 }
             }
-        </div>
+        </ul>
     </section>
 </div>
+
+@*<script>
+    let lectures = [...document.querySelectorAll(".lectures a")];
+
+    for (let i = 0; i < lectures.length; i++) {
+        let lectureClass = lectures[i].className;
+        let nextLectureClass = lectures[i + 1].className;
+
+        if (lectureClass === "" && nextLectureClass === "") {
+            lectures[i].className = 'btn disabled';
+        }
+    }
+</script>*@

@@ -6,6 +6,7 @@
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Threading.Tasks;
+    using Programmer.Models;
 
     public class LectureService : ILectureService
     {
@@ -16,7 +17,7 @@
             this.context = context;
         }
 
-        public LectureDetailsDto GetLectureDetails(int id)
+        public LectureDetailsDto GetLectureDetails(int id, string userId)
         {
             var lecture = this.context.Lectures
                 .Where(l => l.Id == id)
@@ -28,7 +29,7 @@
                     HardSkillReward = l.Course.HardSkillReward,
                     SoftSkillReward = l.Course.SoftSkillReward,
                     RequiredEnergy = l.Course.RequiredEnergy,
-                    TimeNeeded = this.GetTimeNeeded(id).ToString(),
+                    TimeNeeded = this.GetTimeNeeded(id, userId).ToString(),
                     XpReward = l.XpReward,
                 })
                 .FirstOrDefault();
@@ -36,7 +37,7 @@
             return lecture;
         }
 
-        public async Task WatchLecture(int id, string userId)
+        public void WatchLecture(int id, string userId)
         {
             // TODO: bad queries - fix them
             var user = this.context.Users.Find(userId);
@@ -44,43 +45,56 @@
 
             user.Energy -= lecture.Course.RequiredEnergy;
             user.IsActive = true;
-            user.TaskTimeRemaining = this.GetTimeNeeded(id);
+            user.TaskTimeRemaining = this.GetTimeNeeded(id, userId);
 
-            Task.Run(async () =>
-            {
-                await Task.Delay((int)user.TaskTimeRemaining?.TotalMilliseconds);
-
-                user.CSharp += lecture.Course.HardSkillReward;
-                user.ProblemSolving += lecture.Course.SoftSkillReward;
-                user.Xp += lecture.XpReward;
-
-                lecture.IsCompleted = true;
-
-                this.context.Users.Update(user);
-                this.context.Lectures.Update(lecture);
-                this.context.SaveChanges();
-            });
-
-            //player.Energy -= lecture.Course.RequiredEnergy;
-            //player.IsActive = true;
-            //player.TaskTimeRemaining = lecture.TimeNeeded;
-
-            //var test = DateTime.UtcNow.AddSeconds((double)player.TaskTimeRemaining?.TotalSeconds);
-
-            //await Task.Delay((int)player.TaskTimeRemaining?.TotalMilliseconds);
-
-            //player.HardSkills.CSharp += lecture.Course.HardSkillReward;
-            //player.SoftSkills.ProblemSolving += lecture.Course.SoftSkillReward;
-            //player.Xp += lecture.XpReward;
-
-            //context.SaveChanges();
+            this.context.Update(user);
+            this.context.SaveChanges();
         }
 
-        private TimeSpan GetTimeNeeded(int id) 
+        public void UpdateUser(string userId, int lectureId)
+        {
+            var user = this.context.Users.Find(userId);
+            var lecture = this.context.Lectures.Include(l => l.Course).FirstOrDefault(l => l.Id == lectureId);
+
+            if (lecture.Course.Name.Contains("C#"))
+            {
+                user.CSharp += lecture.Course.HardSkillReward;
+                user.ProblemSolving += lecture.Course.SoftSkillReward;
+            }
+            else if (lecture.Course.Name == "Data Structures")
+            {
+                user.DataStructures += lecture.Course.HardSkillReward;
+                user.AbstractThinking += lecture.Course.SoftSkillReward;
+            }
+            else if (lecture.Course.Name == "Algorithms")
+            {
+                user.Algorithms += lecture.Course.HardSkillReward;
+                user.AbstractThinking += lecture.Course.SoftSkillReward;
+            }
+            else if (lecture.Course.Name == "Unit Testing")
+            {
+                user.Testing += lecture.Course.HardSkillReward;
+                user.AbstractThinking += lecture.Course.SoftSkillReward;
+            }
+
+            user.Xp += lecture.XpReward;
+            user.TaskTimeRemaining = null;
+            user.IsActive = false;
+
+            lecture.IsCompleted = true;
+
+            this.context.Users.Update(user);
+            this.context.Lectures.Update(lecture);
+
+            this.context.SaveChanges();
+        }
+
+        private TimeSpan GetTimeNeeded(int id, string userId)
         {
             var userXp = this.context.Lectures
                 .Where(l => l.Id == id)
                 .SelectMany(l => l.Course.Users)
+                .Where(u => u.User.Id == userId)
                 .Select(u => u.User.Xp)
                 .FirstOrDefault();
 

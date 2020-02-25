@@ -48,6 +48,7 @@ namespace ProgrammerDemo.Controllers
                 Level = user.Level,
                 Money = user.Money,
                 UserStats = user.UserStats,
+                TimeRemaining = user.TimeRemaining,
             };
 
             return this.View(viewModel);

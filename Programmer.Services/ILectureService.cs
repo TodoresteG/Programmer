@@ -5,8 +5,10 @@
 
     public interface ILectureService
     {
-        LectureDetailsDto GetLectureDetails(int id);
+        LectureDetailsDto GetLectureDetails(int id, string userId);
 
-        Task WatchLecture(int id, string userId);
+        void WatchLecture(int id, string userId);
+
+        void UpdateUser(string userId, int lectureId);
     }
 }

@@ -18,19 +18,28 @@
         [Authorize]
         public IActionResult Details(int lectureId) 
         {
-            var viewModel = this.lectureService.GetLectureDetails(lectureId);
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var viewModel = this.lectureService.GetLectureDetails(lectureId, userId);
 
             return this.View(viewModel);
         }
 
         [Authorize]
-        public async Task<IActionResult> Watch(int lectureId) 
+        public IActionResult Watch(int lectureId) 
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            await this.lectureService.WatchLecture(lectureId, userId);
+            this.lectureService.WatchLecture(lectureId, userId);
 
             return this.Redirect("/Home/Office");
+        }
+
+        [Authorize]
+        public IActionResult UpdateUser() 
+        {
+
+
+            return this.Redirect("Home/Office");
         }
     }
 }

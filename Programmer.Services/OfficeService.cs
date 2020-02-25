@@ -28,6 +28,7 @@
                     Level = u.Level,
                     Money = u.Money,
                     Bitcoins = u.Bitcoins,
+                    TimeRemaining = u.TaskTimeRemaining,
                 })
                 .FirstOrDefault();
 

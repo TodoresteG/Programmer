@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Programmer.Services.Dtos.Office
 {
@@ -15,6 +16,8 @@ namespace Programmer.Services.Dtos.Office
         public decimal Money { get; set; }
 
         public int Bitcoins { get; set; }
+
+        public TimeSpan? TimeRemaining { get; set; }
 
         public IDictionary<string, double?> UserStats { get; set; }
     }
