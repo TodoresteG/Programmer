@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewData["Title"] = "Default";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using Programmer.App.Models.Users
+@model PlayerInfoViewModel
+
+<section class="page-section" row>
+    <ul class="d-flex list-unstyled justify-content-md-around ml-auto bg-primary text-white py-3 col-md-12">
+        <li class="nav-item mx-0 mx-lg-1">
+            <span data-toggle="tooltip"><i class="fas fa-user"></i>@this.User.Identity.Name</span>
+        </li>
+        <li class="nav-item mx-0 mx-lg-1">
+            <span><i class="fas fa-level-up-alt"></i>Level - @Model.Level</span>
+        </li>
+        <li class="nav-item mx-0 mx-lg-1">
+            <span><i class="fas fa-at"></i>Xp - @Model.Xp/@Model.XpForNextLevel</span>
+        </li>
+        <li class="nav-item mx-0 mx-lg-1">
+            <span><i class="far fa-money-bill-alt"></i>Money - @Model.Money$</span>
+        </li>
+        <li class="nav-item mx-0 mx-lg-1">
+            <span><i class="fab fa-bitcoin"></i>Bitcoins - @Model.Bitcoins</span>
+        </li>
+        <li class="nav-item mx-0 mx-lg-1">
+            <span id="energy"><i class="fas fa-bolt"></i>Energy - @Model.Energy - <span id="energy-timer"></span></span>
+        </li>
+        <li class="nav-item mx-0 mx-lg-1">
+            <div id="energy"><i class="fas fa-clock"></i>Time Left - @Model.TimeRemaining - <p id="task-timer">Hours: <span class="hours"></span>Minutes:<span class="minutes"></span><span class="seconds">Seconds:</span></p></div>
+        </li>
+    </ul>
+</section>
+
+@section Scripts {
+    <script>
+        function getTimeRemaining(endTime) {
+            let time = Date.parse(endTime) - Date.parse(new Date());
+            let seconds = Math.floor((time / 1000) % 60);
+            let minutes = Math.floor((time / 1000 / 60) % 60);
+            let hours = Math.floor(time / (1000 * 60 * 60) % 24);
+
+            return {
+                'total': time,
+                'hours': hours,
+                'minutes': minutes,
+                'seconds': seconds,
+            };
+        }
+
+        function initializeClock(id, endTime) {
+            let clock = document.getElementById(id);
+            let hoursSpan = document.querySelector('.hours');
+            let minutesSpan = document.querySelector('.minutes');
+            let secondsSpan = document.querySelector('.seconds');
+
+            function updateClock() {
+                let time = getTimeRemaining(endTime);
+                //clock.innerHTML = `${time.hours}h:${time.minutes}m:${time.seconds}s`;
+
+                hoursSpan.innerHtml = ('0' + time.hours).slice(-2);
+                minutesSpan.innerHtml = ('0' + time.minutes).slice(-2);
+                secondsSpan.innerHtml = ('0' + time.seconds).slice(-2);
+
+                if (time.total <= 0) {
+                    clearInterval(timeInterval);
+                }
+            }
+
+            updateClock();
+            let timeInterval = setInterval(updateClock, 1000);
+        }
+
+        function test() {
+            // if there's a cookie with the name myClock, use that value as the deadline
+            if (document.cookie && document.cookie.match('myClock')) {
+                // get deadline value from cookie
+                var deadline = document.cookie.match(/(^|;)myClock=([^;]+)/)[2];
+            }
+
+            // otherwise, set a deadline 10 minutes from now and
+            // save it in a cookie with that name
+            else {
+                // create deadline 10 minutes from now
+                var timeInMinutes = 10;
+                var currentTime = Date.parse(new Date());
+                var deadline = new Date(currentTime + timeInMinutes * 60 * 1000);
+
+                // store deadline in cookie for future reference
+                document.cookie = 'myClock=' + deadline + '; path=/; domain=.localhost';
+            }
+        }
+    </script>
+}

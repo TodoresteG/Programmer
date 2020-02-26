@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Programmer.Data;
 using Programmer.Models;
 using Programmer.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ProgrammerDemo
 {
@@ -44,6 +45,7 @@ namespace ProgrammerDemo
             services.AddTransient<IAcademyService, AcademyService>();
             services.AddTransient<ICourseService, CourseService>();
             services.AddTransient<ILectureService, LectureService>();
+            services.AddTransient<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

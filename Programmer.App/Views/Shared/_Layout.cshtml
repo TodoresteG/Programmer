@@ -115,6 +115,12 @@
     </nav>
 
     <main class="mt-3">
+        @if (this.User.Identity.IsAuthenticated)
+        {
+            <div class="container">
+                <vc:PlayerInfo></vc:PlayerInfo>
+            </div>
+        }
         <div>
             @RenderBody()
         </div>
