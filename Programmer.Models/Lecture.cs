@@ -1,12 +1,15 @@
 ﻿namespace Programmer.Models
 {
-    using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
 
     public class Lecture
     {
+        public Lecture()
+        {
+            this.UserLectures = new HashSet<UserLecture>();
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -18,10 +21,10 @@
 
         public int XpReward { get; set; }
 
-        public bool IsCompleted { get; set; }
-
         public int CourseId { get; set; }
 
         public Course Course { get; set; }
+
+        public ICollection<UserLecture> UserLectures { get; set; }
     }
 }

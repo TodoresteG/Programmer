@@ -82,7 +82,10 @@
             clearInterval(x);
             document.getElementById("demo").innerHTML = "DONE";
 
-            new XMLHttpRequest().open("GET", "/Lectures/UpdateUser", true);
+            let xhttp = new XMLHttpRequest();
+
+            xhttp.open("GET", "/Lectures/UpdateUser", true);
+            xhttp.send();
         }
     }, 1000);
 </script>

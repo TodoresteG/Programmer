@@ -10,7 +10,7 @@ using Programmer.Data;
 namespace Programmer.Data.Migrations
 {
     [DbContext(typeof(ProgrammerDbContext))]
-    [Migration("20200222073350_InitialMigrate")]
+    [Migration("20200226092030_InitialMigrate")]
     partial class InitialMigrate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -312,9 +312,6 @@ namespace Programmer.Data.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -542,6 +539,27 @@ namespace Programmer.Data.Migrations
                     b.ToTable("UserCourses");
                 });
 
+            modelBuilder.Entity("Programmer.Models.UserLecture", b =>
+                {
+                    b.Property<string>("ProgrammerUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("LectureId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ProgrammerUserId", "LectureId");
+
+                    b.HasIndex("LectureId");
+
+                    b.ToTable("UserLectures");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Programmer.Models.ProgrammerRole", null)
@@ -673,6 +691,21 @@ namespace Programmer.Data.Migrations
 
                     b.HasOne("Programmer.Models.ProgrammerUser", "User")
                         .WithMany("Courses")
+                        .HasForeignKey("ProgrammerUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Programmer.Models.UserLecture", b =>
+                {
+                    b.HasOne("Programmer.Models.Lecture", "Lecture")
+                        .WithMany("UserLectures")
+                        .HasForeignKey("LectureId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Programmer.Models.ProgrammerUser", "User")
+                        .WithMany("UserLectures")
                         .HasForeignKey("ProgrammerUserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

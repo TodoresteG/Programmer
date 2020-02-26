@@ -6,7 +6,7 @@
     {
         CourseEnrollDetailsDto GetCourseEnrollDetails(int id);
 
-        CourseDetailsDto GetCourseDetails(int id);
+        CourseDetailsDto GetCourseDetails(int id, string userId);
 
         bool EnrollUserToCourse(int id, string userId);
 

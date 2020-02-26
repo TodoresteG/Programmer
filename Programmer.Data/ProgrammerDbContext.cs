@@ -29,7 +29,8 @@
         public DbSet<RequiredSkill> RequiredSkills { get; set; }
 
         public DbSet<UserCourse> UserCourses { get; set; }
-        //TODO: configure foreignKeys
+
+        public DbSet<UserLecture> UserLectures { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

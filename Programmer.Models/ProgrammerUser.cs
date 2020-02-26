@@ -17,6 +17,7 @@
             this.Events = new HashSet<Event>();
             this.Documentations = new HashSet<Documentation>();
             this.JobTasks = new HashSet<JobTask>();
+            this.UserLectures = new HashSet<UserLecture>();
         }
 
         public long Xp { get; set; }
@@ -73,6 +74,8 @@
         public double? Css { get; set; }
 
         public ICollection<UserCourse> Courses { get; set; }
+
+        public ICollection<UserLecture> UserLectures { get; set; }
 
         public ICollection<Event> Events { get; set; }
 

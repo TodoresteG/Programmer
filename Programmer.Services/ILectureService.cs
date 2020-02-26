@@ -1,6 +1,7 @@
 ﻿namespace Programmer.Services
 {
     using Dtos.Lectures;
+    using System;
     using System.Threading.Tasks;
 
     public interface ILectureService
@@ -9,6 +10,8 @@
 
         void WatchLecture(int id, string userId);
 
-        void UpdateUser(string userId, int lectureId);
+        void UpdateUser(string userId);
+
+        public TimeSpan GetTimeNeeded(int id, string userId);
     }
 }

@@ -40,56 +40,64 @@
         public void WatchLecture(int id, string userId)
         {
             // TODO: bad queries - fix them
-            var user = this.context.Users.Find(userId);
-            var lecture = this.context.Lectures.Include(l => l.Course).FirstOrDefault(l => l.Id == id);
+            var user = this.context.Users
+                .Where(u => u.Id == userId)
+                .FirstOrDefault();
 
-            user.Energy -= lecture.Course.RequiredEnergy;
+            var userLecture = this.context.UserLectures
+                .Include(ul => ul.Lecture.Course)
+                .FirstOrDefault(ul => ul.LectureId == id && ul.ProgrammerUserId == userId);
+
+            user.Energy -= userLecture.Lecture.Course.RequiredEnergy;
             user.IsActive = true;
             user.TaskTimeRemaining = this.GetTimeNeeded(id, userId);
 
-            this.context.Update(user);
+            userLecture.IsActive = true;
+
+            this.context.Users.Update(user);
+            this.context.UserLectures.Update(userLecture);
             this.context.SaveChanges();
         }
 
-        public void UpdateUser(string userId, int lectureId)
+        public void UpdateUser(string userId)
         {
             var user = this.context.Users.Find(userId);
-            var lecture = this.context.Lectures.Include(l => l.Course).FirstOrDefault(l => l.Id == lectureId);
+            var userLecture = this.context.UserLectures
+                .Include(ul => ul.Lecture.Course)
+                .FirstOrDefault(ul => ul.IsActive == true && ul.ProgrammerUserId == userId);
 
-            if (lecture.Course.Name.Contains("C#"))
+            if (userLecture.Lecture.Course.Name.Contains("C#"))
             {
-                user.CSharp += lecture.Course.HardSkillReward;
-                user.ProblemSolving += lecture.Course.SoftSkillReward;
+                user.CSharp += userLecture.Lecture.Course.HardSkillReward;
+                user.ProblemSolving += userLecture.Lecture.Course.SoftSkillReward;
             }
-            else if (lecture.Course.Name == "Data Structures")
+            else if (userLecture.Lecture.Course.Name == "Data Structures")
             {
-                user.DataStructures += lecture.Course.HardSkillReward;
-                user.AbstractThinking += lecture.Course.SoftSkillReward;
+                user.DataStructures += userLecture.Lecture.Course.HardSkillReward;
+                user.AbstractThinking += userLecture.Lecture.Course.SoftSkillReward;
             }
-            else if (lecture.Course.Name == "Algorithms")
+            else if (userLecture.Lecture.Course.Name == "Algorithms")
             {
-                user.Algorithms += lecture.Course.HardSkillReward;
-                user.AbstractThinking += lecture.Course.SoftSkillReward;
+                user.Algorithms += userLecture.Lecture.Course.HardSkillReward;
+                user.AbstractThinking += userLecture.Lecture.Course.SoftSkillReward;
             }
-            else if (lecture.Course.Name == "Unit Testing")
+            else if (userLecture.Lecture.Course.Name == "Unit Testing")
             {
-                user.Testing += lecture.Course.HardSkillReward;
-                user.AbstractThinking += lecture.Course.SoftSkillReward;
+                user.Testing += userLecture.Lecture.Course.HardSkillReward;
+                user.AbstractThinking += userLecture.Lecture.Course.SoftSkillReward;
             }
 
-            user.Xp += lecture.XpReward;
+            user.Xp += userLecture.Lecture.XpReward;
             user.TaskTimeRemaining = null;
             user.IsActive = false;
 
-            lecture.IsCompleted = true;
-
-            this.context.Users.Update(user);
-            this.context.Lectures.Update(lecture);
+            userLecture.IsCompleted = true;
+            userLecture.IsActive = false;
 
             this.context.SaveChanges();
         }
 
-        private TimeSpan GetTimeNeeded(int id, string userId)
+        public TimeSpan GetTimeNeeded(int id, string userId)
         {
             var userXp = this.context.Lectures
                 .Where(l => l.Id == id)

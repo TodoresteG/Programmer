@@ -50,9 +50,8 @@
         [Authorize]
         public IActionResult Details(int id) 
         {
-            // TODO: Make taking a lecture to be in order of the course lectures
-
-            var viewModel = this.courseService.GetCourseDetails(id);
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var viewModel = this.courseService.GetCourseDetails(id, userId);
 
             return this.View(viewModel);
         }

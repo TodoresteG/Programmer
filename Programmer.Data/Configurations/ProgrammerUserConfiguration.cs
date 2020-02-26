@@ -16,6 +16,12 @@
                 .OnDelete(DeleteBehavior.Restrict);
 
             player
+                .HasMany(p => p.UserLectures)
+                .WithOne(ul => ul.User)
+                .HasForeignKey(ul => ul.ProgrammerUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            player
                 .HasMany(p => p.Events)
                 .WithOne(e => e.Player)
                 .HasForeignKey(e => e.ProgrammerUserId)

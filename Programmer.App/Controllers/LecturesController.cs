@@ -37,9 +37,11 @@
         [Authorize]
         public IActionResult UpdateUser() 
         {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
+            this.lectureService.UpdateUser(userId);
 
-            return this.Redirect("Home/Office");
+            return this.Redirect("/Home/Office");
         }
     }
 }

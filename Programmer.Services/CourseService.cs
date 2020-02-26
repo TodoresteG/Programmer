@@ -4,6 +4,7 @@
     using Programmer.Models;
     using Programmer.Services.Dtos.Courses;
     using Programmer.Services.Dtos.Lectures;
+    using System.Collections.Generic;
     using System.Linq;
 
     public class CourseService : ICourseService
@@ -25,38 +26,58 @@
                 IsEnrolled = true,
             };
 
+            List<UserLecture> userLectures = this.context.Lectures
+                .Where(l => l.CourseId == id)
+                .Select(l => new UserLecture
+                {
+                    ProgrammerUserId = userId,
+                    LectureId = l.Id,
+                })
+                .ToList();
+
             this.context.UserCourses.Add(userCourse);
+            this.context.UserLectures.AddRange(userLectures);
 
-            var course = this.context.Courses.Find(id);
+            var course = this.context.Courses
+                .Where(c => c.Id == id)
+                .Select(c => new Course 
+                {
+                    Price = c.Price,
+                })
+                .FirstOrDefault();
 
-            var user = this.context.Users.Find(userId);
+            var user = this.context.Users
+                .Where(u => u.Id == userId)
+                .FirstOrDefault();
 
             if (user.Money < course.Price)
             {
                 return false;
             }
 
-            user.Money -= userCourse.Course.Price;
+            user.Money -= course.Price;
 
-            this.context.Update(user);
+            this.context.Users.Update(user);
             this.context.SaveChanges();
-
             return true;
         }
 
-        public CourseDetailsDto GetCourseDetails(int id)
+        public CourseDetailsDto GetCourseDetails(int id, string userId)
         {
-            var course = this.context.Courses
-                .Where(c => c.Id == id)
+            var course = this.context.UserCourses
+                .Where(c => c.CourseId == id && c.ProgrammerUserId == userId)
                 .Select(c => new CourseDetailsDto
                 {
-                    Name = c.Name,
-                    Lectures = c.Lectures.Select(l => new LectureCourseDetailsDto
+                    Name = c.Course.Name,
+                    Lectures = c.Course.Lectures.SelectMany(c => c.UserLectures)
+                    .Where(ul => ul.ProgrammerUserId == userId)
+                    .Select(ul => new LectureCourseDetailsDto
                     {
-                        Id = l.Id,
-                        Name = l.Name,
-                        IsCompleted = l.IsCompleted,
-                    }).ToList()
+                        Id = ul.LectureId,
+                        Name = ul.Lecture.Name,
+                        IsCompleted = ul.IsCompleted,
+                    })
+                    .ToList()
                 })
                 .FirstOrDefault();
 

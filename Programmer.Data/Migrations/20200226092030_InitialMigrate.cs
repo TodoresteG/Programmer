@@ -245,7 +245,6 @@ namespace Programmer.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     XpReward = table.Column<int>(nullable: false),
-                    IsCompleted = table.Column<bool>(nullable: false),
                     CourseId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -391,6 +390,32 @@ namespace Programmer.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UserLectures",
+                columns: table => new
+                {
+                    ProgrammerUserId = table.Column<string>(nullable: false),
+                    LectureId = table.Column<int>(nullable: false),
+                    IsCompleted = table.Column<bool>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserLectures", x => new { x.ProgrammerUserId, x.LectureId });
+                    table.ForeignKey(
+                        name: "FK_UserLectures_Lectures_LectureId",
+                        column: x => x.LectureId,
+                        principalTable: "Lectures",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserLectures_AspNetUsers_ProgrammerUserId",
+                        column: x => x.ProgrammerUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AdditionalActivityCategories_DocumentationId",
                 table: "AdditionalActivityCategories",
@@ -480,6 +505,11 @@ namespace Programmer.Data.Migrations
                 name: "IX_UserCourses_CourseId",
                 table: "UserCourses",
                 column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserLectures_LectureId",
+                table: "UserLectures",
+                column: "LectureId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -509,10 +539,10 @@ namespace Programmer.Data.Migrations
                 name: "JobTasks");
 
             migrationBuilder.DropTable(
-                name: "Lectures");
+                name: "UserCourses");
 
             migrationBuilder.DropTable(
-                name: "UserCourses");
+                name: "UserLectures");
 
             migrationBuilder.DropTable(
                 name: "Documentations");
@@ -527,10 +557,13 @@ namespace Programmer.Data.Migrations
                 name: "RequiredSkills");
 
             migrationBuilder.DropTable(
-                name: "Courses");
+                name: "Lectures");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Courses");
         }
     }
 }
