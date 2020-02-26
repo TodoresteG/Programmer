@@ -15,6 +15,8 @@
 
         public double ProblemSolvingReward { get; set; }
 
+        public bool IsPreviousCompleted { get; set; }
+
         public decimal Price { get; set; }
 
         public IList<LectureCourseEnrollDto> Lectures { get; set; }

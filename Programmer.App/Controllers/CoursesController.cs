@@ -26,7 +26,7 @@
                 return this.Redirect("/Academy/Index");
             }
 
-            var viewModel = this.courseService.GetCourseEnrollDetails(id);
+            var viewModel = this.courseService.GetCourseEnrollDetails(id, userId);
 
             return this.View(viewModel);
         }
@@ -36,11 +36,15 @@
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            var isEnrolled = this.courseService.EnrollUserToCourse(id, userId);
+            if (!this.courseService.IsPreviousCompleted(id, userId))
+            {
+                return this.Redirect("/Academy/Index");
+            }
 
+            var isEnrolled = this.courseService.EnrollUserToCourse(id, userId);
             if (!isEnrolled)
             {
-                // TODO: Make a better error
+                // TODO: Make a better error. Make this validation on client side
                 return this.Content("Not enough money to enroll on a course");
             }
 

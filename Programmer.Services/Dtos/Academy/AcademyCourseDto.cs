@@ -8,8 +8,6 @@
 
         public decimal Price { get; set; }
 
-        public bool IsCompleted { get; set; }
-
         public bool IsEnrolled { get; set; }
     }
 }

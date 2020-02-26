@@ -22,8 +22,7 @@
                     Id = c.Id,
                     Name = c.Name,
                     Price = c.Price,
-                    //IsCompleted = c.IsCompleted, TODO: Think about here
-                    //IsEnrolled = c.IsEnrolled,
+                    IsEnrolled = c.Users.Where(u => u.ProgrammerUserId == userId).Select(u => u.IsEnrolled).FirstOrDefault(),
                 })
                 .ToList();
 

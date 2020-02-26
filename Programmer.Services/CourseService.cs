@@ -40,7 +40,7 @@
 
             var course = this.context.Courses
                 .Where(c => c.Id == id)
-                .Select(c => new Course 
+                .Select(c => new Course
                 {
                     Price = c.Price,
                 })
@@ -84,7 +84,7 @@
             return course;
         }
 
-        public CourseEnrollDetailsDto GetCourseEnrollDetails(int id)
+        public CourseEnrollDetailsDto GetCourseEnrollDetails(int id, string userId)
         {
             var course = this.context.Courses
                 .Where(c => c.Id == id)
@@ -103,6 +103,8 @@
                 })
                 .FirstOrDefault();
 
+            course.IsPreviousCompleted = this.IsPreviousCompleted(id, userId);
+
             return course;
         }
 
@@ -111,6 +113,16 @@
             return this.context.UserCourses
                 .Where(c => c.CourseId == id && c.ProgrammerUserId == userId)
                 .Select(c => c.IsEnrolled)
+                .FirstOrDefault();
+        }
+
+        public bool IsPreviousCompleted(int id, string userId) 
+        {
+            id = id == 1 ? 2 : id;
+
+            return this.context.UserCourses
+                .Where(c => c.CourseId == id - 1 && c.ProgrammerUserId == userId)
+                .Select(c => c.IsCompleted)
                 .FirstOrDefault();
         }
     }

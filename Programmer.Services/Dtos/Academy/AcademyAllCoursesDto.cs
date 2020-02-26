@@ -4,7 +4,7 @@
 
     public class AcademyAllCoursesDto
     {
-        public IList<AcademyCourseDto> AllCourses { get; set; }
+        public IEnumerable<AcademyCourseDto> AllCourses { get; set; }
 
         public IEnumerable<AcademyEnrolledCourseDto> EnrolledCourses { get; set; }
 
