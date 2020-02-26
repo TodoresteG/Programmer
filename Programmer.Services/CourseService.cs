@@ -118,10 +118,15 @@
 
         public bool IsPreviousCompleted(int id, string userId) 
         {
-            id = id == 1 ? 2 : id;
+            if (id == 1)
+            {
+                return true;
+            }
+
+            id =- 1;
 
             return this.context.UserCourses
-                .Where(c => c.CourseId == id - 1 && c.ProgrammerUserId == userId)
+                .Where(c => c.CourseId == id && c.ProgrammerUserId == userId)
                 .Select(c => c.IsCompleted)
                 .FirstOrDefault();
         }

@@ -41,15 +41,19 @@
     </section>
 </div>
 
-@*<script>
-    let lectures = [...document.querySelectorAll(".lectures a")];
+@section Scripts{
+    <script>
+        let lectures = [...document.querySelectorAll(".lectures a")];
 
-    for (let i = 0; i < lectures.length; i++) {
-        let lectureClass = lectures[i].className;
-        let nextLectureClass = lectures[i + 1].className;
+        for (let i = 0; i < lectures.length; i++) {
+            let lectureClass = lectures[i].className;
+            let nextLectureClass = lectures[i + 1].className;
 
-        if (lectureClass === "" && nextLectureClass === "") {
-            lectures[i].className = 'btn disabled';
+            if (lectureClass === "" && nextLectureClass === "") {
+                lectures[i].className = 'btn disabled text-success';
+                lectures[i].innerHTML += " - Completed"
+            }
         }
-    }
-</script>*@
+    </script>
+}
+
