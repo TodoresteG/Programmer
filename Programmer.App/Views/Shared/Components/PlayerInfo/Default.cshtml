@@ -1,13 +1,11 @@
-﻿
-@{
-    ViewData["Title"] = "Default";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPlayerInfoViewComponent.cshtml";
+ }
 
 @using Programmer.App.Models.Users
 @model PlayerInfoViewModel
 
-<section class="page-section" row>
+<section class="page-section row">
     <ul class="d-flex list-unstyled justify-content-md-around ml-auto bg-primary text-white py-3 col-md-12">
         <li class="nav-item mx-0 mx-lg-1">
             <span data-toggle="tooltip"><i class="fas fa-user"></i>@this.User.Identity.Name</span>
@@ -25,16 +23,26 @@
             <span><i class="fab fa-bitcoin"></i>Bitcoins - @Model.Bitcoins</span>
         </li>
         <li class="nav-item mx-0 mx-lg-1">
-            <span id="energy"><i class="fas fa-bolt"></i>Energy - @Model.Energy - <span id="energy-timer"></span></span>
+            <div><i class="fas fa-bolt"></i>Energy - <span id="energy">@Model.Energy</span> - <p id="energy-timer"><span class="minutes"></span><span class="seconds"></span></p></div>
         </li>
         <li class="nav-item mx-0 mx-lg-1">
-            <div id="energy"><i class="fas fa-clock"></i>Time Left - @Model.TimeRemaining - <p id="task-timer">Hours: <span class="hours"></span>Minutes:<span class="minutes"></span><span class="seconds">Seconds:</span></p></div>
+            <div><i class="fas fa-clock"></i>Time Left - @Model.TimeRemaining - <p id="task-timer">Hours: <span class="hours"></span>Minutes:<span class="minutes"></span><span class="seconds">Seconds:</span></p></div>
         </li>
     </ul>
 </section>
 
 @section Scripts {
-    <script>
+    <script asp-cut-key="myScriptKey">
+        let currentEnergy = parseInt(document.getElementById('energy').textContent);
+        let energyNeeded = 30 - currentEnergy;
+        let endTime = addMinutes(new Date(), energyNeeded).toString();
+
+        initializeClock('energy-timer', endTime)
+
+        function addMinutes(date, minutes) {
+            return new Date(date.getTime() + minutes * 60000);
+        }
+
         function getTimeRemaining(endTime) {
             let time = Date.parse(endTime) - Date.parse(new Date());
             let seconds = Math.floor((time / 1000) % 60);
@@ -60,8 +68,8 @@
                 //clock.innerHTML = `${time.hours}h:${time.minutes}m:${time.seconds}s`;
 
                 hoursSpan.innerHtml = ('0' + time.hours).slice(-2);
-                minutesSpan.innerHtml = ('0' + time.minutes).slice(-2);
-                secondsSpan.innerHtml = ('0' + time.seconds).slice(-2);
+                minutesSpan.textContent = ('0' + time.minutes).slice(-2) + 'm:';
+                secondsSpan.textContent = ('0' + time.seconds).slice(-2) + 's';
 
                 if (time.total <= 0) {
                     clearInterval(timeInterval);

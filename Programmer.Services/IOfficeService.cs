@@ -4,6 +4,6 @@
 
     public interface IOfficeService
     {
-        UserDto GetUserForHome(string username);
+        UserDto GetUserForHome(string userId);
     }
 }

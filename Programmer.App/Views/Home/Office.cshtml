@@ -6,28 +6,7 @@
 
 @model Programmer.App.Models.Office.OfficeViewModel
 
-<section class="page-section row">
-    <ul class="d-flex list-unstyled justify-content-md-around ml-auto bg-primary text-white py-3 col-md-12">
-        <li class="nav-item mx-0 mx-lg-1">
-            <span data-toggle="tooltip"><i class="fas fa-user"></i>@this.User.Identity.Name</span>
-        </li>
-        <li class="nav-item mx-0 mx-lg-1">
-            <span><i class="fas fa-level-up-alt"></i>Level - @Model.Level</span>
-        </li>
-        <li class="nav-item mx-0 mx-lg-1">
-            <span><i class="fas fa-at"></i>Xp - @Model.Xp/@Model.XpForNextLevel</span>
-        </li>
-        <li class="nav-item mx-0 mx-lg-1">
-            <span><i class="far fa-money-bill-alt"></i>Money - @Model.Money$</span>
-        </li>
-        <li class="nav-item mx-0 mx-lg-1">
-            <span><i class="fab fa-bitcoin"></i>Bitcoins - @Model.Bitcoins</span>
-        </li>
-        <li class="nav-item mx-0 mx-lg-1">
-            <span id="energy"><i class="fas fa-bolt"></i>Energy - @Model.Energy - <span id="timer"></span></span>
-        </li>
-    </ul>
-
+<section class="row">
     <div class="col-md-4 mx-5">
         <h2>Stats:</h2>
         @foreach (var kvp in Model.UserStats.Where(s => s.Value != null).OrderBy(x => x.Key))

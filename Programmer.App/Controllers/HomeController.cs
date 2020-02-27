@@ -9,7 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Programmer.App.Models.Office;
 using Programmer.Services;
-using ProgrammerDemo.Models;
+using Programmer.Models;
+using System.Security.Claims;
 
 namespace ProgrammerDemo.Controllers
 {
@@ -37,18 +38,12 @@ namespace ProgrammerDemo.Controllers
         [Authorize]
         public IActionResult Office()
         {
-            var user = this.officeService.GetUserForHome(this.User.Identity.Name);
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = this.officeService.GetUserForHome(userId);
 
             OfficeViewModel viewModel = new OfficeViewModel
             {
-                Xp = user.Xp,
-                XpForNextLevel = user.XpForNextLevel,
-                Bitcoins = user.Bitcoins,
-                Energy = user.Energy,
-                Level = user.Level,
-                Money = user.Money,
                 UserStats = user.UserStats,
-                TimeRemaining = user.TimeRemaining,
             };
 
             return this.View(viewModel);

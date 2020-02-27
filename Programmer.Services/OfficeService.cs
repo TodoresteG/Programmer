@@ -16,23 +16,11 @@
             this.context = context;
         }
 
-        public UserDto GetUserForHome(string username)
+        public UserDto GetUserForHome(string userId)
         {
-            UserDto userDto = this.context.Users
-                .Where(u => u.UserName == username)
-                .Select(u => new UserDto
-                {
-                    Xp = u.Xp,
-                    XpForNextLevel = u.XpForNextLevel,
-                    Energy = u.Energy,
-                    Level = u.Level,
-                    Money = u.Money,
-                    Bitcoins = u.Bitcoins,
-                    TimeRemaining = u.TaskTimeRemaining,
-                })
-                .FirstOrDefault();
+            UserDto userDto = new UserDto();
 
-            ProgrammerUser userFromDb = this.context.Users.SingleOrDefault(u => u.UserName == username);
+            ProgrammerUser userFromDb = this.context.Users.SingleOrDefault(u => u.Id == userId);
 
             var userStats = new Dictionary<string, double?>();
 

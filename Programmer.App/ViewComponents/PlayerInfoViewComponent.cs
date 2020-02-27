@@ -3,7 +3,9 @@
     using Microsoft.AspNetCore.Mvc;
     using Programmer.App.Models.Users;
     using Programmer.Services;
+    using System.Security.Claims;
 
+    [ViewComponent(Name = "PlayerInfo")]
     public class PlayerInfoViewComponent : ViewComponent
     {
         private readonly IUserService userService;
@@ -15,7 +17,20 @@
 
         public IViewComponentResult Invoke()
         {
-            var viewModel = new PlayerInfoViewModel();
+            var userId = this.UserClaimsPrincipal.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var dto = this.userService.GetPlayerInfo(userId);
+
+            var viewModel = new PlayerInfoViewModel
+            {
+                Bitcoins = dto.Bitcoins,
+                Energy = dto.Energy,
+                Level = dto.Level,
+                Money = dto.Money,
+                TimeRemaining = dto.TimeRemaining,
+                Xp = dto.Xp,
+                XpForNextLevel = dto.XpForNextLevel,
+            };
+
             return this.View(viewModel);
         }
     }
