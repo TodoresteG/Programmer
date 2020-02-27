@@ -1,8 +1,10 @@
 ﻿namespace Programmer.Services
 {
     using Programmer.Data;
+    using Programmer.Models;
     using Programmer.Services.Dtos.Users;
     using System.Linq;
+    using System.Threading.Tasks;
 
     public class UserService : IUserService
     {
@@ -32,9 +34,15 @@
             return user;
         }
 
-        public void UpdateUser(string userId)
+        public async Task<int> UpdateUserEnergy(string userId)
         {
-            throw new System.NotImplementedException();
+            var user = this.context.Users
+                .FirstOrDefault(u => u.Id == userId);
+
+            user.Energy++;
+            await this.context.SaveChangesAsync();
+
+            return user.Energy;
         }
     }
 }
