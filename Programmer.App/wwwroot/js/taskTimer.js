@@ -60,14 +60,14 @@ function initializeClock(id, endTime) {
                     const taskTimer = document.getElementById('task');
                     taskTimer.parentElement.className = 'invisible';
 
-                    document.getElementById('level').textContent = data.Level;
-                    document.getElementById('xp').textContent = data.Xp;
-                    document.getElementById('xp-for-next').textContent = data.XpForNextLevel;
-                    document.getElementById('csharp').textContent = data.HardSkill;
-                    document.getElementById('problemsolving').textContent = data.SoftSkill;
+                    document.getElementById('level').textContent = data.level;
+                    document.getElementById('xp').textContent = data.xp;
+                    document.getElementById('xp-for-next').textContent = data.xpForNextLevel;
+                    document.getElementById(data.hardSkillName).textContent = data.hardSkill;
+                    document.getElementById(data.softSkillName).textContent = data.softSkill;
                 })
                 .fail(function fail(data, status) {
-                    alert('I have failed you');
+                    alert('I have task failed you');
                     console.log(data);
                     console.log(status);
                 });

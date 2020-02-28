@@ -9,6 +9,6 @@
 
         Task<int> UpdateUserEnergy(string userId);
 
-        UpdateUserAfterLectureDto UpgradeUserAfterLecture(string userId);
+        Task<UpdateUserAfterLectureDto> UpgradeUserAfterLecture(string userId);
     }
 }

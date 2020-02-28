@@ -11,7 +11,7 @@
         <h2>Stats:</h2>
         @foreach (var kvp in Model.UserStats.Where(s => s.Value != null).OrderBy(x => x.Key))
         {
-            <h5 id="@kvp.Key.ToLower()">@kvp.Key - @kvp.Value</h5>
+            <h5>@kvp.Key - <span id="@kvp.Key.ToLower()">@kvp.Value</span></h5>
         }
     </div>
 

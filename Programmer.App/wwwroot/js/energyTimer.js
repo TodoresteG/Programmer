@@ -69,7 +69,7 @@ function initializeClock(id, endTime) {
                     resetTimer();
                 })
                 .fail(function fail(data, status) {
-                    alert('I have failed you');
+                    alert('I have energy failed you');
                     console.log(data);
                     console.log(status);
                 });

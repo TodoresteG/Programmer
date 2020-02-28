@@ -47,52 +47,65 @@
             return user.Energy;
         }
 
-        public UpdateUserAfterLectureDto UpgradeUserAfterLecture(string userId)
+        // TODO: Refactor this. Something is wrong here
+        public async Task<UpdateUserAfterLectureDto> UpgradeUserAfterLecture(string userId)
         {
             var user = this.context.Users.Find(userId);
             var userLecture = this.context.UserLectures
                 .Include(ul => ul.Lecture.Course)
                 .FirstOrDefault(ul => ul.IsActive == true && ul.ProgrammerUserId == userId);
 
+            var userType = user.GetType();
+
+            var hardSkill = (double)userType
+                 .GetProperty(userLecture.Lecture.Course.HardSkillName)
+                 .GetValue(user);
+
+            userType
+                .GetProperty(userLecture.Lecture.Course.HardSkillName)
+                .SetValue(user, hardSkill + userLecture.Lecture.Course.HardSkillReward);
+
             var dto = new UpdateUserAfterLectureDto();
 
-            if (userLecture.Lecture.Course.Name.Contains("C#"))
+            if (userLecture.Lecture.Name.EndsWith("Exersice"))
             {
-                user.CSharp += userLecture.Lecture.Course.HardSkillReward;
-                user.ProblemSolving += userLecture.Lecture.Course.SoftSkillReward;
-                dto.HardSkill += userLecture.Lecture.Course.HardSkillReward;
-                dto.SoftSkill += userLecture.Lecture.Course.SoftSkillReward;
+                user.Coding += userLecture.Lecture.Course.SoftSkillReward;
+                dto.SoftSkillName = "coding";
             }
-            else if (userLecture.Lecture.Course.Name == "Data Structures")
+            else
             {
-                user.DataStructures += userLecture.Lecture.Course.HardSkillReward;
-                user.AbstractThinking += userLecture.Lecture.Course.SoftSkillReward;
-            }
-            else if (userLecture.Lecture.Course.Name == "Algorithms")
-            {
-                user.Algorithms += userLecture.Lecture.Course.HardSkillReward;
-                user.AbstractThinking += userLecture.Lecture.Course.SoftSkillReward;
-            }
-            else if (userLecture.Lecture.Course.Name == "Unit Testing")
-            {
-                user.Testing += userLecture.Lecture.Course.HardSkillReward;
-                user.AbstractThinking += userLecture.Lecture.Course.SoftSkillReward;
+                var softSkill = (double)userType
+                     .GetProperty(userLecture.Lecture.Course.SoftSkillName)
+                     .GetValue(user);
+
+                userType
+                    .GetProperty(userLecture.Lecture.Course.SoftSkillName)
+                    .SetValue(user, softSkill + userLecture.Lecture.Course.SoftSkillReward);
+
+                dto.SoftSkillName = userLecture.Lecture.Course.SoftSkillName.ToLower();
             }
 
-            user.Xp += userLecture.Lecture.XpReward;
+            user.Xp += userLecture.Lecture.Course.XpReward;
+
+            if (user.Xp >= user.XpForNextLevel)
+            {
+                user.Level++;
+            }
+
             user.TaskTimeRemaining = null;
             user.IsActive = false;
 
             userLecture.IsCompleted = true;
             userLecture.IsActive = false;
 
-            this.context.SaveChanges();
+            await this.context.SaveChangesAsync();
 
+            dto.HardSkill = (double)userType.GetProperty(userLecture.Lecture.Course.HardSkillName).GetValue(user);
+            dto.HardSkillName = userLecture.Lecture.Course.HardSkillName.ToLower();
+            dto.SoftSkill = (double)userType.GetProperty(userLecture.Lecture.Course.SoftSkillName).GetValue(user);
+            dto.Level = user.Level;
             dto.Xp = user.Xp;
             dto.XpForNextLevel = user.XpForNextLevel;
-            dto.IsActive = user.IsActive;
-            dto.Level = user.Level;
-            dto.TaskTimeRemaining = user.TaskTimeRemaining;
 
             return dto;
         }

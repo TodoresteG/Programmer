@@ -14,8 +14,8 @@
 
         public double SoftSkill { get; set; }
 
-        public DateTime? TaskTimeRemaining { get; set; }
+        public string HardSkillName { get; set; }
 
-        public bool IsActive { get; set; }
+        public string SoftSkillName { get; set; }
     }
 }

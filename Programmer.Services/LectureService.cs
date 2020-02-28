@@ -30,7 +30,7 @@
                     SoftSkillReward = l.Course.SoftSkillReward,
                     RequiredEnergy = l.Course.RequiredEnergy,
                     TimeNeeded = this.GetTimeNeeded(id, userId).ToString(),
-                    XpReward = l.XpReward,
+                    XpReward = l.Course.XpReward,
                 })
                 .FirstOrDefault();
 
@@ -59,46 +59,7 @@
             this.context.SaveChanges();
         }
 
-        public void UpdateUser(string userId)
-        {
-            var user = this.context.Users.Find(userId);
-            var userLecture = this.context.UserLectures
-                .Include(ul => ul.Lecture.Course)
-                .FirstOrDefault(ul => ul.IsActive == true && ul.ProgrammerUserId == userId);
-
-            if (userLecture.Lecture.Course.Name.Contains("C#"))
-            {
-                user.CSharp += userLecture.Lecture.Course.HardSkillReward;
-                user.ProblemSolving += userLecture.Lecture.Course.SoftSkillReward;
-            }
-            else if (userLecture.Lecture.Course.Name == "Data Structures")
-            {
-                user.DataStructures += userLecture.Lecture.Course.HardSkillReward;
-                user.AbstractThinking += userLecture.Lecture.Course.SoftSkillReward;
-            }
-            else if (userLecture.Lecture.Course.Name == "Algorithms")
-            {
-                user.Algorithms += userLecture.Lecture.Course.HardSkillReward;
-                user.AbstractThinking += userLecture.Lecture.Course.SoftSkillReward;
-            }
-            else if (userLecture.Lecture.Course.Name == "Unit Testing")
-            {
-                user.Testing += userLecture.Lecture.Course.HardSkillReward;
-                user.AbstractThinking += userLecture.Lecture.Course.SoftSkillReward;
-            }
-
-            user.Xp += userLecture.Lecture.XpReward;
-            user.TaskTimeRemaining = null;
-            user.IsActive = false;
-
-            userLecture.IsCompleted = true;
-            userLecture.IsActive = false;
-
-            this.context.SaveChanges();
-        }
-
-        // TODO: Convert To dateTime
-        public DateTime GetTimeNeeded(int id, string userId)
+        private DateTime GetTimeNeeded(int id, string userId)
         {
             var userXp = this.context.Lectures
                 .Where(l => l.Id == id)

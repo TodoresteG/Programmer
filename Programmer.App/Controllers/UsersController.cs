@@ -15,7 +15,7 @@
             this.userService = userService;
         }
 
-        [HttpGet("{UpdateUserEnergy}")]
+        [HttpGet("UpdateUserEnergy")]
         public async Task<ActionResult<int>> UpdateUserEnergy() 
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -24,19 +24,19 @@
             return userEnergy;
         }
 
-        [HttpGet("{UpdateUserStats}")]
-        public ActionResult<UpdateUserAfterLectureApiModel> UpdateUserStats() 
+        [HttpGet("UpdateUserStats")]
+        public async Task<ActionResult<UpdateUserAfterLectureApiModel>> UpdateUserStats() 
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var dto = this.userService.UpgradeUserAfterLecture(userId);
+            var dto = await this.userService.UpgradeUserAfterLecture(userId);
 
             var apiModel = new UpdateUserAfterLectureApiModel
             {
                 HardSkill = dto.HardSkill,
-                IsActive = dto.IsActive,
-                Level = dto.Level,
+                HardSkillName = dto.HardSkillName,
                 SoftSkill = dto.SoftSkill,
-                TaskTimeRemaining = dto.TaskTimeRemaining,
+                SoftSkillName = dto.SoftSkillName,
+                Level = dto.Level,
                 Xp = dto.Xp,
                 XpForNextLevel = dto.XpForNextLevel,
             };

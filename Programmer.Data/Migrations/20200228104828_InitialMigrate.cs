@@ -32,7 +32,7 @@ namespace Programmer.Data.Migrations
                     Money = table.Column<decimal>(nullable: false),
                     Bitcoins = table.Column<int>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
-                    TaskTimeRemaining = table.Column<TimeSpan>(nullable: true),
+                    TaskTimeRemaining = table.Column<DateTime>(nullable: true),
                     Teamwork = table.Column<double>(nullable: false),
                     ProblemSolving = table.Column<double>(nullable: false),
                     Creativity = table.Column<double>(nullable: false),
@@ -67,8 +67,11 @@ namespace Programmer.Data.Migrations
                     Price = table.Column<decimal>(nullable: false),
                     RequiredEnergy = table.Column<int>(nullable: false),
                     HardSkillReward = table.Column<double>(nullable: false),
+                    HardSkillName = table.Column<string>(nullable: true),
                     SoftSkillReward = table.Column<double>(nullable: false),
-                    BaseTimeNeeded = table.Column<TimeSpan>(nullable: false)
+                    SoftSkillName = table.Column<string>(nullable: true),
+                    BaseTimeNeeded = table.Column<TimeSpan>(nullable: false),
+                    XpReward = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -244,7 +247,6 @@ namespace Programmer.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
-                    XpReward = table.Column<int>(nullable: false),
                     CourseId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

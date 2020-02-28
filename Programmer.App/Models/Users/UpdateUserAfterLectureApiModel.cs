@@ -1,7 +1,5 @@
 ﻿namespace Programmer.App.Models.Users
 {
-    using System;
-
     public class UpdateUserAfterLectureApiModel
     {
         public long Xp { get; set; }
@@ -14,8 +12,8 @@
 
         public double SoftSkill { get; set; }
 
-        public DateTime? TaskTimeRemaining { get; set; }
+        public string HardSkillName { get; set; }
 
-        public bool IsActive { get; set; }
+        public string SoftSkillName { get; set; }
     }
 }

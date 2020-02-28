@@ -170,6 +170,9 @@ namespace Programmer.Data.Migrations
                     b.Property<TimeSpan>("BaseTimeNeeded")
                         .HasColumnType("time");
 
+                    b.Property<string>("HardSkillName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("HardSkillReward")
                         .HasColumnType("float");
 
@@ -182,8 +185,14 @@ namespace Programmer.Data.Migrations
                     b.Property<int>("RequiredEnergy")
                         .HasColumnType("int");
 
+                    b.Property<string>("SoftSkillName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("SoftSkillReward")
                         .HasColumnType("float");
+
+                    b.Property<int>("XpReward")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -312,9 +321,6 @@ namespace Programmer.Data.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("XpReward")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
