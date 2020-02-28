@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class PlayerInfoDto
+    public class UserInfoDto
     {
         public int Level { get; set; }
 
@@ -17,5 +17,7 @@
         public int Energy { get; set; }
 
         public TimeSpan? TimeRemaining { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }

@@ -11,10 +11,10 @@
             <span data-toggle="tooltip"><i class="fas fa-user"></i>@this.User.Identity.Name</span>
         </li>
         <li class="nav-item mx-0 mx-lg-1">
-            <span><i class="fas fa-level-up-alt"></i>Level - @Model.Level</span>
+            <span><i class="fas fa-level-up-alt"></i>Level - <span id="level">@Model.Level</span></span>
         </li>
         <li class="nav-item mx-0 mx-lg-1">
-            <span><i class="fas fa-at"></i>Xp - @Model.Xp/@Model.XpForNextLevel</span>
+            <span><i class="fas fa-at"></i>Xp - <span id="xp">@Model.Xp</span>/<span id="xp-for-next">@Model.XpForNextLevel</span></span>
         </li>
         <li class="nav-item mx-0 mx-lg-1">
             <span><i class="far fa-money-bill-alt"></i>Money - @Model.Money$</span>
@@ -23,91 +23,20 @@
             <span><i class="fab fa-bitcoin"></i>Bitcoins - @Model.Bitcoins</span>
         </li>
         <li class="nav-item mx-0 mx-lg-1">
-            <div><i class="fas fa-bolt"></i>Energy - <span id="energy">@Model.Energy</span><p id="energy-timer"><span class="minutes"></span><span class="seconds"></span></p></div>
+            <div><i class="fas fa-bolt"></i>Energy - <span id="energy">@Model.Energy</span><p id="energy-timer"><span class="energy-minutes"></span><span class="energy-seconds"></span></p></div>
         </li>
-        <li class="nav-item mx-0 mx-lg-1">
-            <div><i class="fas fa-clock"></i>Time Left - @Model.TimeRemaining - <p id="task-timer">Hours: <span class="hours"></span>Minutes:<span class="minutes"></span><span class="seconds">Seconds:</span></p></div>
+        <li class="invisible">
+            <div id="task"><i class="fas fa-clock"></i>Time Left - <span class="invisible" id="task-time">@Model.TimeRemaining</span> <p id="task-timer"><span class="task-hours"></span><span class="task-minutes"></span><span class="task-seconds"></span></p></div>
+        </li>
+        <li class="invisible">
+            <div id="is-active">@Model.IsActive</div>
         </li>
     </ul>
 </section>
 
 @section Scripts {
-    <script asp-cut-key="myScriptKey">
-        let currentEnergy = parseInt(document.getElementById('energy').textContent);
-        let endTime = addMinutes(new Date(), 2).toString();
-
-        if (document.cookie && document.cookie.match('energyClock')) {
-            endTime = document.cookie.match(/(^|;)energyClock=([^;]+)/)[2];
-        }
-        else {
-            document.cookie = 'energyClock=' + endTime + '; path=/; domain=.localhost';
-        }
-
-        initializeClock('energy-timer', endTime);
-
-        function resetTimer() {
-            let endTime = addMinutes(new Date(), 2).toString();
-            initializeClock('energy-timer', endTime);
-        }
-
-        function addMinutes(date, minutes) {
-            return new Date(date.getTime() + minutes * 60000);
-        }
-
-        function getTimeRemaining(endTime) {
-            let time = Date.parse(endTime) - Date.parse(new Date());
-            let seconds = Math.floor((time / 1000) % 60);
-            let minutes = Math.floor((time / 1000 / 60) % 60);
-            let hours = Math.floor(time / (1000 * 60 * 60) % 24);
-
-            return {
-                'total': time,
-                'hours': hours,
-                'minutes': minutes,
-                'seconds': seconds,
-            };
-        }
-
-        function initializeClock(id, endTime) {
-            let clock = document.getElementById(id);
-            let hoursSpan = document.querySelector('.hours');
-            let minutesSpan = document.querySelector('.minutes');
-            let secondsSpan = document.querySelector('.seconds');
-
-            function updateClock() {
-                let time = getTimeRemaining(endTime);
-
-                hoursSpan.innerHtml = ('0' + time.hours).slice(-2);
-                minutesSpan.textContent = ('0' + time.minutes).slice(-2) + 'm:';
-                secondsSpan.textContent = ('0' + time.seconds).slice(-2) + 's';
-
-                if (currentEnergy === 30) {
-                    document.getElementById('energy-timer').innerHTML = '';
-                    return;
-                }
-
-                if (time.total <= 0) {
-                    clearInterval(timeInterval);
-
-                    $.ajax({
-                        method: 'GET',
-                        url: '/api/users/UpdateUserEnergy'
-                    })
-                        .done(function success(data) {
-                            $('#energy').text(data);
-                            currentEnergy++;
-                            resetTimer();
-                        })
-                        .fail(function fail(data, status) {
-                            alert('I have failed you');
-                            console.log(data);
-                            console.log(status);
-                        });
-                }
-            }
-
-            updateClock();
-            let timeInterval = setInterval(updateClock, 1000);
-        }
+    <script asp-cut-key="energyScriptKey" src="~/js/energyTimer.js">
+    </script>
+    <script asp-cut-key="taskScriptKey" src="~/js/taskTimer.js">
     </script>
 }

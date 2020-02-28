@@ -24,6 +24,7 @@
             {
                 Bitcoins = dto.Bitcoins,
                 Energy = dto.Energy,
+                IsActive = dto.IsActive,
                 Level = dto.Level,
                 Money = dto.Money,
                 TimeRemaining = dto.TimeRemaining,

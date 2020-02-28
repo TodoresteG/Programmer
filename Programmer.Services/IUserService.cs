@@ -5,8 +5,10 @@
 
     public interface IUserService
     {
-        PlayerInfoDto GetPlayerInfo(string userId);
+        UserInfoDto GetPlayerInfo(string userId);
 
         Task<int> UpdateUserEnergy(string userId);
+
+        UpdateUserAfterLectureDto UpgradeUserAfterLecture(string userId);
     }
 }
