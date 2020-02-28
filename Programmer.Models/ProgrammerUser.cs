@@ -35,7 +35,7 @@
         [NotMapped]
         public long XpForNextLevel => this.Level == 1 ? XpForSecondLevel : this.Xp * MultiplierForXpForNextLevel;
 
-        public TimeSpan? TaskTimeRemaining { get; set; }
+        public DateTime? TaskTimeRemaining { get; set; }
 
         public double Teamwork { get; set; }
 

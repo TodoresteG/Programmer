@@ -7,7 +7,7 @@ function cookieCheck() {
     let endTime;
 
     if (document.cookie && document.cookie.match('energyClock')) {
-        endTime = document.cookie.match(/(^|;)energyClock=([^;]+)/)[2];
+        endTime = document.cookie.match(/energyClock=([^;]+)/)[1];
     }
     else {
         endTime = addMinutes(new Date(), 2).toUTCString();

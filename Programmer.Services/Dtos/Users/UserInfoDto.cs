@@ -16,7 +16,7 @@
 
         public int Energy { get; set; }
 
-        public TimeSpan? TimeRemaining { get; set; }
+        public DateTime? TimeRemaining { get; set; }
 
         public bool IsActive { get; set; }
     }

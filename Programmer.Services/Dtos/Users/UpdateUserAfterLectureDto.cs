@@ -14,7 +14,7 @@
 
         public double SoftSkill { get; set; }
 
-        public TimeSpan? TaskTimeRemaining { get; set; }
+        public DateTime? TaskTimeRemaining { get; set; }
 
         public bool IsActive { get; set; }
     }

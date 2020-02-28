@@ -12,20 +12,14 @@ function cookieCheck() {
     let endTime;
 
     if (document.cookie && document.cookie.match('taskClock')) {
-        endTime = document.cookie.match(/(^|;)taskClock=([^;]+)/)[2];
+        endTime = document.cookie.match(/taskClock=([^;]+)/)[1];
     }
     else {
-        const taskTime = document.getElementById('task-time').textContent;
-        const now = new Date().setTime(taskTime);
-        endTime = addMinutes(new Date(), 2).toUTCString();
+        endTime = new Date(document.getElementById('task-time').textContent).toUTCString();
         document.cookie = 'taskClock=' + endTime + '; path=/; expires=' + endTime + ';';
     }
 
     return endTime;
-}
-
-function addMinutes(date, minutes) {
-    return new Date(date.getTime() + minutes * 60000);
 }
 
 function getTimeRemaining(endTime) {
@@ -51,7 +45,7 @@ function initializeClock(id, endTime) {
     function updateClock() {
         let time = getTimeRemaining(endTime);
 
-        hoursSpan.innerHtml = ('0' + time.hours).slice(-2) + 'h:';
+        hoursSpan.textContent = ('0' + time.hours).slice(-2) + 'h:';
         minutesSpan.textContent = ('0' + time.minutes).slice(-2) + 'm:';
         secondsSpan.textContent = ('0' + time.seconds).slice(-2) + 's';
 

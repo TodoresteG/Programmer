@@ -12,6 +12,6 @@
 
         void UpdateUser(string userId);
 
-        public TimeSpan GetTimeNeeded(int id, string userId);
+        public DateTime GetTimeNeeded(int id, string userId);
     }
 }

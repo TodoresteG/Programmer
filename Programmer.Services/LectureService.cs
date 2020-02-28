@@ -97,7 +97,8 @@
             this.context.SaveChanges();
         }
 
-        public TimeSpan GetTimeNeeded(int id, string userId)
+        // TODO: Convert To dateTime
+        public DateTime GetTimeNeeded(int id, string userId)
         {
             var userXp = this.context.Lectures
                 .Where(l => l.Id == id)
@@ -117,7 +118,8 @@
                 .Select(l => l.Course.BaseTimeNeeded.TotalSeconds)
                 .FirstOrDefault();
 
-            return TimeSpan.FromSeconds(Math.Round(userXp / userLevel * baseTime));
+            var time = TimeSpan.FromSeconds(Math.Round(userXp / userLevel * baseTime)).TotalSeconds;
+            return DateTime.Now.AddSeconds(time);
         }
     }
 }
