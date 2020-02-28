@@ -67,10 +67,11 @@
 
             var dto = new UpdateUserAfterLectureDto();
 
-            if (userLecture.Lecture.Name.EndsWith("Exersice"))
+            if (userLecture.Lecture.Name.Contains("Exercise"))
             {
                 user.Coding += userLecture.Lecture.Course.SoftSkillReward;
                 dto.SoftSkillName = "coding";
+                dto.SoftSkill = user.Coding;
             }
             else
             {
@@ -83,6 +84,7 @@
                     .SetValue(user, softSkill + userLecture.Lecture.Course.SoftSkillReward);
 
                 dto.SoftSkillName = userLecture.Lecture.Course.SoftSkillName.ToLower();
+                dto.SoftSkill = (double)userType.GetProperty(userLecture.Lecture.Course.SoftSkillName).GetValue(user);
             }
 
             user.Xp += userLecture.Lecture.Course.XpReward;
@@ -102,7 +104,6 @@
 
             dto.HardSkill = (double)userType.GetProperty(userLecture.Lecture.Course.HardSkillName).GetValue(user);
             dto.HardSkillName = userLecture.Lecture.Course.HardSkillName.ToLower();
-            dto.SoftSkill = (double)userType.GetProperty(userLecture.Lecture.Course.SoftSkillName).GetValue(user);
             dto.Level = user.Level;
             dto.Xp = user.Xp;
             dto.XpForNextLevel = user.XpForNextLevel;

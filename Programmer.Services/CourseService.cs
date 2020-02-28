@@ -93,9 +93,11 @@
                     Id = c.Id,
                     Name = c.Name,
                     Price = c.Price,
-                    CSharpSkillReward = c.HardSkillReward * c.Lectures.Count() * 2,
+                    HardSkillReward = c.HardSkillReward * c.Lectures.Count() * 2,
+                    HardSkillName = c.HardSkillName,
                     CodingSkillReward = c.SoftSkillReward * c.Lectures.Count(),
-                    ProblemSolvingReward = c.SoftSkillReward * c.Lectures.Count(),
+                    SoftSkillReward = c.SoftSkillReward * c.Lectures.Count(),
+                    SoftSkillName = c.SoftSkillName,
                     Lectures = c.Lectures.Select(l => new LectureCourseEnrollDto
                     {
                         Name = l.Name,

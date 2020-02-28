@@ -12,7 +12,11 @@
 
         public double HardSkillReward { get; set; }
 
+        public string HardSkillName { get; set; }
+
         public double SoftSkillReward { get; set; }
+
+        public string SoftSkillName { get; set; }
 
         public int XpReward { get; set; }
     }
