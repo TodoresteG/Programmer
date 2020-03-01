@@ -30,8 +30,6 @@
 
         public string SoftSkillName { get; set; }
 
-        public TimeSpan BaseTimeNeeded { get; set; }
-
         public int XpReward { get; set; }
 
         public Exam Exam { get; set; }

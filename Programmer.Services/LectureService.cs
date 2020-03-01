@@ -4,17 +4,16 @@
     using Programmer.Data;
     using Programmer.Services.Dtos.Lectures;
     using Microsoft.EntityFrameworkCore;
-    using System;
-    using System.Threading.Tasks;
-    using Programmer.Models;
 
     public class LectureService : ILectureService
     {
         private readonly ProgrammerDbContext context;
+        private readonly IUserService userService;
 
-        public LectureService(ProgrammerDbContext context)
+        public LectureService(ProgrammerDbContext context, IUserService userService)
         {
             this.context = context;
+            this.userService = userService;
         }
 
         public LectureDetailsDto GetLectureDetails(int id, string userId)
@@ -31,7 +30,7 @@
                     SoftSkillReward = l.Course.SoftSkillReward,
                     SoftSkillName = l.Course.SoftSkillName,
                     RequiredEnergy = l.Course.RequiredEnergy,
-                    TimeNeeded = this.GetTimeNeeded(id, userId).ToString(),
+                    TimeNeeded = this.userService.GetTimeNeeded(userId).ToString(),
                     XpReward = l.Course.XpReward,
                 })
                 .FirstOrDefault();
@@ -52,37 +51,13 @@
 
             user.Energy -= userLecture.Lecture.Course.RequiredEnergy;
             user.IsActive = true;
-            user.TaskTimeRemaining = this.GetTimeNeeded(id, userId);
+            user.TaskTimeRemaining = this.userService.GetTimeNeeded(userId);
 
             userLecture.IsActive = true;
 
             this.context.Users.Update(user);
             this.context.UserLectures.Update(userLecture);
             this.context.SaveChanges();
-        }
-
-        private DateTime GetTimeNeeded(int id, string userId)
-        {
-            var userXp = this.context.Lectures
-                .Where(l => l.Id == id)
-                .SelectMany(l => l.Course.Users)
-                .Where(u => u.User.Id == userId)
-                .Select(u => u.User.Xp)
-                .FirstOrDefault();
-
-            var userLevel = this.context.Lectures
-                .Where(l => l.Id == id)
-                .SelectMany(l => l.Course.Users)
-                .Select(u => u.User.Level)
-                .FirstOrDefault();
-
-            var baseTime = this.context.Lectures
-                .Where(l => l.Id == id)
-                .Select(l => l.Course.BaseTimeNeeded.TotalSeconds)
-                .FirstOrDefault();
-
-            var time = TimeSpan.FromSeconds(Math.Round(userXp / userLevel * baseTime)).TotalSeconds;
-            return DateTime.Now.AddSeconds(time);
         }
     }
 }

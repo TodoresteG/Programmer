@@ -130,9 +130,6 @@ namespace Programmer.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("BaseTimeNeeded")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("DocumentationId")
                         .HasColumnType("int");
 
@@ -166,9 +163,6 @@ namespace Programmer.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<TimeSpan>("BaseTimeNeeded")
-                        .HasColumnType("time");
 
                     b.Property<string>("HardSkillName")
                         .HasColumnType("nvarchar(max)");
@@ -251,9 +245,6 @@ namespace Programmer.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<TimeSpan>("BaseTimeNeeded")
-                        .HasColumnType("time");
 
                     b.Property<int>("CourseId")
                         .HasColumnType("int");

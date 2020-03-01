@@ -16,8 +16,6 @@
 
         public double SoftSkillReward { get; set; }
 
-        public DateTime BaseTimeNeeded { get; set; }
-
         public int DocumentationId { get; set; }
 
         public Documentation Documentation { get; set; }

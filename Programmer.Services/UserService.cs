@@ -4,11 +4,15 @@
     using Programmer.Data;
     using Programmer.Models;
     using Programmer.Services.Dtos.Users;
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
     public class UserService : IUserService
     {
+        private const double BaseSeconds = 6;
+        private const double UserXpDivider = 2;
+
         private readonly ProgrammerDbContext context;
 
         public UserService(ProgrammerDbContext context)
@@ -34,6 +38,17 @@
                 .FirstOrDefault();
 
             return user;
+        }
+
+        public DateTime GetTimeNeeded(string userId)
+        {
+            var userXp = this.context.Users
+                .Where(u => u.Id == userId)
+                .Select(u => u.Xp)
+                .FirstOrDefault();
+
+            var time = TimeSpan.FromSeconds(Math.Round(userXp / UserXpDivider * BaseSeconds)).TotalSeconds;
+            return DateTime.Now.AddSeconds(time);
         }
 
         public async Task<int> UpdateUserEnergy(string userId)

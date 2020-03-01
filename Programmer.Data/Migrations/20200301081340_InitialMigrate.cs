@@ -70,7 +70,6 @@ namespace Programmer.Data.Migrations
                     HardSkillName = table.Column<string>(nullable: true),
                     SoftSkillReward = table.Column<double>(nullable: false),
                     SoftSkillName = table.Column<string>(nullable: true),
-                    BaseTimeNeeded = table.Column<TimeSpan>(nullable: false),
                     XpReward = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -223,7 +222,6 @@ namespace Programmer.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BaseTimeNeeded = table.Column<TimeSpan>(nullable: false),
                     RequiredEnergy = table.Column<int>(nullable: false),
                     RequiredHardSkill = table.Column<double>(nullable: false),
                     RequiredCodingSkill = table.Column<double>(nullable: false),
@@ -371,7 +369,6 @@ namespace Programmer.Data.Migrations
                     RequiredEnergy = table.Column<int>(nullable: false),
                     HardSkillReward = table.Column<double>(nullable: false),
                     SoftSkillReward = table.Column<double>(nullable: false),
-                    BaseTimeNeeded = table.Column<DateTime>(nullable: false),
                     DocumentationId = table.Column<int>(nullable: false),
                     EventId = table.Column<int>(nullable: false)
                 },

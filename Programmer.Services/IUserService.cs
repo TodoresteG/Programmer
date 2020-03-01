@@ -2,6 +2,7 @@
 {
     using Programmer.Services.Dtos.Users;
     using System.Threading.Tasks;
+    using System;
 
     public interface IUserService
     {
@@ -10,5 +11,7 @@
         Task<int> UpdateUserEnergy(string userId);
 
         Task<UpdateUserAfterLectureDto> UpgradeUserAfterLecture(string userId);
+
+        DateTime GetTimeNeeded(string userId);
     }
 }

@@ -10,7 +10,7 @@ using Programmer.Data;
 namespace Programmer.Data.Migrations
 {
     [DbContext(typeof(ProgrammerDbContext))]
-    [Migration("20200228104828_InitialMigrate")]
+    [Migration("20200301081340_InitialMigrate")]
     partial class InitialMigrate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -132,9 +132,6 @@ namespace Programmer.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("BaseTimeNeeded")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("DocumentationId")
                         .HasColumnType("int");
 
@@ -168,9 +165,6 @@ namespace Programmer.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<TimeSpan>("BaseTimeNeeded")
-                        .HasColumnType("time");
 
                     b.Property<string>("HardSkillName")
                         .HasColumnType("nvarchar(max)");
@@ -253,9 +247,6 @@ namespace Programmer.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<TimeSpan>("BaseTimeNeeded")
-                        .HasColumnType("time");
 
                     b.Property<int>("CourseId")
                         .HasColumnType("int");

@@ -8,8 +8,6 @@
         [Key]
         public int Id { get; set; }
 
-        public TimeSpan BaseTimeNeeded { get; set; }
-
         public int RequiredEnergy { get; set; }
 
         public double RequiredHardSkill { get; set; }
