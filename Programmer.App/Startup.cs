@@ -15,6 +15,7 @@ using Programmer.Data;
 using Programmer.Models;
 using Programmer.Services;
 using Microsoft.AspNetCore.Mvc;
+using Programmer.Data.Seeding;
 
 namespace ProgrammerDemo
 {
@@ -55,6 +56,13 @@ namespace ProgrammerDemo
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+
+                using (var scope = app.ApplicationServices.CreateScope())
+                {
+                    var context = scope.ServiceProvider.GetService<ProgrammerDbContext>();
+                    var seeder = new ProgrammerDbContextSeeder(context);
+                    seeder.SeedDb();
+                }
             }
             else
             {
