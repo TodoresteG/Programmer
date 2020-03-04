@@ -3,6 +3,9 @@
     using Programmer.Data;
     using Programmer.Services.Dtos.Academy;
     using Programmer.Services.Dtos.Lectures;
+    using Programmer.Services.Dtos.Users;
+    using Programmer.Services.Extensions.Courses;
+    using System.Collections.Generic;
     using System.Linq;
 
     public class AcademyService : IAcademyService
@@ -14,6 +17,41 @@
             this.context = context;
         }
 
+        private IEnumerable<bool> CheckCoursesRequiredSkills(string userId)
+        {
+            var user = this.context.Users
+                .Where(u => u.Id == userId)
+                .Select(u => new UserStatsDto
+                {
+                    AbstractThinking = u.AbstractThinking,
+                    Algorithms = u.Algorithms,
+                    AspNetCore = u.AspNetCore,
+                    CSharp = u.CSharp,
+                    Bitcoins = u.Bitcoins,
+                    Creativity = u.Creativity,
+                    Coding = u.Coding,
+                    Css = u.Css,
+                    Curiosity = u.Curiosity,
+                    DatabasesAndSQL = u.DatabasesAndSQL,
+                    DataStructures = u.DataStructures,
+                    EfCore = u.EfCore,
+                    Energy = u.Energy,
+                    Html = u.Html,
+                    Level = u.Level,
+                    Money = u.Money,
+                    NodeJs = u.NodeJs,
+                    ProblemSolving = u.ProblemSolving,
+                    React = u.React,
+                    Testing = u.Testing,
+                    VanillaJavaScript = u.VanillaJavaScript,
+                    Xp = u.Xp,
+                })
+                .FirstOrDefault();
+
+            return CourseExtension.CheckCourses(user);
+        }
+
+        // TODO: Make this work with the method above
         public AcademyAllCoursesDto GetAllCourses(string userId)
         {
             var allCourses = this.context.Courses
