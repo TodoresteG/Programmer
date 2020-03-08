@@ -4,8 +4,9 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
     using Microsoft.AspNetCore.Identity;
+    using Programmer.Data.Common.Models;
 
-    public class ProgrammerUser : IdentityUser<string>
+    public class ProgrammerUser : IdentityUser<string>, IAuditInfo, IDeletableEntity
     {
         private const long XpForSecondLevel = 50;
         private const int MultiplierForXpForNextLevel = 2;
@@ -13,12 +14,21 @@
         public ProgrammerUser()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.Roles = new HashSet<ProgrammerRole>();
             this.Courses = new HashSet<UserCourse>();
             this.Events = new HashSet<Event>();
             this.Documentations = new HashSet<Documentation>();
             this.JobTasks = new HashSet<JobTask>();
             this.UserLectures = new HashSet<UserLecture>();
         }
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public DateTime? DeletedOn { get; set; }
 
         public long Xp { get; set; }
 

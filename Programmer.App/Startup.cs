@@ -62,6 +62,7 @@ namespace ProgrammerDemo
                     var context = scope.ServiceProvider.GetService<ProgrammerDbContext>();
                     var seeder = new ProgrammerDbContextSeeder(context);
                     seeder.SeedDb();
+                    context.Database.Migrate();
                 }
             }
             else

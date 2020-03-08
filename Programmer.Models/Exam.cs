@@ -1,13 +1,9 @@
 ﻿namespace Programmer.Models
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
+    using Programmer.Data.Common.Models;
 
-    public class Exam
+    public class Exam : BaseDeletableModel<int>
     {
-        [Key]
-        public int Id { get; set; }
-
         public int RequiredEnergy { get; set; }
 
         public double RequiredHardSkill { get; set; }

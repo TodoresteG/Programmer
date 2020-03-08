@@ -1,17 +1,15 @@
 ﻿namespace Programmer.Models
 {
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    using Programmer.Data.Common.Models;
 
-    public class Lecture
+    using System.Collections.Generic;
+
+    public class Lecture : BaseDeletableModel<int>
     {
         public Lecture()
         {
             this.UserLectures = new HashSet<UserLecture>();
         }
-
-        [Key]
-        public int Id { get; set; }
 
         public string Name { get; set; }
 

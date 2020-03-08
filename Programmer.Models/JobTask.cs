@@ -1,13 +1,10 @@
 ﻿namespace Programmer.Models
 {
+    using Programmer.Data.Common.Models;
     using System;
-    using System.ComponentModel.DataAnnotations;
 
-    public class JobTask
+    public class JobTask : BaseDeletableModel<int>
     {
-        [Key]
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         // TODO: Jobtasks Types in different table

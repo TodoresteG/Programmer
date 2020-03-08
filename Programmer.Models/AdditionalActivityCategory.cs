@@ -1,13 +1,9 @@
 ﻿namespace Programmer.Models
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
+    using Programmer.Data.Common.Models;
 
-    public class AdditionalActivityCategory
+    public class AdditionalActivityCategory : BaseDeletableModel<int>
     {
-        [Key]
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public int RequiredEnergy { get; set; }
