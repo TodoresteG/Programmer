@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using Programmer.App.ViewModels.Exams
+@model ExamDetailsViewModel
+
+<div class="container">
+    <section class="page-section">
+        <h1>Lecture Name: @Model.Name</h1>
+        <h5>Required Energy: @Model.RequiredEnergy</h5>
+        <h5>Time Needed: @Model.TimeNeeded</h5>
+        <h5>Required @Model.RequiredHardSkillName Skill: @Model.RequiredHardSkill</h5>
+
+        <h5>Coding Skill Reward: @Model.RequiredCodingSkill</h5>
+
+        <a asp-controller="Exams" asp-action="Take" asp-route-examId="@Model.Id" class="btn">Take Exam</a>
+    </section>
+</div>
+

@@ -8,6 +8,8 @@
 
         public double RequiredHardSkill { get; set; }
 
+        public string RequiredHardSkillName { get; set; }
+
         public double RequiredCodingSkill { get; set; }
 
         public int CourseId { get; set; }

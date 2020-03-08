@@ -80,20 +80,21 @@ VALUES (1, 'C# Fundamentals', 500, 5, 1, 1, 'CSharp', 'ProblemSolving', 10, GETD
 SET IDENTITY_INSERT [dbo].Courses OFF;
 SET IDENTITY_INSERT [dbo].Exams ON;
 
-INSERT INTO Exams (Id, RequiredEnergy, RequiredHardSkill, RequiredCodingSkill, CourseId, CreatedOn, IsDeleted)
-VALUES (1, 10, 36, 18, 1, GETDATE(), 0),
-		(2, 10, 86, 28, 2, GETDATE(), 0),
-		(3, 10, 158, 52, 3, GETDATE(), 0),
-		(4, 10, 110, 74, 4, GETDATE(), 0),
-		(5, 10, 120, 98, 5, GETDATE(), 0),
-		(6, 10, 108, 116, 6, GETDATE(), 0),
-		(7, 10, 108, 132, 7, GETDATE(), 0),
-		(8, 10, 140, 152, 8, GETDATE(), 0),
-		(9, 10, 136, 186, 9, GETDATE(), 0),
-		(10, 10, 130, 212, 10, GETDATE(), 0),
-		(11, 10, 120, 236, 11, GETDATE(), 0),
-		(12, 10, 112, 252, 12, GETDATE(), 0),
-		(13, 10, 112, 266, 13, GETDATE(), 0)
+INSERT INTO Exams (Id, RequiredEnergy, RequiredHardSkill, RequiredCodingSkill, CourseId, CreatedOn, IsDeleted, RequiredHardSkillName)
+VALUES (1, 10, 36, 18, 1, GETDATE(), 0, 'CSharp'),
+		(2, 10, 86, 28, 2, GETDATE(), 0, 'CSharp'),
+		(3, 10, 158, 52, 3, GETDATE(), 0, 'CSharp'),
+		(4, 10, 110, 74, 4, GETDATE(), 0, 'DataStructures'),
+		(5, 10, 120, 98, 5, GETDATE(), 0, 'Algorithms'),
+		(6, 10, 108, 116, 6, GETDATE(), 0, 'Testing'),
+		(7, 10, 108, 132, 7, GETDATE(), 0, 'DatabasesAndSQL'),
+		(8, 10, 140, 152, 8, GETDATE(), 0, 'EfCore'),
+		(9, 10, 136, 186, 9, GETDATE(), 0, 'VanillaJavaScript'),
+		(10, 10, 130, 212, 10, GETDATE(), 0, 'Html'),
+		(11, 10, 120, 236, 11, GETDATE(), 0, 'Css'),
+		(12, 10, 112, 252, 12, GETDATE(), 0, 'AspNetCore'),
+		(13, 10, 112, 266, 13, GETDATE(), 0, 'React'),
+		(14, 10, 112, 266, 14, GETDATE(), 0, 'NodeJs')
 		
 
 SET IDENTITY_INSERT [dbo].Exams OFF;
