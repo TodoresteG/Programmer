@@ -1,4 +1,4 @@
-﻿namespace Programmer.Models
+﻿namespace Programmer.Data.Models
 {
     public class UserCourse
     {

@@ -2,6 +2,7 @@
 {
     using Programmer.App.ViewModels.Academy;
     using Programmer.Data;
+    using Programmer.Services.Mapping;
     using Programmer.Services.Dtos;
     using Programmer.Services.Extensions.Courses;
     using System.Collections.Generic;
@@ -20,31 +21,7 @@
         {
             var user = this.context.Users
                 .Where(u => u.Id == userId)
-                .Select(u => new UserStatsDto
-                {
-                    AbstractThinking = u.AbstractThinking,
-                    Algorithms = u.Algorithms,
-                    AspNetCore = u.AspNetCore,
-                    CSharp = u.CSharp,
-                    Bitcoins = u.Bitcoins,
-                    Creativity = u.Creativity,
-                    Coding = u.Coding,
-                    Css = u.Css,
-                    Curiosity = u.Curiosity,
-                    DatabasesAndSQL = u.DatabasesAndSQL,
-                    DataStructures = u.DataStructures,
-                    EfCore = u.EfCore,
-                    Energy = u.Energy,
-                    Html = u.Html,
-                    Level = u.Level,
-                    Money = u.Money,
-                    NodeJs = u.NodeJs,
-                    ProblemSolving = u.ProblemSolving,
-                    React = u.React,
-                    Testing = u.Testing,
-                    VanillaJavaScript = u.VanillaJavaScript,
-                    Xp = u.Xp,
-                })
+                .To<UserStatsDto>()
                 .FirstOrDefault();
 
             return CourseExtension.CheckCourses(user);

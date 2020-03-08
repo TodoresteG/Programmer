@@ -1,4 +1,4 @@
-﻿namespace Programmer.Models
+﻿namespace Programmer.Data.Models
 {
     using Programmer.Data.Common.Models;
 
