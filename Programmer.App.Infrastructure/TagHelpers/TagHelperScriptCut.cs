@@ -1,9 +1,9 @@
-﻿namespace Programmer.App.TagHelpers
+﻿namespace Programmer.App.Infrastructure.TagHelpers
 {
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.AspNetCore.Razor.TagHelpers;
-    using Programmer.App.TagHelpers.Common;
+    using Programmer.App.Infrastructure.TagHelpers.Common;
     using System;
     using System.Collections.Generic;
     using System.Linq;

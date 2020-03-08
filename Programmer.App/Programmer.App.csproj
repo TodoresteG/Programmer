@@ -35,6 +35,7 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\Programmer.App.Infrastructure\Programmer.App.Infrastructure.csproj" />
     <ProjectReference Include="..\Programmer.App.ViewModels\Programmer.App.ViewModels.csproj" />
     <ProjectReference Include="..\Programmer.Data\Programmer.Data.csproj" />
     <ProjectReference Include="..\Programmer.Services.Mapping\Programmer.Services.Mapping.csproj" />

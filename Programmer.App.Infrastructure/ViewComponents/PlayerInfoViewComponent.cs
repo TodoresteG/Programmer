@@ -1,4 +1,4 @@
-﻿namespace Programmer.App.ViewComponents
+﻿namespace Programmer.App.Infrastructure.ViewComponents
 {
     using Microsoft.AspNetCore.Mvc;
     using Programmer.App.ViewModels.Users;

@@ -1,4 +1,4 @@
-﻿namespace Programmer.App.TagHelpers.Common
+﻿namespace Programmer.App.Infrastructure.TagHelpers.Common
 {
     using Microsoft.AspNetCore.Razor.TagHelpers;
     using System.Collections.Generic;
