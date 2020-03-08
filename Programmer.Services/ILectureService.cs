@@ -6,6 +6,6 @@
     {
         LectureDetailsViewModel GetLectureDetails(int id, string userId);
 
-        void WatchLecture(int id, string userId);
+        bool WatchLecture(int id, string userId);
     }
 }

@@ -15,33 +15,29 @@
             this.userService = userService;
         }
 
-        [HttpGet("UpdateUserEnergy")]
-        public async Task<ActionResult<int>> UpdateUserEnergy() 
+        [HttpGet("UpdateUserAfterLecture")]
+        public ActionResult<int> UpdateUserAfterLecture() 
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            int userEnergy = await this.userService.UpdateUserEnergy(userId);
+            int userEnergy = this.userService.UpdateUserEnergy(userId);
 
             return userEnergy;
         }
 
         [HttpGet("UpdateUserStats")]
-        public async Task<ActionResult<UpdateUserAfterLectureApiModel>> UpdateUserStats() 
+        public ActionResult<UpdateUserAfterLectureApiModel> UpdateUserStats() 
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var dto = await this.userService.UpgradeUserAfterLecture(userId);
-
-            var apiModel = new UpdateUserAfterLectureApiModel
-            {
-                HardSkill = dto.HardSkill,
-                HardSkillName = dto.HardSkillName,
-                SoftSkill = dto.SoftSkill,
-                SoftSkillName = dto.SoftSkillName,
-                Level = dto.Level,
-                Xp = dto.Xp,
-                XpForNextLevel = dto.XpForNextLevel,
-            };
+            var apiModel = this.userService.UpgradeUserAfterLecture(userId);
 
             return apiModel;
+        }
+
+        [HttpGet("UpdateUserAfterExam")]
+        public void UpdateUserAfterExam() 
+        {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            this.userService.UpdateUserAfterExam(userId);
         }
     }
 }

@@ -11,6 +11,8 @@
 
         public int Energy { get; set; }
 
+        public bool IsActive { get; set; }
+
         public decimal Money { get; set; }
 
         public int Bitcoins { get; set; }

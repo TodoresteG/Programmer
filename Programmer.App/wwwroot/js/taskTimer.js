@@ -36,6 +36,17 @@ function getTimeRemaining(endTime) {
     };
 }
 
+function getUpdatePath() {
+    const taskType = document.getElementById('task-type');
+
+    switch (taskType) {
+        case 'Lecture':
+            return '/api/users/UpdateUserAfterLecture';
+        case 'Exam':
+            return '/api/users/UpdateUserAfterExam';
+    }
+}
+
 function initializeClock(id, endTime) {
     let clock = document.getElementById(id);
     let hoursSpan = document.querySelector('.task-hours');
@@ -52,9 +63,11 @@ function initializeClock(id, endTime) {
         if (time.total <= 0) {
             clearInterval(timeInterval);
 
+            const apiPath = getUpdatePath(); 
+
             $.ajax({
                 method: 'GET',
-                url: '/api/users/UpdateUserStats'
+                url: apiPath
             })
                 .done(function success(data) {
                     const taskTimer = document.getElementById('task');

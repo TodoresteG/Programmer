@@ -42,6 +42,8 @@
 
         public bool IsActive { get; set; }
 
+        public string TypeOfTask { get; set; }
+
         [NotMapped]
         public long XpForNextLevel => this.Level == 1 ? XpForSecondLevel : this.Xp * MultiplierForXpForNextLevel;
 

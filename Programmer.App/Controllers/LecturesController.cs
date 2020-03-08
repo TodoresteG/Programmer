@@ -29,17 +29,12 @@
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            this.lectureService.WatchLecture(lectureId, userId);
+            var canWatch = this.lectureService.WatchLecture(lectureId, userId);
 
-            return this.Redirect("/Home/Office");
-        }
-
-        [Authorize]
-        public IActionResult UpdateUser() 
-        {
-            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-            // TODO: this.lectureService.UpdateUser(userId);
+            if (!canWatch)
+            {
+                return this.Content("Not enoigh energy");
+            }
 
             return this.Redirect("/Home/Office");
         }

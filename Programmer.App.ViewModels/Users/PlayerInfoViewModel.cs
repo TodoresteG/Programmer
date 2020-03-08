@@ -1,5 +1,6 @@
 ﻿namespace Programmer.App.ViewModels.Users
 {
+    using AutoMapper;
     using Programmer.Data.Models;
     using Programmer.Services.Mapping;
     using System;
@@ -21,5 +22,7 @@
         public DateTime? TimeRemaining { get; set; }
 
         public bool IsActive { get; set; }
+
+        public string TypeOfTask { get; set; }
     }
 }

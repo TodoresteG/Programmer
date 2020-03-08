@@ -13,8 +13,7 @@
         <h5>Required Energy: @Model.RequiredEnergy</h5>
         <h5>Time Needed: @Model.TimeNeeded</h5>
         <h5>Required @Model.RequiredHardSkillName Skill: @Model.RequiredHardSkill</h5>
-
-        <h5>Coding Skill Reward: @Model.RequiredCodingSkill</h5>
+        <h5>Required Coding Skill: @Model.RequiredCodingSkill</h5>
 
         <a asp-controller="Exams" asp-action="Take" asp-route-examId="@Model.Id" class="btn">Take Exam</a>
     </section>

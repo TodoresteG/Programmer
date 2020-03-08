@@ -38,22 +38,31 @@
                 .FirstOrDefault();
 
             var time = TimeSpan.FromSeconds(Math.Round(userXp / UserXpDivider * BaseSeconds)).TotalSeconds;
-            return DateTime.Now.AddSeconds(time);
+            return DateTime.UtcNow.AddSeconds(time);
         }
 
-        public async Task<int> UpdateUserEnergy(string userId)
+        public void UpdateUserAfterExam(string userId)
+        {
+            var user = this.context.Users.Find(userId);
+            ; // TODO: Check why setting an expire date in cookie gives Invalid date in taskTimer
+            // Finish Exam Functionallity
+            // EnergyTimer is also failing for some reason
+            // You can do it
+        }
+
+        public int UpdateUserEnergy(string userId)
         {
             var user = this.context.Users
                 .FirstOrDefault(u => u.Id == userId);
 
             user.Energy++;
-            await this.context.SaveChangesAsync();
+            this.context.SaveChanges();
 
             return user.Energy;
         }
 
         // TODO: Refactor this. Something is wrong here
-        public async Task<UpdateUserAfterLectureApiModel> UpgradeUserAfterLecture(string userId)
+        public UpdateUserAfterLectureApiModel UpgradeUserAfterLecture(string userId)
         {
             var user = this.context.Users.Find(userId);
             var userLecture = this.context.UserLectures
@@ -105,7 +114,7 @@
             userLecture.IsCompleted = true;
             userLecture.IsActive = false;
 
-            await this.context.SaveChangesAsync();
+            this.context.SaveChanges();
 
             dto.HardSkill = (double)userType.GetProperty(userLecture.Lecture.Course.HardSkillName).GetValue(user);
             dto.HardSkillName = userLecture.Lecture.Course.HardSkillName.ToLower();

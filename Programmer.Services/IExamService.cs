@@ -5,5 +5,7 @@
     public interface IExamService
     {
         ExamDetailsViewModel GetExamDetails(int id, string userId);
+
+        bool TakeExam(int examId, string userId);
     }
 }

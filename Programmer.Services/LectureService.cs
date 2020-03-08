@@ -29,7 +29,7 @@
             return lecture;
         }
 
-        public void WatchLecture(int id, string userId)
+        public bool WatchLecture(int id, string userId)
         {
             // TODO: bad queries - fix them
             var user = this.context.Users
@@ -40,15 +40,22 @@
                 .Include(ul => ul.Lecture.Course)
                 .FirstOrDefault(ul => ul.LectureId == id && ul.ProgrammerUserId == userId);
 
+            if (user.Energy < userLecture.Lecture.Course.RequiredEnergy)
+            {
+                return false;
+            }
+
             user.Energy -= userLecture.Lecture.Course.RequiredEnergy;
             user.IsActive = true;
             user.TaskTimeRemaining = this.userService.GetTimeNeeded(userId);
+            user.TypeOfTask = "Lecture";
 
             userLecture.IsActive = true;
 
             this.context.Users.Update(user);
             this.context.UserLectures.Update(userLecture);
             this.context.SaveChanges();
+            return true;
         }
     }
 }

@@ -27,5 +27,33 @@
 
             return exam;
         }
+
+        public bool TakeExam(int examId, string userId)
+        {
+            var exam = this.context.Exams
+                .Where(e => e.Id == examId)
+                .To<ExamDetailsViewModel>()
+                .FirstOrDefault();
+
+            var user = this.context.Users
+                .Where(u => u.Id == userId)
+                .FirstOrDefault();
+
+            var userHardSkill = (double)user.GetType().GetProperty(exam.RequiredHardSkillName).GetValue(user);
+
+            // TODO: Need to check that
+            //if (user.Energy < exam.RequiredEnergy || (userHardSkill < exam.RequiredHardSkill && user.Coding < exam.RequiredCodingSkill))
+            //{
+            //    return false;
+            //}
+
+            user.Energy -= exam.RequiredEnergy;
+            user.IsActive = true;
+            user.TaskTimeRemaining = this.userService.GetTimeNeeded(userId);
+            user.TypeOfTask = "Exam";
+
+            this.context.SaveChanges();
+            return true;
+        }
     }
 }

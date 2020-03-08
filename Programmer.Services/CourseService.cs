@@ -1,6 +1,7 @@
 ﻿namespace Programmer.Services
 {
     using Programmer.App.ViewModels.Courses;
+    using Programmer.App.ViewModels.Lectures;
     using Programmer.Data;
     using Programmer.Data.Models;
     using Programmer.Services.Mapping;
@@ -68,6 +69,11 @@
                 .Where(c => c.CourseId == id && c.ProgrammerUserId == userId)
                 .To<CourseDetailsViewModel>()
                 .FirstOrDefault();
+
+            course.Lectures = this.context.UserLectures
+                .Where(ul => ul.Lecture.CourseId == id && ul.ProgrammerUserId == userId)
+                .To<LectureCourseDetailsViewModel>()
+                .ToList();
 
             return course;
         }
