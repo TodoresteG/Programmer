@@ -1,12 +1,12 @@
 ﻿namespace Programmer.Services
 {
-    using Programmer.Services.Dtos.Courses;
+    using Programmer.App.ViewModels.Courses;
 
     public interface ICourseService
     {
-        CourseEnrollDetailsDto GetCourseEnrollDetails(int id, string userId);
+        CourseEnrollDetailsViewModel GetCourseEnrollDetails(int id, string userId);
 
-        CourseDetailsDto GetCourseDetails(int id, string userId);
+        CourseDetailsViewModel GetCourseDetails(int id, string userId);
 
         bool EnrollUserToCourse(int id, string userId);
 

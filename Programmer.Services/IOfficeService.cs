@@ -1,9 +1,9 @@
 ﻿namespace Programmer.Services
 {
-    using Dtos.Office;
+    using Programmer.App.ViewModels.Office;
 
     public interface IOfficeService
     {
-        UserDto GetUserForHome(string userId);
+        OfficeViewModel GetUserForHome(string userId);
     }
 }

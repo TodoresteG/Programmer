@@ -1,8 +1,6 @@
-﻿namespace Programmer.Services.Dtos.Users
+﻿namespace Programmer.App.ViewModels.Users
 {
-    using System;
-
-    public class UpdateUserAfterLectureDto
+    public class UpdateUserAfterLectureApiModel
     {
         public long Xp { get; set; }
 

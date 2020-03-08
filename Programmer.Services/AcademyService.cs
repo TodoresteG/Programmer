@@ -1,9 +1,8 @@
 ﻿namespace Programmer.Services
 {
+    using Programmer.App.ViewModels.Academy;
     using Programmer.Data;
-    using Programmer.Services.Dtos.Academy;
-    using Programmer.Services.Dtos.Lectures;
-    using Programmer.Services.Dtos.Users;
+    using Programmer.Services.Dtos;
     using Programmer.Services.Extensions.Courses;
     using System.Collections.Generic;
     using System.Linq;
@@ -52,10 +51,10 @@
         }
 
         // TODO: Make this work with the method above
-        public AcademyAllCoursesDto GetAllCourses(string userId)
+        public AcademyAllCoursesViewModel GetAllCourses(string userId)
         {
             var allCourses = this.context.Courses
-                .Select(c => new AcademyCourseDto
+                .Select(c => new AcademyCourseViewModel
                 {
                     Id = c.Id,
                     Name = c.Name,
@@ -66,7 +65,7 @@
 
             var enrolledCourses = this.context.UserCourses
                 .Where(u => u.IsEnrolled == true && u.ProgrammerUserId == userId)
-                .Select(c => new AcademyEnrolledCourseDto
+                .Select(c => new AcademyEnrolledCourseViewModel
                 {
                     Id = c.CourseId,
                     Name = c.Course.Name,
@@ -75,13 +74,13 @@
 
             var completedCourses = this.context.UserCourses
                 .Where(c => c.IsCompleted == true && c.ProgrammerUserId == userId)
-                .Select(c => new AcademyCompletedCourseDto
+                .Select(c => new AcademyCompletedCourseViewModel
                 {
                     Name = c.Course.Name,
                 })
                 .ToList();
 
-            var dto = new AcademyAllCoursesDto
+            var dto = new AcademyAllCoursesViewModel
             {
                 AllCourses = allCourses,
                 EnrolledCourses = enrolledCourses,

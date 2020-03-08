@@ -1,6 +1,6 @@
-﻿namespace Programmer.Services.Dtos.Academy
+﻿namespace Programmer.App.ViewModels.Academy
 {
-    public class AcademyCourseDto
+    public class AcademyCourseViewModel
     {
         public int Id { get; set; }
 

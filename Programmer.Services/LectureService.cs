@@ -2,8 +2,8 @@
 {
     using System.Linq;
     using Programmer.Data;
-    using Programmer.Services.Dtos.Lectures;
     using Microsoft.EntityFrameworkCore;
+    using Programmer.App.ViewModels.Lectures;
 
     public class LectureService : ILectureService
     {
@@ -16,12 +16,12 @@
             this.userService = userService;
         }
 
-        public LectureDetailsDto GetLectureDetails(int id, string userId)
+        public LectureDetailsViewModel GetLectureDetails(int id, string userId)
         {
             var lecture = this.context.Lectures
                 .Where(l => l.Id == id)
                 .Include(l => l.Course)
-                .Select(l => new LectureDetailsDto
+                .Select(l => new LectureDetailsViewModel
                 {
                     Id = l.Id,
                     Name = l.Name,

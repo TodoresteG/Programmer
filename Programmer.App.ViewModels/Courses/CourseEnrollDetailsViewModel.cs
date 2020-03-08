@@ -1,9 +1,9 @@
-﻿namespace Programmer.Services.Dtos.Courses
+﻿namespace Programmer.App.ViewModels.Courses
 {
-    using Programmer.Services.Dtos.Lectures;
+    using Programmer.App.ViewModels.Lectures;
     using System.Collections.Generic;
 
-    public class CourseEnrollDetailsDto
+    public class CourseEnrollDetailsViewModel
     {
         public int Id { get; set; }
 
@@ -23,6 +23,6 @@
 
         public decimal Price { get; set; }
 
-        public IList<LectureCourseEnrollDto> Lectures { get; set; }
+        public IList<LectureCourseEnrollViewModel> Lectures { get; set; }
     }
 }

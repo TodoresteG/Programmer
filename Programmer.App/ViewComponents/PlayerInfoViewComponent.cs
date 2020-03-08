@@ -1,7 +1,7 @@
 ﻿namespace Programmer.App.ViewComponents
 {
     using Microsoft.AspNetCore.Mvc;
-    using Programmer.App.Models.Users;
+    using Programmer.App.ViewModels.Users;
     using Programmer.Services;
     using System.Security.Claims;
 

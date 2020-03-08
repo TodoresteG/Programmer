@@ -1,9 +1,9 @@
 ﻿namespace Programmer.Services
 {
+    using Programmer.App.ViewModels.Courses;
+    using Programmer.App.ViewModels.Lectures;
     using Programmer.Data;
     using Programmer.Models;
-    using Programmer.Services.Dtos.Courses;
-    using Programmer.Services.Dtos.Lectures;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -62,16 +62,16 @@
             return true;
         }
 
-        public CourseDetailsDto GetCourseDetails(int id, string userId)
+        public CourseDetailsViewModel GetCourseDetails(int id, string userId)
         {
             var course = this.context.UserCourses
                 .Where(c => c.CourseId == id && c.ProgrammerUserId == userId)
-                .Select(c => new CourseDetailsDto
+                .Select(c => new CourseDetailsViewModel
                 {
                     Name = c.Course.Name,
                     Lectures = c.Course.Lectures.SelectMany(c => c.UserLectures)
                     .Where(ul => ul.ProgrammerUserId == userId)
-                    .Select(ul => new LectureCourseDetailsDto
+                    .Select(ul => new LectureCourseDetailsViewModel
                     {
                         Id = ul.LectureId,
                         Name = ul.Lecture.Name,
@@ -84,11 +84,11 @@
             return course;
         }
 
-        public CourseEnrollDetailsDto GetCourseEnrollDetails(int id, string userId)
+        public CourseEnrollDetailsViewModel GetCourseEnrollDetails(int id, string userId)
         {
             var course = this.context.Courses
                 .Where(c => c.Id == id)
-                .Select(c => new CourseEnrollDetailsDto
+                .Select(c => new CourseEnrollDetailsViewModel
                 {
                     Id = c.Id,
                     Name = c.Name,
@@ -98,7 +98,7 @@
                     CodingSkillReward = c.SoftSkillReward * c.Lectures.Count(),
                     SoftSkillReward = c.SoftSkillReward * c.Lectures.Count(),
                     SoftSkillName = c.SoftSkillName,
-                    Lectures = c.Lectures.Select(l => new LectureCourseEnrollDto
+                    Lectures = c.Lectures.Select(l => new LectureCourseEnrollViewModel
                     {
                         Name = l.Name,
                     }).ToList()

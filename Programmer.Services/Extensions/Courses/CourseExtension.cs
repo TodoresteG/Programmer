@@ -1,6 +1,6 @@
 ﻿namespace Programmer.Services.Extensions.Courses
 {
-    using Programmer.Services.Dtos.Users;
+    using Programmer.Services.Dtos;
     using System.Collections.Generic;
 
     using static CoursesRequiredSkill;

@@ -1,8 +1,8 @@
 ﻿namespace Programmer.Services
 {
     using Data;
+    using Programmer.App.ViewModels.Office;
     using Programmer.Models;
-    using Programmer.Services.Dtos.Office;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
@@ -16,9 +16,9 @@
             this.context = context;
         }
 
-        public UserDto GetUserForHome(string userId)
+        public OfficeViewModel GetUserForHome(string userId)
         {
-            UserDto userDto = new UserDto();
+            var userDto = new OfficeViewModel();
 
             ProgrammerUser userFromDb = this.context.Users.SingleOrDefault(u => u.Id == userId);
 

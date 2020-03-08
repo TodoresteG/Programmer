@@ -1,12 +1,10 @@
 ﻿namespace Programmer.Services
 {
-    using Dtos.Lectures;
-    using System;
-    using System.Threading.Tasks;
+    using Programmer.App.ViewModels.Lectures;
 
     public interface ILectureService
     {
-        LectureDetailsDto GetLectureDetails(int id, string userId);
+        LectureDetailsViewModel GetLectureDetails(int id, string userId);
 
         void WatchLecture(int id, string userId);
     }

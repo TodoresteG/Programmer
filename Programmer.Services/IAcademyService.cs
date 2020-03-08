@@ -1,9 +1,9 @@
 ﻿namespace Programmer.Services
 {
-    using Programmer.Services.Dtos.Academy;
+    using Programmer.App.ViewModels.Academy;
 
     public interface IAcademyService
     {
-        AcademyAllCoursesDto GetAllCourses(string userId);
+        AcademyAllCoursesViewModel GetAllCourses(string userId);
     }
 }

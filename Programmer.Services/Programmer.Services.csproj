@@ -5,8 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Programmer.App.ViewModels\Programmer.App.ViewModels.csproj" />
     <ProjectReference Include="..\Programmer.Data\Programmer.Data.csproj" />
-    <ProjectReference Include="..\Programmer.Models\Programmer.Models.csproj" />
+    <ProjectReference Include="..\Programmer.Models\Programmer.Data.Models.csproj" />
     <ProjectReference Include="..\Programmer.Services.Mapping\Programmer.Services.Mapping.csproj" />
   </ItemGroup>
 

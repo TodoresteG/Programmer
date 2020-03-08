@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Programmer.App.Models.Office;
-using Programmer.Services;
-using Programmer.Models;
-using System.Security.Claims;
-
-namespace ProgrammerDemo.Controllers
+﻿namespace ProgrammerDemo.Controllers
 {
+    using System.Diagnostics;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+    using Programmer.App.ViewModels.Office;
+    using Programmer.Services;
+    using Programmer.App.ViewModels;
+    using System.Security.Claims;
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

@@ -94,6 +94,7 @@ namespace Programmer.App.Areas.Identity.Pages.Account
                     IsActive = false,
                     Level = 1,
                     Money = 1000,
+                    CreatedOn = DateTime.UtcNow,
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);

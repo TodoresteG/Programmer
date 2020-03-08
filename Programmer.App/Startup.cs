@@ -16,6 +16,7 @@ using Programmer.Models;
 using Programmer.Services;
 using Microsoft.AspNetCore.Mvc;
 using Programmer.Data.Seeding;
+using Microsoft.AspNetCore.Http;
 
 namespace ProgrammerDemo
 {
@@ -36,12 +37,27 @@ namespace ProgrammerDemo
             services.AddDbContext<ProgrammerDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ProgrammerUser, ProgrammerRole>()
-                .AddEntityFrameworkStores<ProgrammerDbContext>();
+            services.AddIdentity<ProgrammerUser, ProgrammerRole>(options => 
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 6;
+            })
+            .AddEntityFrameworkStores<ProgrammerDbContext>();
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
 
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+            services.AddSingleton(this.Configuration);
+            // TODO: Add email sender 
             services.AddTransient<IOfficeService, OfficeService>();
             services.AddTransient<IAcademyService, AcademyService>();
             services.AddTransient<ICourseService, CourseService>();
@@ -71,23 +87,22 @@ namespace ProgrammerDemo
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCookiePolicy();
 
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseMvcWithDefaultRoute();
-
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllerRoute(
-            //        name: "default",
-            //        pattern: "{controller=Home}/{action=Index}/{id?}");
-            //    endpoints.MapRazorPages();
-            //});
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
+            });
         }
     }
 }

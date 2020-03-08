@@ -1,7 +1,5 @@
-﻿namespace Programmer.Services.Dtos.Users
+﻿namespace Programmer.Services.Dtos
 {
-    // TODO: maybe you have to make for every course stats different class
-
     public class UserStatsDto
     {
         public long Xp { get; set; }

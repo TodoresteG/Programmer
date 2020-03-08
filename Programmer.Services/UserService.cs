@@ -1,9 +1,8 @@
 ﻿namespace Programmer.Services
 {
     using Microsoft.EntityFrameworkCore;
+    using Programmer.App.ViewModels.Users;
     using Programmer.Data;
-    using Programmer.Models;
-    using Programmer.Services.Dtos.Users;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
@@ -20,11 +19,11 @@
             this.context = context;
         }
 
-        public UserInfoDto GetPlayerInfo(string userId)
+        public PlayerInfoViewModel GetPlayerInfo(string userId)
         {
             var user = this.context.Users
                 .Where(u => u.Id == userId)
-                .Select(u => new UserInfoDto
+                .Select(u => new PlayerInfoViewModel
                 {
                     Bitcoins = u.Bitcoins,
                     Energy = u.Energy,
@@ -63,7 +62,7 @@
         }
 
         // TODO: Refactor this. Something is wrong here
-        public async Task<UpdateUserAfterLectureDto> UpgradeUserAfterLecture(string userId)
+        public async Task<UpdateUserAfterLectureApiModel> UpgradeUserAfterLecture(string userId)
         {
             var user = this.context.Users.Find(userId);
             var userLecture = this.context.UserLectures
@@ -80,7 +79,7 @@
                 .GetProperty(userLecture.Lecture.Course.HardSkillName)
                 .SetValue(user, hardSkill + userLecture.Lecture.Course.HardSkillReward);
 
-            var dto = new UpdateUserAfterLectureDto();
+            var dto = new UpdateUserAfterLectureApiModel();
 
             if (userLecture.Lecture.Name.Contains("Exercise"))
             {
