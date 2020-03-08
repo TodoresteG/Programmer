@@ -3,6 +3,7 @@
     using Microsoft.EntityFrameworkCore;
     using Programmer.App.ViewModels.Users;
     using Programmer.Data;
+    using Programmer.Services.Mapping;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
@@ -23,17 +24,7 @@
         {
             var user = this.context.Users
                 .Where(u => u.Id == userId)
-                .Select(u => new PlayerInfoViewModel
-                {
-                    Bitcoins = u.Bitcoins,
-                    Energy = u.Energy,
-                    IsActive = u.IsActive,
-                    Level = u.Level,
-                    Money = u.Money,
-                    TimeRemaining = u.TaskTimeRemaining,
-                    Xp = u.Xp,
-                    XpForNextLevel = u.XpForNextLevel,
-                })
+                .To<PlayerInfoViewModel>()
                 .FirstOrDefault();
 
             return user;

@@ -1,9 +1,11 @@
 ﻿namespace Programmer.App.ViewModels.Courses
 {
     using Programmer.App.ViewModels.Lectures;
+    using Programmer.Data.Models;
+    using Programmer.Services.Mapping;
     using System.Collections.Generic;
 
-    public class CourseEnrollDetailsViewModel
+    public class CourseEnrollDetailsViewModel : IMapFrom<Course>
     {
         public int Id { get; set; }
 

@@ -18,19 +18,7 @@
         public IViewComponentResult Invoke()
         {
             var userId = this.UserClaimsPrincipal.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var dto = this.userService.GetPlayerInfo(userId);
-
-            var viewModel = new PlayerInfoViewModel
-            {
-                Bitcoins = dto.Bitcoins,
-                Energy = dto.Energy,
-                IsActive = dto.IsActive,
-                Level = dto.Level,
-                Money = dto.Money,
-                TimeRemaining = dto.TimeRemaining,
-                Xp = dto.Xp,
-                XpForNextLevel = dto.XpForNextLevel,
-            };
+            var viewModel = this.userService.GetPlayerInfo(userId);
 
             return this.View(viewModel);
         }

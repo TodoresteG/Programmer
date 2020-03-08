@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Programmer.Models;
+using Programmer.Data.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace Programmer.App.Areas.Identity.Pages.Account

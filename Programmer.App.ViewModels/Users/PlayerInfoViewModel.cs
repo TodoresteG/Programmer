@@ -1,8 +1,10 @@
 ﻿namespace Programmer.App.ViewModels.Users
 {
+    using Programmer.Data.Models;
+    using Programmer.Services.Mapping;
     using System;
 
-    public class PlayerInfoViewModel
+    public class PlayerInfoViewModel : IMapFrom<ProgrammerUser>
     {
         public int Level { get; set; }
 

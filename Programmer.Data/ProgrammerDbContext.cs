@@ -2,7 +2,7 @@
 {
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
-    using Programmer.Models;
+    using Programmer.Data.Models;
     using System.Reflection;
 
     public class ProgrammerDbContext : IdentityDbContext<ProgrammerUser, ProgrammerRole, string>

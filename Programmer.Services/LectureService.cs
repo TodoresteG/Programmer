@@ -4,6 +4,7 @@
     using Programmer.Data;
     using Microsoft.EntityFrameworkCore;
     using Programmer.App.ViewModels.Lectures;
+    using Programmer.Services.Mapping;
 
     public class LectureService : ILectureService
     {
@@ -20,20 +21,10 @@
         {
             var lecture = this.context.Lectures
                 .Where(l => l.Id == id)
-                .Include(l => l.Course)
-                .Select(l => new LectureDetailsViewModel
-                {
-                    Id = l.Id,
-                    Name = l.Name,
-                    HardSkillReward = l.Course.HardSkillReward,
-                    HardSkillName = l.Course.HardSkillName,
-                    SoftSkillReward = l.Course.SoftSkillReward,
-                    SoftSkillName = l.Course.SoftSkillName,
-                    RequiredEnergy = l.Course.RequiredEnergy,
-                    TimeNeeded = this.userService.GetTimeNeeded(userId).ToString(),
-                    XpReward = l.Course.XpReward,
-                })
+                .To<LectureDetailsViewModel>()
                 .FirstOrDefault();
+
+            lecture.TimeNeeded = this.userService.GetTimeNeeded(userId).ToString();
 
             return lecture;
         }

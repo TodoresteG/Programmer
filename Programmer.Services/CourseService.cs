@@ -1,9 +1,9 @@
 ﻿namespace Programmer.Services
 {
     using Programmer.App.ViewModels.Courses;
-    using Programmer.App.ViewModels.Lectures;
     using Programmer.Data;
-    using Programmer.Models;
+    using Programmer.Data.Models;
+    using Programmer.Services.Mapping;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -66,19 +66,7 @@
         {
             var course = this.context.UserCourses
                 .Where(c => c.CourseId == id && c.ProgrammerUserId == userId)
-                .Select(c => new CourseDetailsViewModel
-                {
-                    Name = c.Course.Name,
-                    Lectures = c.Course.Lectures.SelectMany(c => c.UserLectures)
-                    .Where(ul => ul.ProgrammerUserId == userId)
-                    .Select(ul => new LectureCourseDetailsViewModel
-                    {
-                        Id = ul.LectureId,
-                        Name = ul.Lecture.Name,
-                        IsCompleted = ul.IsCompleted,
-                    })
-                    .ToList()
-                })
+                .To<CourseDetailsViewModel>()
                 .FirstOrDefault();
 
             return course;
@@ -88,21 +76,7 @@
         {
             var course = this.context.Courses
                 .Where(c => c.Id == id)
-                .Select(c => new CourseEnrollDetailsViewModel
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Price = c.Price,
-                    HardSkillReward = c.HardSkillReward * c.Lectures.Count() * 2,
-                    HardSkillName = c.HardSkillName,
-                    CodingSkillReward = c.SoftSkillReward * c.Lectures.Count(),
-                    SoftSkillReward = c.SoftSkillReward * c.Lectures.Count(),
-                    SoftSkillName = c.SoftSkillName,
-                    Lectures = c.Lectures.Select(l => new LectureCourseEnrollViewModel
-                    {
-                        Name = l.Name,
-                    }).ToList()
-                })
+                .To<CourseEnrollDetailsViewModel>()
                 .FirstOrDefault();
 
             course.IsPreviousCompleted = this.IsPreviousCompleted(id, userId);

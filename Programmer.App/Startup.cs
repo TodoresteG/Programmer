@@ -12,11 +12,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Programmer.Data;
-using Programmer.Models;
+using Programmer.Data.Models;
 using Programmer.Services;
 using Microsoft.AspNetCore.Mvc;
 using Programmer.Data.Seeding;
 using Microsoft.AspNetCore.Http;
+using Programmer.Services.Mapping;
+using Programmer.App.ViewModels;
+using System.Reflection;
 
 namespace ProgrammerDemo
 {
@@ -68,6 +71,8 @@ namespace ProgrammerDemo
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
