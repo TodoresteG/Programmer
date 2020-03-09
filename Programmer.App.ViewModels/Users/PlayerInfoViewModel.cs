@@ -19,7 +19,7 @@
 
         public int Energy { get; set; }
 
-        public DateTime? TimeRemaining { get; set; }
+        public DateTime? TaskTimeRemaining { get; set; }
 
         public bool IsActive { get; set; }
 

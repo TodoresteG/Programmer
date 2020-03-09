@@ -37,7 +37,7 @@ function getTimeRemaining(endTime) {
 }
 
 function getUpdatePath() {
-    const taskType = document.getElementById('task-type');
+    const taskType = document.getElementById('task-type').textContent;
 
     switch (taskType) {
         case 'Lecture':
@@ -87,6 +87,6 @@ function initializeClock(id, endTime) {
         }
     }
 
-    updateClock();
+    //updateClock();
     let timeInterval = setInterval(updateClock, 1000);
 }

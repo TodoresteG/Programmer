@@ -15,8 +15,8 @@
             this.userService = userService;
         }
 
-        [HttpGet("UpdateUserAfterLecture")]
-        public ActionResult<int> UpdateUserAfterLecture() 
+        [HttpGet("UpdateUserEnergy")]
+        public ActionResult<int> UpdateUserEnergy() 
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             int userEnergy = this.userService.UpdateUserEnergy(userId);
@@ -24,8 +24,8 @@
             return userEnergy;
         }
 
-        [HttpGet("UpdateUserStats")]
-        public ActionResult<UpdateUserAfterLectureApiModel> UpdateUserStats() 
+        [HttpGet("UpdateUserAfterLecture")]
+        public ActionResult<UpdateUserAfterLectureApiModel> UpdateUserAfterLecture() 
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var apiModel = this.userService.UpgradeUserAfterLecture(userId);
@@ -34,10 +34,10 @@
         }
 
         [HttpGet("UpdateUserAfterExam")]
-        public void UpdateUserAfterExam() 
+        public ActionResult<UpdateUserAfterLectureApiModel> UpdateUserAfterExam() 
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            this.userService.UpdateUserAfterExam(userId);
+            return this.userService.UpdateUserAfterExam(userId);
         }
     }
 }

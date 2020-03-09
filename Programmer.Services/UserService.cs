@@ -38,16 +38,32 @@
                 .FirstOrDefault();
 
             var time = TimeSpan.FromSeconds(Math.Round(userXp / UserXpDivider * BaseSeconds)).TotalSeconds;
-            return DateTime.UtcNow.AddSeconds(time);
+            return DateTime.Now.AddSeconds(time);
         }
 
-        public void UpdateUserAfterExam(string userId)
+        public UpdateUserAfterLectureApiModel UpdateUserAfterExam(string userId)
         {
             var user = this.context.Users.Find(userId);
-            ; // TODO: Check why setting an expire date in cookie gives Invalid date in taskTimer
-            // Finish Exam Functionallity
-            // EnergyTimer is also failing for some reason
-            // You can do it
+
+            var course = this.context.UserCourses
+                .Where(c => c.ProgrammerUserId == userId)
+                .FirstOrDefault();
+
+            user.TypeOfTask = null;
+            user.IsActive = false;
+            user.TaskTimeRemaining = null;
+
+            course.IsCompleted = true;
+            course.IsEnrolled = false;
+
+            this.context.SaveChanges();
+
+            var apiModel = this.context.Users
+                .Where(u => u.Id == userId)
+                .To<UpdateUserAfterLectureApiModel>()
+                .FirstOrDefault();
+
+            return apiModel;
         }
 
         public int UpdateUserEnergy(string userId)
@@ -110,6 +126,7 @@
 
             user.TaskTimeRemaining = null;
             user.IsActive = false;
+            user.TypeOfTask = null;
 
             userLecture.IsCompleted = true;
             userLecture.IsActive = false;

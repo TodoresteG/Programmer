@@ -60,7 +60,10 @@ namespace ProgrammerDemo
             services.AddRazorPages();
 
             services.AddSingleton(this.Configuration);
-            // TODO: Add email sender 
+            // TODO: Add email sender
+            // TODO: Courses enrolments after complete course
+            // TODO: Energy timer is not reseting after 2 minutes
+            // TODO: You have to start working more seriusly
             services.AddTransient<IOfficeService, OfficeService>();
             services.AddTransient<IAcademyService, AcademyService>();
             services.AddTransient<ICourseService, CourseService>();

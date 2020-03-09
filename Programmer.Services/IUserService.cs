@@ -12,7 +12,7 @@
 
         UpdateUserAfterLectureApiModel UpgradeUserAfterLecture(string userId);
 
-        void UpdateUserAfterExam(string userId);
+        UpdateUserAfterLectureApiModel UpdateUserAfterExam(string userId);
 
         DateTime GetTimeNeeded(string userId);
     }

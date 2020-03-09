@@ -25,11 +25,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Data\" />
-  </ItemGroup>
-
-
-  <ItemGroup>
     <None Include="wwwroot\seed\ProgrammerDBSeeder.sql" />
   </ItemGroup>
 
