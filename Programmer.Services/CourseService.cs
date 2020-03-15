@@ -98,6 +98,14 @@
                 .FirstOrDefault();
         }
 
+        public bool IsCompleted(int id, string userId) 
+        {
+            return this.context.UserCourses
+                .Where(c => c.CourseId == id && c.ProgrammerUserId == userId)
+                .Select(c => c.IsCompleted)
+                .FirstOrDefault();
+        }
+
         public bool IsPreviousCompleted(int id, string userId) 
         {
             if (id == 1)

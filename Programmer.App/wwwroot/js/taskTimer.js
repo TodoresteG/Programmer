@@ -4,11 +4,11 @@ if (isActive === 'true') {
     const taskTimer = document.getElementById('task');
     taskTimer.parentElement.className = 'nav-item mx-0 mx-lg-1 visible';
 
-    let endTime = cookieCheck();
-    initializeClock('task-timer', endTime);
+    let endTime = taskCookieCheck();
+    initializeTaskClock('task-timer', endTime);
 }
 
-function cookieCheck() {
+function taskCookieCheck() {
     let endTime;
 
     if (document.cookie && document.cookie.match('taskClock')) {
@@ -22,7 +22,7 @@ function cookieCheck() {
     return endTime;
 }
 
-function getTimeRemaining(endTime) {
+function getTaskTimeRemaining(endTime) {
     let time = Date.parse(endTime) - Date.parse(new Date());
     let seconds = Math.floor((time / 1000) % 60);
     let minutes = Math.floor((time / 1000 / 60) % 60);
@@ -47,14 +47,14 @@ function getUpdatePath() {
     }
 }
 
-function initializeClock(id, endTime) {
+function initializeTaskClock(id, endTime) {
     let clock = document.getElementById(id);
     let hoursSpan = document.querySelector('.task-hours');
     let minutesSpan = document.querySelector('.task-minutes');
     let secondsSpan = document.querySelector('.task-seconds');
 
-    function updateClock() {
-        let time = getTimeRemaining(endTime);
+    function updateTaskClock() {
+        let time = getTaskTimeRemaining(endTime);
 
         hoursSpan.textContent = ('0' + time.hours).slice(-2) + 'h:';
         minutesSpan.textContent = ('0' + time.minutes).slice(-2) + 'm:';
@@ -63,13 +63,13 @@ function initializeClock(id, endTime) {
         if (time.total <= 0) {
             clearInterval(timeInterval);
 
-            const apiPath = getUpdatePath(); 
+            const apiPath = getUpdatePath();
 
-            $.ajax({
-                method: 'GET',
-                url: apiPath
-            })
-                .done(function success(data) {
+            fetch(apiPath)
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
                     const taskTimer = document.getElementById('task');
                     taskTimer.parentElement.className = 'invisible';
 
@@ -79,14 +79,9 @@ function initializeClock(id, endTime) {
                     document.getElementById(data.hardSkillName).textContent = data.hardSkill;
                     document.getElementById(data.softSkillName).textContent = data.softSkill;
                 })
-                .fail(function fail(data, status) {
-                    alert('I have task failed you');
-                    console.log(data);
-                    console.log(status);
-                });
         }
     }
 
     //updateClock();
-    let timeInterval = setInterval(updateClock, 1000);
+    let timeInterval = setInterval(updateTaskClock, 1000);
 }

@@ -12,6 +12,8 @@
 
         bool IsEnrolled(int id, string userId);
 
+        bool IsCompleted(int id, string userId);
+
         bool IsPreviousCompleted(int id, string userId);
     }
 }

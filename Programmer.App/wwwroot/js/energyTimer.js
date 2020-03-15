@@ -1,16 +1,16 @@
 ﻿let currentEnergy = parseInt(document.getElementById('energy').textContent);
-let endTime = cookieCheck();
+let endTime = energyCookieCheck();
 
-initializeClock('energy-timer', endTime);
+initializeEnergyClock('energy-timer', endTime);
 
-function cookieCheck() {
+function energyCookieCheck() {
     let endTime;
 
     if (document.cookie && document.cookie.match('energyClock')) {
         endTime = document.cookie.match(/energyClock=([^;]+)/)[1];
     }
     else {
-        endTime = addMinutes(new Date(), 2).toUTCString();
+        endTime = addMinutes(new Date(), 0.3).toUTCString();
         document.cookie = 'energyClock=' + endTime + '; path=/; expires=' + endTime + ';';
     }
 
@@ -18,15 +18,15 @@ function cookieCheck() {
 }
 
 function resetTimer() {
-    let endTime = cookieCheck();
-    initializeClock('energy-timer', endTime);
+    let endTime = energyCookieCheck();
+    initializeEnergyClock('energy-timer', endTime);
 }
 
 function addMinutes(date, minutes) {
     return new Date(date.getTime() + minutes * 60000);
 }
 
-function getTimeRemaining(endTime) {
+function getEnergyTimeRemaining(endTime) {
     let time = Date.parse(endTime) - Date.parse(new Date());
     let seconds = Math.floor((time / 1000) % 60);
     let minutes = Math.floor((time / 1000 / 60) % 60);
@@ -40,18 +40,17 @@ function getTimeRemaining(endTime) {
     };
 }
 
-function initializeClock(id, endTime) {
+function initializeEnergyClock(id, endTime) {
     let minutesSpan = document.querySelector('.energy-minutes');
     let secondsSpan = document.querySelector('.energy-seconds');
 
-    function updateClock() {
-        let time = getTimeRemaining(endTime);
+    function updateEnergyClock() {
+        let time = getEnergyTimeRemaining(endTime);
 
         minutesSpan.textContent = ('0' + time.minutes).slice(-2) + 'm:';
         secondsSpan.textContent = ('0' + time.seconds).slice(-2) + 's';
 
         if (currentEnergy === 30) {
-            document.cookie.match('energyClock') = null;
             document.getElementById('energy-timer').innerHTML = '';
             return;
         }
@@ -59,23 +58,18 @@ function initializeClock(id, endTime) {
         if (time.total <= 0) {
             clearInterval(timeInterval);
 
-            $.ajax({
-                method: 'GET',
-                url: '/api/users/UpdateUserEnergy'
-            })
-                .done(function success(data) {
-                    $('#energy').text(data);
+            fetch('/api/users/UpdateUserEnergy')
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    document.getElementById('energy').textContent = data;
                     currentEnergy++;
                     resetTimer();
                 })
-                .fail(function fail(data, status) {
-                    alert('I have energy failed you');
-                    console.log(data);
-                    console.log(status);
-                });
         }
     }
 
-    updateClock();
-    let timeInterval = setInterval(updateClock, 1000);
+    updateEnergyClock();
+    let timeInterval = setInterval(updateEnergyClock, 1000);
 }

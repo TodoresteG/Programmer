@@ -31,9 +31,16 @@
         // TODO: Make this work with the method above
         public AcademyAllCoursesViewModel GetAllCourses(string userId)
         {
+            // really bad query can't figure other way. It works for now
             var allCourses = this.context.Courses
-                .Include(c => c.Users)
-                .To<AcademyCourseViewModel>()
+                .Select(c => new AcademyCourseViewModel 
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Price = c.Price,
+                    IsCompleted = c.Users.Where(uc => uc.ProgrammerUserId == userId).Select(uc => uc.IsCompleted).FirstOrDefault(),
+                    IsEnrolled = c.Users.Where(uc => uc.ProgrammerUserId == userId).Select(uc => uc.IsEnrolled).FirstOrDefault(),
+                })
                 .ToList();
 
             var enrolledCourses = this.context.UserCourses

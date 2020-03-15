@@ -20,7 +20,7 @@
             <h3>All Courses</h3>
             @foreach (var course in Model.AllCourses)
             {
-                @if (course.IsEnrolled)
+                @if (course.IsEnrolled || course.IsCompleted)
                 {
                     <p><a class="btn disabled" asp-controller="Courses" asp-action="Enroll" asp-route-id="@course.Id">@course.Name - @course.Price $</a></p>
                 }

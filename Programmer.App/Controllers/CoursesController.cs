@@ -20,8 +20,9 @@
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             var isEnrolled = this.courseService.IsEnrolled(id, userId);
+            var isCompleted = this.courseService.IsCompleted(id, userId);
 
-            if (isEnrolled)
+            if (isEnrolled || isCompleted)
             {
                 return this.Redirect("/Academy/Index");
             }

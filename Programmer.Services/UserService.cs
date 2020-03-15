@@ -3,6 +3,7 @@
     using Microsoft.EntityFrameworkCore;
     using Programmer.App.ViewModels.Users;
     using Programmer.Data;
+    using Programmer.Data.Models;
     using Programmer.Services.Mapping;
     using System;
     using System.Linq;
@@ -140,6 +141,12 @@
             dto.XpForNextLevel = user.XpForNextLevel;
 
             return dto;
+        }
+
+        private void LevelUp(ProgrammerUser user) 
+        {
+            user.Level++;
+
         }
     }
 }
