@@ -61,7 +61,7 @@ namespace ProgrammerDemo
 
             services.AddSingleton(this.Configuration);
             // TODO: Add email sender
-            // TODO: Courses enrolments after complete course
+            // TODO: Make unlocking courses not after every one but after certain criteria
             // TODO: You have to start working more seriusly
             services.AddTransient<IOfficeService, OfficeService>();
             services.AddTransient<IAcademyService, AcademyService>();

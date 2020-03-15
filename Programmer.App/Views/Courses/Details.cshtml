@@ -36,9 +36,18 @@
                 }
             }
 
-            <li class="col-12 text-center">
-                <a asp-controller="Exams" asp-action="Details" asp-route-examId="@Model.Exam.Id">@Model.Exam.Name</a>
-            </li>
+            @if (Model.Lectures.Last().IsCompleted)
+            {
+                <li class="col-12 text-center">
+                    <a asp-controller="Exams" asp-action="Details" asp-route-examId="@Model.Exam.Id">@Model.Exam.Name</a>
+                </li>
+            }
+            else
+            {
+                <li class="col-12 text-center">
+                    <a class="btn disabled" asp-controller="Exams" asp-action="Details" asp-route-examId="@Model.Exam.Id">@Model.Exam.Name</a>
+                </li>
+            }
         </ul>
 
         <a class="btn bg-primary" asp-controller="Academy" asp-action="Index">Back to all courses</a>

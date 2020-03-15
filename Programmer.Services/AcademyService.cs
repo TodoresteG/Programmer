@@ -7,7 +7,6 @@
     using Programmer.Services.Extensions.Courses;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.EntityFrameworkCore;
 
     public class AcademyService : IAcademyService
     {
@@ -22,7 +21,32 @@
         {
             var user = this.context.Users
                 .Where(u => u.Id == userId)
-                .To<UserStatsDto>()
+                .Select(u => new UserStatsDto
+                {
+                    AbstractThinking = u.AbstractThinking,
+                    Algorithms = u.Algorithms,
+                    AspNetCore = u.AspNetCore,
+                    Bitcoins = u.Bitcoins,
+                    Coding = u.Coding,
+                    Creativity = u.Creativity,
+                    CSharp = u.CSharp,
+                    Css = u.Css,
+                    Curiosity = u.Curiosity,
+                    DatabasesAndSQL = u.DatabasesAndSQL,
+                    DataStructures = u.DataStructures,
+                    EfCore = u.EfCore,
+                    Energy = u.Energy,
+                    Html = u.Html,
+                    IsActive = u.IsActive,
+                    Level = u.Level,
+                    Money = u.Money,
+                    NodeJs = u.NodeJs,
+                    ProblemSolving = u.ProblemSolving,
+                    React = u.React,
+                    Testing = u.Testing,
+                    VanillaJavaScript = u.VanillaJavaScript,
+                    Xp = u.Xp,
+                })
                 .FirstOrDefault();
 
             return CourseExtension.CheckCourses(user);
@@ -31,6 +55,8 @@
         // TODO: Make this work with the method above
         public AcademyAllCoursesViewModel GetAllCourses(string userId)
         {
+            var test = this.CheckCoursesRequiredSkills(userId);
+
             // really bad query can't figure other way. It works for now
             var allCourses = this.context.Courses
                 .Select(c => new AcademyCourseViewModel 

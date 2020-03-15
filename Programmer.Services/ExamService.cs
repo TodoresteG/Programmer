@@ -41,11 +41,10 @@
 
             var userHardSkill = (double)user.GetType().GetProperty(exam.RequiredHardSkillName).GetValue(user);
 
-            // TODO: Need to check that
-            //if (user.Energy < exam.RequiredEnergy || (userHardSkill < exam.RequiredHardSkill && user.Coding < exam.RequiredCodingSkill))
-            //{
-            //    return false;
-            //}
+            if (user.Energy < exam.RequiredEnergy || (userHardSkill < exam.RequiredHardSkill && user.Coding < exam.RequiredCodingSkill))
+            {
+                return false;
+            }
 
             user.Energy -= exam.RequiredEnergy;
             user.IsActive = true;

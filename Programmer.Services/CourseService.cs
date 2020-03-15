@@ -113,7 +113,7 @@
                 return true;
             }
 
-            id =- 1;
+            id -= 1;
 
             return this.context.UserCourses
                 .Where(c => c.CourseId == id && c.ProgrammerUserId == userId)
