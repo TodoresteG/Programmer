@@ -40,7 +40,7 @@ namespace ProgrammerDemo
             services.AddDbContext<ProgrammerDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ProgrammerUser, ProgrammerRole>(options => 
+            services.AddIdentity<ProgrammerUser, ProgrammerRole>(options =>
             {
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
@@ -85,8 +85,8 @@ namespace ProgrammerDemo
                 {
                     var context = scope.ServiceProvider.GetService<ProgrammerDbContext>();
                     var seeder = new ProgrammerDbContextSeeder(context);
+
                     seeder.SeedDb();
-                    context.Database.Migrate();
                 }
             }
             else

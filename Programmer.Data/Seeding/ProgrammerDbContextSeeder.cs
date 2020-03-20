@@ -15,12 +15,7 @@
 
         public void SeedDb()
         {
-            var isCreated = this.context.Database.EnsureCreated();
-
-            if (!isCreated)
-            {
-                return;
-            }
+            this.context.Database.Migrate();
 
             var path = "wwwroot/seed/ProgrammerDBSeeder.sql";
             var seedingScript = File.ReadAllText(path);

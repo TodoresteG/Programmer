@@ -8,17 +8,19 @@
     {
         public Documentation()
         {
-            this.Categories = new HashSet<AdditionalActivityCategory>();
+            this.UserDocumentations = new HashSet<UserDocumentation>();
         }
 
         public string Name { get; set; }
 
         public int XpReward { get; set; }
 
-        public string ProgrammerUserId { get; set; }
+        public int RequiredEnergy { get; set; }
 
-        public ProgrammerUser Player { get; set; }
+        public double HardSkillReward { get; set; }
 
-        public ICollection<AdditionalActivityCategory> Categories { get; set; }
+        public string HardSkillName { get; set; }
+
+        public ICollection<UserDocumentation> UserDocumentations { get; set; }
     }
 }

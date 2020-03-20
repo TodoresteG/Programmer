@@ -8,23 +8,23 @@ SET IDENTITY_INSERT JobTasks OFF;
 SET IDENTITY_INSERT Lectures OFF;
 SET IDENTITY_INSERT RequiredSkills OFF;
 
---SET IDENTITY_INSERT [dbo].Documentations ON;
+SET IDENTITY_INSERT [dbo].Documentations ON;
 
---INSERT INTO Documentations (Id, [Name], XpReward)
---VALUES (1, 'Data Structures - Documentation', 8),
---		(2, 'Algorithms - Documentation', 8),
---		(3, 'OOP - Documentation', 8),
---		(4, 'Testing - Documentation', 8),
---		(5, 'C# Tips And Tricks - Documentation', 8),
---		(6, 'Databases - Documentation', 8),
---		(7, 'EF Core - Documentation', 8),
---		(8, 'JS - Documentation', 8),
---		(9, 'Front-End Tricks - Documentation', 8),
---		(10, 'Asp.Net Core - Documentation', 8),
---		(11, 'ReactJs - Documentation', 8),
---		(12, 'Nodejs - Documentation', 8)
+INSERT INTO Documentations (Id, [Name], XpReward, RequiredEnergy, HardSkillReward, HardSkillName, CreatedOn, IsDeleted)
+VALUES (1, 'C# Tips And Tricks', 8, 5, 1.5, 'CSharp', GETDATE(), 0),
+		(2, 'DataStructures Deep Dive', 10, 6, 1.4, 'DataStructures', GETDATE(), 0),
+		(3, 'Algorithms', 12, 7, 1.6, 'Algorithms', GETDATE(), 0),
+		(4, 'C# Testing', 6, 4, 1, 'Testing', GETDATE(), 0),
+		(5, 'Data Analitics', 7, 5, 1.4, 'DatabasesAndSQL', GETDATE(), 0),
+		(6, 'EfCore Optimization', 5, 4, 0.8, 'EfCore', GETDATE(), 0),
+		(7, 'JS Things', 9, 6, 1.4, 'VanillaJavaScript', GETDATE(), 0),
+		(8, 'HTML5 Updates', 3, 2, 0.5, 'Html', GETDATE(), 0),
+		(9, 'CSS3 Advaned Techniques', 6, 4, 1, 'Css', GETDATE(), 0),
+		(10, 'Asp.Net Core Best Pracitses And Architechture', 8, 5, 1.2, 'AspNetCore', GETDATE(), 0),
+		(11, 'React Native with Redux', 5, 5, 1.7, 'React', GETDATE(), 0),
+		(12, 'NodeJs And ExpressJs - The Clean way', 6, 5, 1.1, 'NodeJs', GETDATE(), 0)
 
---SET IDENTITY_INSERT [dbo].Documentations OFF;
+SET IDENTITY_INSERT [dbo].Documentations OFF;
 --SET IDENTITY_INSERT  [dbo].[Events] ON;
 
 --INSERT INTO [Events] (Id, [Name], XpReward)
@@ -42,23 +42,7 @@ SET IDENTITY_INSERT RequiredSkills OFF;
 --		(12, 'Nodejs - Event', 8)
 
 --SET IDENTITY_INSERT [dbo].[Events] OFF;
---SET IDENTITY_INSERT [dbo].AdditionalActivityCategories ON;
 
---INSERT INTO AdditionalActivityCategories (Id, [Name], HardSkillReward, SoftSkillReward, RequiredEnergy, DocumentationId, EventId)
---VALUES (1, 'Data Structures', 1, 2, 3, 1, 1),
---		(2, 'Algorithms', 1, 2, 3, 2, 2),
---		(3, 'OOP', 1, 2, 3, 3, 3),
---		(4, 'Testing', 1, 2, 3, 4, 4),
---		(5, 'C# Tips And Tricks', 1, 2, 3, 5, 5),
---		(6, 'Databases', 1, 2, 3, 6, 6),
---		(7, 'EF Core', 1, 2, 3, 7, 7),
---		(8, 'JS', 1, 2, 3, 8, 8),
---		(9, 'Front-End Tricks', 1, 2, 3, 9, 9),
---		(10, 'Asp.Net Core', 1, 2, 3, 10, 10),
---		(11, 'ReactJs', 1, 2, 3, 11, 11),
---		(12, 'Nodejs', 1, 2, 3, 12, 12)
-
---SET IDENTITY_INSERT [dbo].AdditionalActivityCategories OFF;
 SET IDENTITY_INSERT [dbo].Courses ON;
 
 INSERT INTO Courses (Id, [Name], Price, RequiredEnergy, HardSkillReward, SoftSkillReward, HardSkillName, SoftSkillName, XpReward, CreatedOn, IsDeleted)

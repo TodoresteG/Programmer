@@ -17,9 +17,9 @@
             this.Roles = new HashSet<ProgrammerRole>();
             this.Courses = new HashSet<UserCourse>();
             this.Events = new HashSet<Event>();
-            this.Documentations = new HashSet<Documentation>();
             this.JobTasks = new HashSet<JobTask>();
             this.UserLectures = new HashSet<UserLecture>();
+            this.UserDocumentations = new HashSet<UserDocumentation>();
         }
 
         public DateTime CreatedOn { get; set; }
@@ -91,10 +91,10 @@
 
         public ICollection<Event> Events { get; set; }
 
-        public ICollection<Documentation> Documentations { get; set; }
-
         public ICollection<JobTask> JobTasks { get; set; }
 
         public ICollection<ProgrammerRole> Roles { get; set; }
+
+        public ICollection<UserDocumentation> UserDocumentations { get; set; }
     }
 }

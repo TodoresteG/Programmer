@@ -12,8 +12,6 @@
         {
         }
 
-        public DbSet<AdditionalActivityCategory> AdditionalActivityCategories { get; set; }
-
         public DbSet<Course> Courses { get; set; }
 
         public DbSet<Documentation> Documentations { get; set; }
@@ -29,6 +27,8 @@
         public DbSet<RequiredSkill> RequiredSkills { get; set; }
 
         public DbSet<UserCourse> UserCourses { get; set; }
+
+        public DbSet<UserDocumentation> UserDocumentations { get; set; }
 
         public DbSet<UserLecture> UserLectures { get; set; }
 
