@@ -30,6 +30,7 @@
 <body id="page-top">
 
     <!-- Navigation -->
+    @*TODO: Use tag helpers here*@
     <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
         @if (url.PathAndQuery == "/" && !this.User.Identity.IsAuthenticated)
         {
@@ -97,7 +98,7 @@
                             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/Academy/Index">Academy</a>
                         </li>
                         <li class="nav-item mx-0 mx-lg-1">
-                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#googling">Googling</a>
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/Documentations/Index">Googling</a>
                         </li>
                         <li class="nav-item mx-0 mx-lg-1">
                             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#events">Events</a>

@@ -2,7 +2,7 @@
 {
     using Microsoft.EntityFrameworkCore;
     using System.IO;
-    using System;
+    using System.Linq;
 
     public class ProgrammerDbContextSeeder
     {
@@ -15,6 +15,11 @@
 
         public void SeedDb()
         {
+            if (this.context.Documentations.Any())
+            {
+                return;
+            }
+
             this.context.Database.Migrate();
 
             var path = "wwwroot/seed/ProgrammerDBSeeder.sql";

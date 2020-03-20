@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using Programmer.App.ViewModels.Documentations
+@model AllDocumentationsIndexViewModel
+
+<h1>Documentations</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Required Energy</th>
+            <th>Xp Reward</th>
+            <th>Name of Skill</th>
+            <th>Skill Reward</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var doc in Model.Documentations)
+        {
+            <tr>
+                <td>@doc.Name</td>
+                <td>@doc.RequiredEnergy</td>
+                <td>@doc.XpReward</td>
+                <td>@doc.HardSkillName</td>
+                <td>@doc.HardSkillReward</td>
+                <td><a class="btn btn-success" asp-controller="Documentations" asp-action="Read" asp-route-id="@doc.Id">Read</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
