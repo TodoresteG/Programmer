@@ -42,7 +42,44 @@
             return DateTime.Now.AddSeconds(time);
         }
 
-        public UpdateUserAfterLectureApiModel UpdateUserAfterExam(string userId)
+        public UpdateUserAfterActivityApiModel UpdateUserAfterDocumentation(string userId)
+        {
+            var user = this.context.Users.Find(userId);
+
+            var documentation = this.context.UserDocumentations
+                .Include(ud => ud.Documentation)
+                .Where(ud => ud.ProgrammerId == userId)
+                .FirstOrDefault();
+
+            user.TypeOfTask = null;
+            user.IsActive = false;
+            user.TaskTimeRemaining = null;
+            user.Xp += documentation.Documentation.XpReward;
+
+            var userType = user.GetType();
+
+            var hardSkill = (double)userType
+                 .GetProperty(documentation.Documentation.HardSkillName)
+                 .GetValue(user);
+
+            userType
+                .GetProperty(documentation.Documentation.HardSkillName)
+                .SetValue(user, hardSkill + documentation.Documentation.HardSkillReward);
+
+            this.context.UserDocumentations.Remove(documentation);
+            this.context.SaveChanges();
+
+            var apiModel = this.context.Users
+                .Where(u => u.Id == userId)
+                .To<UpdateUserAfterActivityApiModel>()
+                .FirstOrDefault();
+
+            apiModel.HardSkillName = documentation.Documentation.HardSkillName.ToLower();
+            apiModel.HardSkill = (double)userType.GetProperty(documentation.Documentation.HardSkillName).GetValue(user);
+            return apiModel;
+        }
+
+        public UpdateUserAfterActivityApiModel UpdateUserAfterExam(string userId)
         {
             var user = this.context.Users.Find(userId);
 
@@ -61,7 +98,7 @@
 
             var apiModel = this.context.Users
                 .Where(u => u.Id == userId)
-                .To<UpdateUserAfterLectureApiModel>()
+                .To<UpdateUserAfterActivityApiModel>()
                 .FirstOrDefault();
 
             return apiModel;
@@ -79,7 +116,7 @@
         }
 
         // TODO: Refactor this. Something is wrong here
-        public UpdateUserAfterLectureApiModel UpgradeUserAfterLecture(string userId)
+        public UpdateUserAfterActivityApiModel UpgradeUserAfterLecture(string userId)
         {
             var user = this.context.Users.Find(userId);
             var userLecture = this.context.UserLectures
@@ -96,7 +133,7 @@
                 .GetProperty(userLecture.Lecture.Course.HardSkillName)
                 .SetValue(user, hardSkill + userLecture.Lecture.Course.HardSkillReward);
 
-            var dto = new UpdateUserAfterLectureApiModel();
+            var dto = new UpdateUserAfterActivityApiModel();
 
             if (userLecture.Lecture.Name.Contains("Exercise"))
             {
@@ -120,10 +157,7 @@
 
             user.Xp += userLecture.Lecture.Course.XpReward;
 
-            if (user.Xp >= user.XpForNextLevel)
-            {
-                user.Level++;
-            }
+            this.LevelUp(user);
 
             user.TaskTimeRemaining = null;
             user.IsActive = false;
@@ -143,10 +177,12 @@
             return dto;
         }
 
-        private void LevelUp(ProgrammerUser user) 
+        private void LevelUp(ProgrammerUser user)
         {
-            user.Level++;
-
+            if (user.Xp >= user.XpForNextLevel)
+            {
+                user.Level++;
+            }
         }
     }
 }

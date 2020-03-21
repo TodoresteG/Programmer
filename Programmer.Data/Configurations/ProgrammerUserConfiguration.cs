@@ -30,8 +30,7 @@
             player
                 .HasMany(p => p.UserDocumentations)
                 .WithOne(d => d.User)
-                .HasForeignKey(d => d.ProgrammerId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(d => d.ProgrammerId);
 
             //player
             //    .HasMany(p => p.OfficeEquipment)

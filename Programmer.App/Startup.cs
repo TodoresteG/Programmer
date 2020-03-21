@@ -61,8 +61,10 @@ namespace ProgrammerDemo
 
             services.AddSingleton(this.Configuration);
             // TODO: Add email sender
-            // TODO: Make unlocking courses not after every one but after certain criteria
-            // TODO: You have to start working more seriusly
+            // TODO: Make Dtos for users in services when you pull them from db. It's a big table it will be good not to pull the whole table
+            // TODO: Handle exceptions in proper way. Not returning text
+            // TODO: UserService is all spaghetti. You need to fix it 
+            // TODO: Reading documentation that gives skill which is not unlocked does not working
             services.AddTransient<IOfficeService, OfficeService>();
             services.AddTransient<IAcademyService, AcademyService>();
             services.AddTransient<ICourseService, CourseService>();

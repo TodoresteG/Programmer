@@ -50,7 +50,7 @@ function initializeEnergyClock(id, endTime) {
         minutesSpan.textContent = ('0' + time.minutes).slice(-2) + 'm:';
         secondsSpan.textContent = ('0' + time.seconds).slice(-2) + 's';
 
-        if (currentEnergy === 30) {
+        if (currentEnergy >= 30) {
             document.getElementById('energy-timer').innerHTML = '';
             return;
         }

@@ -10,9 +10,11 @@
 
         int UpdateUserEnergy(string userId);
 
-        UpdateUserAfterLectureApiModel UpgradeUserAfterLecture(string userId);
+        UpdateUserAfterActivityApiModel UpgradeUserAfterLecture(string userId);
 
-        UpdateUserAfterLectureApiModel UpdateUserAfterExam(string userId);
+        UpdateUserAfterActivityApiModel UpdateUserAfterExam(string userId);
+
+        UpdateUserAfterActivityApiModel UpdateUserAfterDocumentation(string userId);
 
         DateTime GetTimeNeeded(string userId);
     }

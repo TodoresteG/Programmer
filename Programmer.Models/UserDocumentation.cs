@@ -5,7 +5,7 @@ using Programmer.Data.Common.Models;
 
 namespace Programmer.Data.Models
 {
-    public class UserDocumentation : IAuditInfo, IDeletableEntity
+    public class UserDocumentation
     {
         public string ProgrammerId { get; set; }
 
@@ -14,13 +14,5 @@ namespace Programmer.Data.Models
         public int DocumentationId { get; set; }
 
         public Documentation Documentation { get; set; }
-
-        public DateTime CreatedOn { get; set; }
-
-        public DateTime? ModifiedOn { get; set; }
-
-        public bool IsDeleted { get; set; }
-
-        public DateTime? DeletedOn { get; set; }
     }
 }

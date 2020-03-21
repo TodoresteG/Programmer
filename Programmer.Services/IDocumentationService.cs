@@ -5,5 +5,7 @@
     public interface IDocumentationService
     {
         AllDocumentationsIndexViewModel GetDocumentationsForIndex();
+
+        bool ReadDocumentation(int documentationId, string userId);
     }
 }

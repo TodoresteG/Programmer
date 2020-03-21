@@ -44,6 +44,8 @@ function getUpdatePath() {
             return '/api/users/UpdateUserAfterLecture';
         case 'Exam':
             return '/api/users/UpdateUserAfterExam';
+        case 'Documentation':
+            return '/api/users/UpdateUserAfterDocumentation'
     }
 }
 

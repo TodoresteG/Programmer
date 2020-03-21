@@ -1,6 +1,10 @@
 ﻿namespace Programmer.App.ViewModels.Users
 {
-    public class UpdateUserAfterLectureApiModel
+    using AutoMapper;
+    using Programmer.Data.Models;
+    using Programmer.Services.Mapping;
+
+    public class UpdateUserAfterActivityApiModel : IMapFrom<ProgrammerUser>
     {
         public long Xp { get; set; }
 

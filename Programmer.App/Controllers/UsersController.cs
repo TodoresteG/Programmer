@@ -25,7 +25,7 @@
         }
 
         [HttpGet("UpdateUserAfterLecture")]
-        public ActionResult<UpdateUserAfterLectureApiModel> UpdateUserAfterLecture() 
+        public ActionResult<UpdateUserAfterActivityApiModel> UpdateUserAfterLecture() 
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var apiModel = this.userService.UpgradeUserAfterLecture(userId);
@@ -34,10 +34,17 @@
         }
 
         [HttpGet("UpdateUserAfterExam")]
-        public ActionResult<UpdateUserAfterLectureApiModel> UpdateUserAfterExam() 
+        public ActionResult<UpdateUserAfterActivityApiModel> UpdateUserAfterExam() 
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             return this.userService.UpdateUserAfterExam(userId);
+        }
+
+        [HttpGet("UpdateUserAfterDocumentation")]
+        public ActionResult<UpdateUserAfterActivityApiModel> UpdateUserAfterDocumentation() 
+        {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return this.userService.UpdateUserAfterDocumentation(userId);
         }
     }
 }
