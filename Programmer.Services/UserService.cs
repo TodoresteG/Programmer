@@ -109,6 +109,11 @@
             var user = this.context.Users
                 .FirstOrDefault(u => u.Id == userId);
 
+            if (user.Energy >= 30)
+            {
+                return 30;
+            }
+
             user.Energy++;
             this.context.SaveChanges();
 
