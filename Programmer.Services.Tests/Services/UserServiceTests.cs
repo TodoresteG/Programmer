@@ -1,8 +1,11 @@
 ﻿namespace Programmer.Services.Tests.Services
 {
     using System;
+    using System.Linq;
+    using System.Reflection;
     using Programmer.App.ViewModels.Users;
     using Programmer.Data.Models;
+    using Programmer.Services.Mapping;
     using Programmer.Services.Tests.Fakes;
     using Xunit;
 
@@ -69,23 +72,128 @@
             }
         }
 
-        //[Fact]
-        //public void GetPlayerInfoShouldReuturnPlayerInfoViewModel()
-        //{
-        //    const string databaseName = "Player-Info";
+        [Fact]
+        public void GetPlayerInfoShouldReuturnPlayerInfoViewModel()
+        {
+            const string databaseName = "Player-Info";
+            AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
 
-        //    var db = new FakeProgrammerDbContext(databaseName);
-        //    var fakeUser = this.GetFakeUser();
+            var db = new FakeProgrammerDbContext(databaseName);
+            var fakeUser = this.GetFakeUser();
 
-        //    db.Add(fakeUser);
+            db.Add(fakeUser);
 
-        //    using (db.Data)
-        //    {
-        //        var userService = new UserService(db.Data);
-        //        var result = userService.GetPlayerInfo(FakeUserId);
-        //        Assert.IsType<PlayerInfoViewModel>(result);
-        //    }
-        //}
+            using (db.Data)
+            {
+                var userService = new UserService(db.Data);
+                var result = userService.GetPlayerInfo(FakeUserId);
+                Assert.IsType<PlayerInfoViewModel>(result);
+            }
+        }
+
+        [Fact]
+        public void GetPlayerInfoShouldReturnNullWhithInvalidUserId() 
+        {
+            const string databaseName = "Player-Info-Fail";
+            AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
+
+            var db = new FakeProgrammerDbContext(databaseName);
+            var fakeUser = this.GetFakeUser();
+
+            db.Add(fakeUser);
+
+            using (db.Data)
+            {
+                var userService = new UserService(db.Data);
+                var result = userService.GetPlayerInfo("failId");
+                Assert.Null(result);
+            }
+        }
+
+        [Fact]
+        public void UpdateUserAfterDocumentationShouldUpdateUserCorrectly() 
+        {
+            const string databaseName = "Update-User-After-Documentation-Update-User";
+            AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
+
+            var db = new FakeProgrammerDbContext(databaseName);
+            var fakeUser = this.GetFakeUser();
+            fakeUser.Xp = 1;
+            fakeUser.CSharp = 1;
+            var fakeDocumentation = this.GetFakeDocumentation();
+            var fakeUserDocumentation = this.GetFakeUserDocumentation();
+
+            db.Add(fakeUser);
+            db.Add(fakeDocumentation);
+            db.Add(fakeUserDocumentation);
+
+            using (db.Data)
+            {
+                var userService = new UserService(db.Data);
+                var result = userService.UpdateUserAfterDocumentation(fakeUser.Id);
+
+                Assert.Equal(11, fakeUser.Xp);
+                Assert.Equal(6, fakeUser.CSharp);
+                Assert.Null(fakeUser.TypeOfTask);
+                Assert.Null(fakeUser.TaskTimeRemaining);
+                Assert.False(fakeUser.IsActive);
+            }
+        }
+
+        [Fact]
+        public void UpdateUserAfterDocumentationShouldRemoveUserDocumentationRecord() 
+        {
+            const string databaseName = "Update-User-After-Documentation-Remove-UserDocumentation-Record";
+            AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
+
+            var db = new FakeProgrammerDbContext(databaseName);
+            var fakeUser = this.GetFakeUser();
+            fakeUser.Xp = 1;
+            fakeUser.CSharp = 1;
+            var fakeDocumentation = this.GetFakeDocumentation();
+            var fakeUserDocumentation = this.GetFakeUserDocumentation();
+
+            db.Add(fakeUser);
+            db.Add(fakeDocumentation);
+            db.Add(fakeUserDocumentation);
+
+            using (db.Data)
+            {
+                var userService = new UserService(db.Data);
+                var result = userService.UpdateUserAfterDocumentation(fakeUser.Id);
+
+                Assert.Equal(0, db.Data.UserDocumentations.Count());
+            }
+        }
+
+        [Fact]
+        public void UpdateUserAfterDocumentationShouldReturnApiViewModel() 
+        {
+            const string databaseName = "Update-User-After-Documentation-Api-View-Model";
+            AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
+
+            var db = new FakeProgrammerDbContext(databaseName);
+            var fakeUser = this.GetFakeUser();
+            fakeUser.Xp = 1;
+            fakeUser.CSharp = 1;
+            var fakeDocumentation = this.GetFakeDocumentation();
+            var fakeUserDocumentation = this.GetFakeUserDocumentation();
+
+            db.Add(fakeUser);
+            db.Add(fakeDocumentation);
+            db.Add(fakeUserDocumentation);
+
+            using (db.Data)
+            {
+                var userService = new UserService(db.Data);
+                var result = userService.UpdateUserAfterDocumentation(fakeUser.Id);
+
+                Assert.IsType<UpdateUserAfterActivityApiModel>(result);
+                Assert.Equal(6, result.HardSkill);
+                Assert.Equal("csharp", result.HardSkillName);
+                Assert.Equal(11, result.Xp);
+            }
+        }
 
         private ProgrammerUser GetFakeUser()
         {
@@ -94,12 +202,28 @@
                 Id = FakeUserId,
                 UserName = FakeUserUserName,
                 Email = FakeUserEmail,
-                Level = 1,
-                Xp = 1,
-                Money = 1,
-                Bitcoins = 1,
-                Energy = 1,
-                IsActive = false,
+            };
+        }
+
+        private Documentation GetFakeDocumentation() 
+        {
+            return new Documentation
+            {
+                Id  = 1,
+                Name = "C# Tips And Tricks",
+                XpReward = 10,
+                RequiredEnergy = 7,
+                HardSkillName = "CSharp",
+                HardSkillReward = 5,
+            };
+        }
+
+        private UserDocumentation GetFakeUserDocumentation() 
+        {
+            return new UserDocumentation
+            {
+                DocumentationId = 1,
+                ProgrammerId = "testId",
             };
         }
     }
