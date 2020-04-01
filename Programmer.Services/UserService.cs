@@ -121,7 +121,7 @@
         }
 
         // TODO: Refactor this. Something is wrong here
-        public UpdateUserAfterActivityApiModel UpgradeUserAfterLecture(string userId)
+        public UpdateUserAfterActivityApiModel UpdateUserAfterLecture(string userId)
         {
             var user = this.context.Users.Find(userId);
             var userLecture = this.context.UserLectures

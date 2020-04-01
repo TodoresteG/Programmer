@@ -29,7 +29,7 @@
             {
                 var userService = new UserService(db.Data);
                 var expctedResult = 11;
-                var result = userService.UpdateUserEnergy(FakeUserId);
+                var result = userService.UpdateUserEnergy(fakeUser.Id);
                 Assert.Equal(expctedResult, result);
             }
         }
@@ -48,7 +48,7 @@
             {
                 var userService = new UserService(db.Data);
                 var expctedResult = 30;
-                var result = userService.UpdateUserEnergy(FakeUserId);
+                var result = userService.UpdateUserEnergy(fakeUser.Id);
                 Assert.Equal(expctedResult, result);
             }
         }
@@ -66,7 +66,7 @@
             using (db.Data)
             {
                 var userService = new UserService(db.Data);
-                var result = userService.GetTimeNeeded(FakeUserId).Second;
+                var result = userService.GetTimeNeeded(fakeUser.Id).Second;
                 var expectedResult = DateTime.Now.AddSeconds(30).Second;
                 Assert.Equal(expectedResult, result);
             }
@@ -86,13 +86,13 @@
             using (db.Data)
             {
                 var userService = new UserService(db.Data);
-                var result = userService.GetPlayerInfo(FakeUserId);
+                var result = userService.GetPlayerInfo(fakeUser.Id);
                 Assert.IsType<PlayerInfoViewModel>(result);
             }
         }
 
         [Fact]
-        public void GetPlayerInfoShouldReturnNullWhithInvalidUserId() 
+        public void GetPlayerInfoShouldReturnNullWhithInvalidUserId()
         {
             const string databaseName = "Player-Info-Fail";
             AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
@@ -111,7 +111,7 @@
         }
 
         [Fact]
-        public void UpdateUserAfterDocumentationShouldUpdateUserCorrectly() 
+        public void UpdateUserAfterDocumentationShouldUpdateUserCorrectly()
         {
             const string databaseName = "Update-User-After-Documentation-Update-User";
             AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
@@ -141,7 +141,7 @@
         }
 
         [Fact]
-        public void UpdateUserAfterDocumentationShouldRemoveUserDocumentationRecord() 
+        public void UpdateUserAfterDocumentationShouldRemoveUserDocumentationRecord()
         {
             const string databaseName = "Update-User-After-Documentation-Remove-UserDocumentation-Record";
             AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
@@ -167,7 +167,7 @@
         }
 
         [Fact]
-        public void UpdateUserAfterDocumentationShouldReturnApiViewModel() 
+        public void UpdateUserAfterDocumentationShouldReturnApiViewModel()
         {
             const string databaseName = "Update-User-After-Documentation-Api-View-Model";
             AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
@@ -195,6 +195,181 @@
             }
         }
 
+        [Fact]
+        public void UpdateUserAfterExamShouldUpdateUserCorrectly()
+        {
+            const string databaseName = "Update-User-After-Exam-Update-User";
+            AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
+
+            var db = new FakeProgrammerDbContext(databaseName);
+            var fakeUser = this.GetFakeUser();
+            var fakeUserCourse = this.GetFakeUserCourse();
+
+            db.Add(fakeUser);
+            db.Add(fakeUserCourse);
+
+            using (db.Data)
+            {
+                var userService = new UserService(db.Data);
+                var result = userService.UpdateUserAfterExam(fakeUser.Id);
+
+                Assert.Null(fakeUser.TypeOfTask);
+                Assert.Null(fakeUser.TaskTimeRemaining);
+                Assert.False(fakeUser.IsActive);
+            }
+        }
+
+        [Fact]
+        public void UpdateUserAfterExamShouldUpdateUserCourseCorrectly()
+        {
+            const string databaseName = "Update-User-After-Exam-Update-UserCourse";
+            AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
+
+            var db = new FakeProgrammerDbContext(databaseName);
+            var fakeUser = this.GetFakeUser();
+            var fakeUserCourse = this.GetFakeUserCourse();
+
+            db.Add(fakeUser);
+            db.Add(fakeUserCourse);
+
+            using (db.Data)
+            {
+                var userService = new UserService(db.Data);
+                var result = userService.UpdateUserAfterExam(fakeUser.Id);
+
+                Assert.True(fakeUserCourse.IsCompleted);
+                Assert.False(fakeUserCourse.IsEnrolled);
+            }
+        }
+
+        [Fact]
+        public void UpdateUserAfterExamShouldReturnApiViewModel()
+        {
+            const string databaseName = "Update-User-After-Exam-Api-View-Model";
+            AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
+
+            var db = new FakeProgrammerDbContext(databaseName);
+            var fakeUser = this.GetFakeUser();
+            var fakeUserCourse = this.GetFakeUserCourse();
+
+            db.Add(fakeUser);
+            db.Add(fakeUserCourse);
+
+            using (db.Data)
+            {
+                var userService = new UserService(db.Data);
+                var result = userService.UpdateUserAfterExam(fakeUser.Id);
+
+                Assert.IsType<UpdateUserAfterActivityApiModel>(result);
+            }
+        }
+
+        [Fact]
+        public void UpdateUserAfterLectureShouldUpdateUserCorrectly()
+        {
+            const string databaseName = "Update-User-After-Lecture-Update-User";
+            AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
+
+            var db = new FakeProgrammerDbContext(databaseName);
+            var fakeUser = this.GetFakeUser();
+            fakeUser.Xp = 1;
+            fakeUser.CSharp = 1;
+            fakeUser.ProblemSolving = 1;
+            var fakeCourse = this.GetFakeCourse();
+            var fakeUserCourse = this.GetFakeUserCourse();
+            var fakeLecture = this.GetFakeLecture();
+            var fakeUserLecture = this.GetFakeUserLecture();
+
+            db.Add(fakeUser);
+            db.Add(fakeCourse);
+            db.Add(fakeUserCourse);
+            db.Add(fakeLecture);
+            db.Add(fakeUserLecture);
+
+            using (db.Data)
+            {
+                var userService = new UserService(db.Data);
+                var result = userService.UpdateUserAfterLecture(fakeUser.Id);
+
+                Assert.Equal(11, fakeUser.Xp);
+                Assert.Equal(6, fakeUser.CSharp);
+                Assert.Equal(4, fakeUser.ProblemSolving);
+                Assert.Null(fakeUser.TaskTimeRemaining);
+                Assert.Null(fakeUser.TypeOfTask);
+                Assert.False(fakeUser.IsActive);
+            }
+        }
+
+        [Fact]
+        public void UpdateUserAfterLectureShouldUpdateUserLectureCorrectly()
+        {
+            const string databaseName = "Update-User-After-Lecture-Update-UserLecture";
+            AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
+
+            var db = new FakeProgrammerDbContext(databaseName);
+            var fakeUser = this.GetFakeUser();
+            fakeUser.Xp = 1;
+            fakeUser.CSharp = 1;
+            fakeUser.ProblemSolving = 1;
+            var fakeCourse = this.GetFakeCourse();
+            var fakeUserCourse = this.GetFakeUserCourse();
+            var fakeLecture = this.GetFakeLecture();
+            var fakeUserLecture = this.GetFakeUserLecture();
+
+            db.Add(fakeUser);
+            db.Add(fakeCourse);
+            db.Add(fakeUserCourse);
+            db.Add(fakeLecture);
+            db.Add(fakeUserLecture);
+
+            using (db.Data)
+            {
+                var userService = new UserService(db.Data);
+                var result = userService.UpdateUserAfterLecture(fakeUser.Id);
+
+                Assert.True(fakeUserLecture.IsCompleted);
+                Assert.False(fakeUserLecture.IsActive);
+            }
+        }
+
+        [Fact]
+        public void UpdateUserAfterLectureShouldReturnApiViewModel()
+        {
+            const string databaseName = "Update-User-After-Lecture-Update-UserLecture";
+            AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
+
+            var db = new FakeProgrammerDbContext(databaseName);
+            var fakeUser = this.GetFakeUser();
+            fakeUser.Xp = 1;
+            fakeUser.CSharp = 1;
+            fakeUser.ProblemSolving = 1;
+            var fakeCourse = this.GetFakeCourse();
+            var fakeUserCourse = this.GetFakeUserCourse();
+            var fakeLecture = this.GetFakeLecture();
+            var fakeUserLecture = this.GetFakeUserLecture();
+
+            db.Add(fakeUser);
+            db.Add(fakeCourse);
+            db.Add(fakeUserCourse);
+            db.Add(fakeLecture);
+            db.Add(fakeUserLecture);
+
+            using (db.Data)
+            {
+                var userService = new UserService(db.Data);
+                var result = userService.UpdateUserAfterLecture(fakeUser.Id);
+
+                Assert.IsType<UpdateUserAfterActivityApiModel>(result);
+                Assert.Equal("problemsolving", result.SoftSkillName);
+                Assert.Equal(4, result.SoftSkill);
+                Assert.Equal("csharp", result.HardSkillName);
+                Assert.Equal(6, result.HardSkill);
+                Assert.Equal(11, result.Xp);
+                Assert.Equal(22, result.XpForNextLevel);
+            }
+        }
+
+        // TODO: Maybe put these in another class
         private ProgrammerUser GetFakeUser()
         {
             return new ProgrammerUser
@@ -205,11 +380,11 @@
             };
         }
 
-        private Documentation GetFakeDocumentation() 
+        private Documentation GetFakeDocumentation()
         {
             return new Documentation
             {
-                Id  = 1,
+                Id = 1,
                 Name = "C# Tips And Tricks",
                 XpReward = 10,
                 RequiredEnergy = 7,
@@ -218,12 +393,55 @@
             };
         }
 
-        private UserDocumentation GetFakeUserDocumentation() 
+        private UserDocumentation GetFakeUserDocumentation()
         {
             return new UserDocumentation
             {
                 DocumentationId = 1,
-                ProgrammerId = "testId",
+                ProgrammerId = FakeUserId,
+            };
+        }
+
+        private Course GetFakeCourse()
+        {
+            return new Course
+            {
+                Id = 1,
+                XpReward = 10,
+                HardSkillName = "CSharp",
+                HardSkillReward = 5,
+                RequiredEnergy = 5,
+                SoftSkillName = "ProblemSolving",
+                SoftSkillReward = 3,
+            };
+        }
+
+        private UserCourse GetFakeUserCourse()
+        {
+            return new UserCourse
+            {
+                CourseId = 1,
+                ProgrammerUserId = FakeUserId,
+            };
+        }
+
+        private Lecture GetFakeLecture()
+        {
+            return new Lecture
+            {
+                Id = 1,
+                CourseId = 1,
+                Name = "Test Lecture"
+            };
+        }
+
+        private UserLecture GetFakeUserLecture()
+        {
+            return new UserLecture
+            {
+                LectureId = 1,
+                ProgrammerUserId = FakeUserId,
+                IsActive = true,
             };
         }
     }

@@ -10,7 +10,7 @@
 
         int UpdateUserEnergy(string userId);
 
-        UpdateUserAfterActivityApiModel UpgradeUserAfterLecture(string userId);
+        UpdateUserAfterActivityApiModel UpdateUserAfterLecture(string userId);
 
         UpdateUserAfterActivityApiModel UpdateUserAfterExam(string userId);
 

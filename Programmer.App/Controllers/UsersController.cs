@@ -28,7 +28,7 @@
         public ActionResult<UpdateUserAfterActivityApiModel> UpdateUserAfterLecture() 
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var apiModel = this.userService.UpgradeUserAfterLecture(userId);
+            var apiModel = this.userService.UpdateUserAfterLecture(userId);
 
             return apiModel;
         }
