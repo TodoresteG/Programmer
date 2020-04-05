@@ -11,17 +11,13 @@
 
     public class UserServiceTests
     {
-        private const string FakeUserId = "testId";
-        private const string FakeUserUserName = "Fake Programmer User";
-        private const string FakeUserEmail = "fake@programmer.user";
-
         [Fact]
         public void UpdateUserEnergyShouldIncrementEnergyByOne()
         {
             const string databaseName = "Energy-By-One";
 
             var db = new FakeProgrammerDbContext(databaseName);
-            var fakeUser = this.GetFakeUser();
+            var fakeUser = db.GetFakeUser();
             fakeUser.Energy = 10;
             db.Add(fakeUser);
 
@@ -40,7 +36,7 @@
             const string databaseName = "Energy-30";
 
             var db = new FakeProgrammerDbContext(databaseName);
-            var fakeUser = this.GetFakeUser();
+            var fakeUser = db.GetFakeUser();
             fakeUser.Energy = 30;
             db.Add(fakeUser);
 
@@ -59,7 +55,7 @@
             const string databaseName = "Time-Needed";
 
             var db = new FakeProgrammerDbContext(databaseName);
-            var fakeUser = this.GetFakeUser();
+            var fakeUser = db.GetFakeUser();
             fakeUser.Xp = 10;
             db.Add(fakeUser);
 
@@ -79,7 +75,7 @@
             AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
 
             var db = new FakeProgrammerDbContext(databaseName);
-            var fakeUser = this.GetFakeUser();
+            var fakeUser = db.GetFakeUser();
 
             db.Add(fakeUser);
 
@@ -98,7 +94,7 @@
             AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
 
             var db = new FakeProgrammerDbContext(databaseName);
-            var fakeUser = this.GetFakeUser();
+            var fakeUser = db.GetFakeUser();
 
             db.Add(fakeUser);
 
@@ -117,11 +113,11 @@
             AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
 
             var db = new FakeProgrammerDbContext(databaseName);
-            var fakeUser = this.GetFakeUser();
+            var fakeUser = db.GetFakeUser();
             fakeUser.Xp = 1;
             fakeUser.CSharp = 1;
-            var fakeDocumentation = this.GetFakeDocumentation();
-            var fakeUserDocumentation = this.GetFakeUserDocumentation();
+            var fakeDocumentation = db.GetFakeDocumentation();
+            var fakeUserDocumentation = db.GetFakeUserDocumentation();
 
             db.Add(fakeUser);
             db.Add(fakeDocumentation);
@@ -147,11 +143,11 @@
             AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
 
             var db = new FakeProgrammerDbContext(databaseName);
-            var fakeUser = this.GetFakeUser();
+            var fakeUser = db.GetFakeUser();
             fakeUser.Xp = 1;
             fakeUser.CSharp = 1;
-            var fakeDocumentation = this.GetFakeDocumentation();
-            var fakeUserDocumentation = this.GetFakeUserDocumentation();
+            var fakeDocumentation = db.GetFakeDocumentation();
+            var fakeUserDocumentation = db.GetFakeUserDocumentation();
 
             db.Add(fakeUser);
             db.Add(fakeDocumentation);
@@ -173,11 +169,11 @@
             AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
 
             var db = new FakeProgrammerDbContext(databaseName);
-            var fakeUser = this.GetFakeUser();
+            var fakeUser = db.GetFakeUser();
             fakeUser.Xp = 1;
             fakeUser.CSharp = 1;
-            var fakeDocumentation = this.GetFakeDocumentation();
-            var fakeUserDocumentation = this.GetFakeUserDocumentation();
+            var fakeDocumentation = db.GetFakeDocumentation();
+            var fakeUserDocumentation = db.GetFakeUserDocumentation();
 
             db.Add(fakeUser);
             db.Add(fakeDocumentation);
@@ -202,8 +198,8 @@
             AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
 
             var db = new FakeProgrammerDbContext(databaseName);
-            var fakeUser = this.GetFakeUser();
-            var fakeUserCourse = this.GetFakeUserCourse();
+            var fakeUser = db.GetFakeUser();
+            var fakeUserCourse = db.GetFakeUserCourse();
 
             db.Add(fakeUser);
             db.Add(fakeUserCourse);
@@ -226,8 +222,8 @@
             AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
 
             var db = new FakeProgrammerDbContext(databaseName);
-            var fakeUser = this.GetFakeUser();
-            var fakeUserCourse = this.GetFakeUserCourse();
+            var fakeUser = db.GetFakeUser();
+            var fakeUserCourse = db.GetFakeUserCourse();
 
             db.Add(fakeUser);
             db.Add(fakeUserCourse);
@@ -249,8 +245,8 @@
             AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
 
             var db = new FakeProgrammerDbContext(databaseName);
-            var fakeUser = this.GetFakeUser();
-            var fakeUserCourse = this.GetFakeUserCourse();
+            var fakeUser = db.GetFakeUser();
+            var fakeUserCourse = db.GetFakeUserCourse();
 
             db.Add(fakeUser);
             db.Add(fakeUserCourse);
@@ -271,14 +267,14 @@
             AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
 
             var db = new FakeProgrammerDbContext(databaseName);
-            var fakeUser = this.GetFakeUser();
+            var fakeUser = db.GetFakeUser();
             fakeUser.Xp = 1;
             fakeUser.CSharp = 1;
             fakeUser.ProblemSolving = 1;
-            var fakeCourse = this.GetFakeCourse();
-            var fakeUserCourse = this.GetFakeUserCourse();
-            var fakeLecture = this.GetFakeLecture();
-            var fakeUserLecture = this.GetFakeUserLecture();
+            var fakeCourse = db.GetFakeCourse();
+            var fakeUserCourse = db.GetFakeUserCourse();
+            var fakeLecture = db.GetFakeLecture();
+            var fakeUserLecture = db.GetFakeUserLecture();
 
             db.Add(fakeUser);
             db.Add(fakeCourse);
@@ -307,14 +303,14 @@
             AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
 
             var db = new FakeProgrammerDbContext(databaseName);
-            var fakeUser = this.GetFakeUser();
+            var fakeUser = db.GetFakeUser();
             fakeUser.Xp = 1;
             fakeUser.CSharp = 1;
             fakeUser.ProblemSolving = 1;
-            var fakeCourse = this.GetFakeCourse();
-            var fakeUserCourse = this.GetFakeUserCourse();
-            var fakeLecture = this.GetFakeLecture();
-            var fakeUserLecture = this.GetFakeUserLecture();
+            var fakeCourse = db.GetFakeCourse();
+            var fakeUserCourse = db.GetFakeUserCourse();
+            var fakeLecture = db.GetFakeLecture();
+            var fakeUserLecture = db.GetFakeUserLecture();
 
             db.Add(fakeUser);
             db.Add(fakeCourse);
@@ -335,18 +331,18 @@
         [Fact]
         public void UpdateUserAfterLectureShouldReturnApiViewModel()
         {
-            const string databaseName = "Update-User-After-Lecture-Update-UserLecture";
+            const string databaseName = "Update-User-After-Lecture-Update-ApiModel";
             AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
 
             var db = new FakeProgrammerDbContext(databaseName);
-            var fakeUser = this.GetFakeUser();
+            var fakeUser = db.GetFakeUser();
             fakeUser.Xp = 1;
             fakeUser.CSharp = 1;
             fakeUser.ProblemSolving = 1;
-            var fakeCourse = this.GetFakeCourse();
-            var fakeUserCourse = this.GetFakeUserCourse();
-            var fakeLecture = this.GetFakeLecture();
-            var fakeUserLecture = this.GetFakeUserLecture();
+            var fakeCourse = db.GetFakeCourse();
+            var fakeUserCourse = db.GetFakeUserCourse();
+            var fakeLecture = db.GetFakeLecture();
+            var fakeUserLecture = db.GetFakeUserLecture();
 
             db.Add(fakeUser);
             db.Add(fakeCourse);
@@ -367,82 +363,6 @@
                 Assert.Equal(11, result.Xp);
                 Assert.Equal(22, result.XpForNextLevel);
             }
-        }
-
-        // TODO: Maybe put these in another class
-        private ProgrammerUser GetFakeUser()
-        {
-            return new ProgrammerUser
-            {
-                Id = FakeUserId,
-                UserName = FakeUserUserName,
-                Email = FakeUserEmail,
-            };
-        }
-
-        private Documentation GetFakeDocumentation()
-        {
-            return new Documentation
-            {
-                Id = 1,
-                Name = "C# Tips And Tricks",
-                XpReward = 10,
-                RequiredEnergy = 7,
-                HardSkillName = "CSharp",
-                HardSkillReward = 5,
-            };
-        }
-
-        private UserDocumentation GetFakeUserDocumentation()
-        {
-            return new UserDocumentation
-            {
-                DocumentationId = 1,
-                ProgrammerId = FakeUserId,
-            };
-        }
-
-        private Course GetFakeCourse()
-        {
-            return new Course
-            {
-                Id = 1,
-                XpReward = 10,
-                HardSkillName = "CSharp",
-                HardSkillReward = 5,
-                RequiredEnergy = 5,
-                SoftSkillName = "ProblemSolving",
-                SoftSkillReward = 3,
-            };
-        }
-
-        private UserCourse GetFakeUserCourse()
-        {
-            return new UserCourse
-            {
-                CourseId = 1,
-                ProgrammerUserId = FakeUserId,
-            };
-        }
-
-        private Lecture GetFakeLecture()
-        {
-            return new Lecture
-            {
-                Id = 1,
-                CourseId = 1,
-                Name = "Test Lecture"
-            };
-        }
-
-        private UserLecture GetFakeUserLecture()
-        {
-            return new UserLecture
-            {
-                LectureId = 1,
-                ProgrammerUserId = FakeUserId,
-                IsActive = true,
-            };
         }
     }
 }
