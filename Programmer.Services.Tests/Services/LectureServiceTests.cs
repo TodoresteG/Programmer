@@ -42,7 +42,7 @@ namespace Programmer.Services.Tests.Services
         }
 
         [Fact]
-        public void WatchLectureShouldReturnTrueWhenUserHaveEnoughEnergy() 
+        public void WatchLectureShouldReturnTrueWhenUserHaveEnoughEnergy()
         {
             const string databaseName = "Watch-Lecture-True";
             AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
@@ -61,7 +61,6 @@ namespace Programmer.Services.Tests.Services
             db.Add(fakeUserLecture);
 
             mockService.Setup(x => x.GetTimeNeeded(fakeUser.Id)).Returns(DateTime.Now.AddSeconds(10));
-            var expectedTimeNeeded = DateTime.Now.AddSeconds(10);
             using (db.Data)
             {
                 var lectureService = new LectureService(db.Data, mockService.Object);
@@ -72,7 +71,7 @@ namespace Programmer.Services.Tests.Services
         }
 
         [Fact]
-        public void WatchLectureShouldReturnFalseWhenUserDoentHaveEnoughEnergy() 
+        public void WatchLectureShouldReturnFalseWhenUserDoentHaveEnoughEnergy()
         {
             const string databaseName = "Watch-Lecture-False";
             AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
@@ -91,13 +90,46 @@ namespace Programmer.Services.Tests.Services
             db.Add(fakeUserLecture);
 
             mockService.Setup(x => x.GetTimeNeeded(fakeUser.Id)).Returns(DateTime.Now.AddSeconds(10));
-            var expectedTimeNeeded = DateTime.Now.AddSeconds(10);
             using (db.Data)
             {
                 var lectureService = new LectureService(db.Data, mockService.Object);
                 var result = lectureService.WatchLecture(fakeLecture.Id, fakeUser.Id);
 
                 Assert.False(result);
+            }
+        }
+
+        [Fact]
+        public void WatchLectureShouldUpdateUserCorrectly()
+        {
+            const string databaseName = "Watch-Lecture-Update-User";
+            AutoMapperConfig.RegisterMappings(Assembly.Load("Programmer.App.ViewModels"));
+            var mockService = new Mock<IUserService>();
+
+            var db = new FakeProgrammerDbContext(databaseName);
+            var fakeUser = db.GetFakeUser();
+            fakeUser.Energy = 5;
+            var fakeLecture = db.GetFakeLecture();
+            var fakeCourse = db.GetFakeCourse();
+            var fakeUserLecture = db.GetFakeUserLecture();
+
+            db.Add(fakeUser);
+            db.Add(fakeLecture);
+            db.Add(fakeCourse);
+            db.Add(fakeUserLecture);
+
+            mockService.Setup(x => x.GetTimeNeeded(fakeUser.Id)).Returns(DateTime.Now.AddSeconds(10));
+            var expectedTimeNeeded = DateTime.Now.AddSeconds(10).ToString();
+            using (db.Data)
+            {
+                var lectureService = new LectureService(db.Data, mockService.Object);
+                var result = lectureService.WatchLecture(fakeLecture.Id, fakeUser.Id);
+
+                Assert.Equal(0, fakeUser.Energy);
+                Assert.Equal("Lecture", fakeUser.TypeOfTask);
+                Assert.Equal(expectedTimeNeeded, fakeUser.TaskTimeRemaining.ToString());
+                Assert.True(fakeUser.IsActive);
+                Assert.True(fakeUserLecture.IsActive);
             }
         }
     }
