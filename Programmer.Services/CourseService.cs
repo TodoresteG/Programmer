@@ -36,9 +36,6 @@
                 })
                 .ToList();
 
-            this.context.UserCourses.Add(userCourse);
-            this.context.UserLectures.AddRange(userLectures);
-
             var course = this.context.Courses
                 .Where(c => c.Id == id)
                 .Select(c => new Course
@@ -58,6 +55,8 @@
 
             user.Money -= course.Price;
 
+            this.context.UserCourses.Add(userCourse);
+            this.context.UserLectures.AddRange(userLectures);
             this.context.Users.Update(user);
             this.context.SaveChanges();
             return true;

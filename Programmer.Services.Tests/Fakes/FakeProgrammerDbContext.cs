@@ -64,12 +64,14 @@
             return new Course
             {
                 Id = 1,
+                Name = "C#",
                 XpReward = 10,
                 HardSkillName = "CSharp",
                 HardSkillReward = 5,
                 RequiredEnergy = 5,
                 SoftSkillName = "ProblemSolving",
                 SoftSkillReward = 3,
+                Price = 500m,
             };
         }
 
@@ -99,6 +101,15 @@
                 LectureId = 1,
                 ProgrammerUserId = FakeUserId,
                 IsActive = true,
+            };
+        }
+
+        public Exam GetFakeExam() 
+        {
+            return new Exam
+            {
+                Id = 1,
+                CourseId = 1,
             };
         }
     }
