@@ -2,6 +2,7 @@
 {
     using Programmer.App.ViewModels.Exams;
     using Programmer.Data;
+    using Programmer.Data.Models;
     using Programmer.Services.Mapping;
     using System.Linq;
 
@@ -39,9 +40,7 @@
                 .Where(u => u.Id == userId)
                 .FirstOrDefault();
 
-            var userHardSkill = (double)user.GetType().GetProperty(exam.RequiredHardSkillName).GetValue(user);
-
-            if (user.Energy < exam.RequiredEnergy || (userHardSkill < exam.RequiredHardSkill && user.Coding < exam.RequiredCodingSkill))
+            if (!CanTakeExam(user, exam))
             {
                 return false;
             }
@@ -52,6 +51,28 @@
             user.TypeOfTask = "Exam";
 
             this.context.SaveChanges();
+            return true;
+        }
+
+        private bool CanTakeExam(ProgrammerUser user, ExamDetailsViewModel exam) 
+        {
+            var userHardSkill = (double)user.GetType().GetProperty(exam.RequiredHardSkillName).GetValue(user);
+
+            if (user.Energy < exam.RequiredEnergy)
+            {
+                return false;
+            }
+
+            if (userHardSkill < exam.RequiredHardSkill)
+            {
+                return false;
+            }
+
+            if (user.Coding < exam.RequiredCodingSkill)
+            {
+                return false;
+            }
+
             return true;
         }
     }

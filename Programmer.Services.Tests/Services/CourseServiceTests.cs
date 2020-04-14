@@ -190,26 +190,6 @@ namespace Programmer.Services.Tests.Services
             }
         }
 
-
-        //public int Id { get; set; }
-
-        //public string Name { get; set; }
-
-        //public double HardSkillReward { get; set; }
-
-        //public string HardSkillName { get; set; }
-
-        //public double CodingSkillReward { get; set; }
-
-        //public double SoftSkillReward { get; set; }
-
-        //public string SoftSkillName { get; set; }
-
-        //public bool IsPreviousCompleted { get; set; }
-
-        //public decimal Price { get; set; }
-
-
         [Fact]
         public void GetCourseEnrollDetailsShouldReturnCourseEnrollDetailsViewModel()
         {

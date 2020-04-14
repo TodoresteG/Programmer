@@ -110,6 +110,10 @@
             {
                 Id = 1,
                 CourseId = 1,
+                RequiredCodingSkill = 2,
+                RequiredEnergy = 10,
+                RequiredHardSkill = 3,
+                RequiredHardSkillName = "CSharp",
             };
         }
     }
