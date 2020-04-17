@@ -34,12 +34,7 @@
         public IActionResult Office()
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var user = this.officeService.GetUserForHome(userId);
-
-            OfficeViewModel viewModel = new OfficeViewModel
-            {
-                UserStats = user.UserStats,
-            };
+            var viewModel = this.officeService.GetUserForHome(userId);
 
             return this.View(viewModel);
         }

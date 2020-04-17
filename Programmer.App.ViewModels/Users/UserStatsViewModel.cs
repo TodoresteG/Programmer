@@ -1,6 +1,9 @@
 ﻿namespace Programmer.Services.Dtos
 {
-    public class UserStatsDto
+    using Programmer.Data.Models;
+    using Programmer.Services.Mapping;
+
+    public class UserStatsViewModel : IMapFrom<ProgrammerUser>
     {
         public long Xp { get; set; }
 

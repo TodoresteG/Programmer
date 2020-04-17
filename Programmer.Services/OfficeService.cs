@@ -2,7 +2,8 @@
 {
     using Data;
     using Programmer.App.ViewModels.Office;
-    using Programmer.Data.Models;
+    using Programmer.Services.Dtos;
+    using Programmer.Services.Mapping;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
@@ -19,10 +20,13 @@
         public OfficeViewModel GetUserForHome(string userId)
         {
             var userDto = new OfficeViewModel();
-            ProgrammerUser userFromDb = this.context.Users.SingleOrDefault(u => u.Id == userId);
+            var userFromDb = this.context.Users
+                .Where(u => u.Id == userId)
+                .To<UserStatsViewModel>()
+                .FirstOrDefault();
 
             var userStats = new Dictionary<string, double?>();
-            var gainedStats = typeof(ProgrammerUser).GetProperties()
+            var gainedStats = typeof(UserStatsViewModel).GetProperties()
                 .Where(p => p.PropertyType == typeof(double) || p.PropertyType == typeof(double?));
 
             foreach (PropertyInfo property in gainedStats)

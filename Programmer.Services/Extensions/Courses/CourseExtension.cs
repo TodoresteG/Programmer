@@ -8,7 +8,7 @@
     public class CourseExtension
     {
         // TODO: refactor this
-        public static IEnumerable<bool> CheckCourses(UserStatsDto user) 
+        public static IEnumerable<bool> CheckCourses(UserStatsViewModel user) 
         {
             var results = new List<bool>();
 
@@ -30,74 +30,74 @@
             return results;
         }
 
-        private static bool CheckForFundamentals(UserStatsDto user)
+        private static bool CheckForFundamentals(UserStatsViewModel user)
         {
             return user.CSharp >= FundamentalsCSharp && user.ProblemSolving >= FundamentalsProblemSolving;
         }
 
-        private static bool CheckForAdvanced(UserStatsDto user)
+        private static bool CheckForAdvanced(UserStatsViewModel user)
         {
             return user.CSharp >= AdvancedCSharp && user.ProblemSolving >= AdvancedProblemSolving;
         }
 
-        private static bool CheckForOop(UserStatsDto user)
+        private static bool CheckForOop(UserStatsViewModel user)
         {
             return user.CSharp >= OopCSharp && user.ProblemSolving >= OopProblemSolving;
         }
 
-        private static bool CheckForDataStructures(UserStatsDto user)
+        private static bool CheckForDataStructures(UserStatsViewModel user)
         {
             return user.DataStructures >= DataStructures && user.AbstractThinking >= DataStructuresAbstractThinking;
         }
 
-        private static bool CheckForAlgorithms(UserStatsDto user)
+        private static bool CheckForAlgorithms(UserStatsViewModel user)
         {
             return user.Algorithms >= Algorithms && user.ProblemSolving >= AlgorithmsProblemSolving;
         }
 
-        private static bool CheckForTesting(UserStatsDto user)
+        private static bool CheckForTesting(UserStatsViewModel user)
         {
             return user.Testing >= Testing && user.AbstractThinking >= TestingAbstractThinking;
         }
 
-        private static bool CheckForDatabase(UserStatsDto user)
+        private static bool CheckForDatabase(UserStatsViewModel user)
         {
             return user.DatabasesAndSQL >= DatabaseAndSql && user.AbstractThinking >= DatabaseAndSqlAbstractThinking;
         }
 
-        private static bool CheckForEfCore(UserStatsDto user)
+        private static bool CheckForEfCore(UserStatsViewModel user)
         {
             // TODO: and db stats
             return user.EfCore >= EfCore && user.ProblemSolving >= EfCoreProblemSolving;
         }
 
-        private static bool CheckForJavaScript(UserStatsDto user)
+        private static bool CheckForJavaScript(UserStatsViewModel user)
         {
             return user.VanillaJavaScript >= VanillaJavaScript && user.ProblemSolving >= VanillaJavaScriptProblemSolving;
         }
 
-        private static bool CheckForHtml(UserStatsDto user)
+        private static bool CheckForHtml(UserStatsViewModel user)
         {
             return user.Html >= Html && user.Creativity >= HtmlCreativity;
         }
 
-        private static bool CheckForCss(UserStatsDto user)
+        private static bool CheckForCss(UserStatsViewModel user)
         {
             return user.Css >= Css && user.Creativity >= CssCreativity;
         }
 
-        private static bool CheckForAspNetCore(UserStatsDto user)
+        private static bool CheckForAspNetCore(UserStatsViewModel user)
         {
             return user.AspNetCore >= AspNetCore && user.AbstractThinking >= AspNetCoreAbstractThinking;
         }
 
-        private static bool CheckForReact(UserStatsDto user) 
+        private static bool CheckForReact(UserStatsViewModel user) 
         {
             // and vanillaJs stat
             return user.React >= React && user.Creativity >= ReactCreativity;
         }
 
-        private static bool CheckForNodeJs(UserStatsDto user) 
+        private static bool CheckForNodeJs(UserStatsViewModel user) 
         {
             return user.NodeJs >= NodeJs && user.AbstractThinking >= NodeJsAbstractThinking;
         }

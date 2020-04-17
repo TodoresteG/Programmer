@@ -21,7 +21,7 @@
         {
             var user = this.context.Users
                 .Where(u => u.Id == userId)
-                .Select(u => new UserStatsDto
+                .Select(u => new UserStatsViewModel
                 {
                     AbstractThinking = u.AbstractThinking,
                     Algorithms = u.Algorithms,
