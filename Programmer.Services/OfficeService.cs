@@ -19,23 +19,23 @@
         public OfficeViewModel GetUserForHome(string userId)
         {
             var userDto = new OfficeViewModel();
-
             ProgrammerUser userFromDb = this.context.Users.SingleOrDefault(u => u.Id == userId);
 
             var userStats = new Dictionary<string, double?>();
+            var gainedStats = typeof(ProgrammerUser).GetProperties()
+                .Where(p => p.PropertyType == typeof(double) || p.PropertyType == typeof(double?));
 
-            foreach (PropertyInfo property in typeof(ProgrammerUser).GetProperties())
+            foreach (PropertyInfo property in gainedStats)
             {
                 var propValue = property.GetValue(userFromDb);
 
-                if ((propValue != null && property.PropertyType == typeof(double)) || (propValue == null && property.PropertyType == typeof(double?)))
+                if (propValue != null)
                 {
                     userStats.Add(property.Name, (double?)propValue);
                 }
             }
 
             userDto.UserStats = userStats;
-
             return userDto;
         }
     }
