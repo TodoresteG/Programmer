@@ -11,7 +11,7 @@
             <h1>Courses</h1>
             @foreach (var course in Model.Courses)
             {
-                <p class="lead"><a id="@course.Id" class="btn btn-primary text-white course">@course.Name</a></p>
+                <p class="lead"><a id="@course.Id" class="btn btn-primary text-white course">@course.Name</a> <a class="btn btn-danger text-white d-none">Delete</a></p>
             }
             <a class="btn btn-success text-white">Create new course</a>
         </div>

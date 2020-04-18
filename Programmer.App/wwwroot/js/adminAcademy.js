@@ -8,12 +8,15 @@ function courseInfo(event) {
     const course = event.toElement;
     const courseId = course.id;
 
-    const current = document.getElementsByClassName("active");
-    if (current.length > 0) {
-        current[0].className = current[0].className.replace(" active", "");
+    const currentActive = document.getElementsByClassName('active');
+    if (currentActive.length > 0) {
+        currentActive[0].nextElementSibling.classList.remove('d-inline');
+        currentActive[0].className = currentActive[0].className.replace(' active', '');
     }
 
-    this.className += " active";
+    this.className += ' active';
+    this.nextElementSibling.classList.add('d-inline');
+    console.log(this.nextElementSibling.className);
 
     fetch(`/api/admin/AcademyApi/GetCourseInfo/${courseId}`)
         .then(response => response.json())
