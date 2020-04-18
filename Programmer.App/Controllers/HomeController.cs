@@ -22,6 +22,11 @@
 
         public IActionResult Index()
         {
+            if (this.User.Identity.IsAuthenticated && this.User.IsInRole("Administrator"))
+            {
+                return this.Redirect("/Administration/Home/Index");
+            }
+
             if (this.User.Identity.IsAuthenticated)
             {
                 return this.Redirect("/Home/Office");
