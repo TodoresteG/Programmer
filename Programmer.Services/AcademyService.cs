@@ -7,6 +7,9 @@
     using Programmer.Services.Extensions.Courses;
     using System.Collections.Generic;
     using System.Linq;
+    using Programmer.App.ViewModels.Courses;
+    using Programmer.App.ViewModels.Lectures;
+    using Programmer.App.ViewModels.Exams;
 
     public class AcademyService : IAcademyService
     {
@@ -87,6 +90,34 @@
             };
 
             return dto;
+        }
+
+        public AdministrationAcademyAllCoursesViewModel GetAllCoursesForAdmin() 
+        {
+            var allCourses = this.context.Courses
+                .To<AdministrationAcademyCourseViewModel>()
+                .ToList();
+
+            return new AdministrationAcademyAllCoursesViewModel { Courses = allCourses };
+        }
+
+        public AdministrationCourseInfoViewModel CourseInfo(int courseId)
+        {
+            var lectures = this.context.Lectures
+                .Where(l => l.CourseId == courseId)
+                .To<AdministrationLectureViewModel>()
+                .ToList();
+
+            var exam = this.context.Exams
+                .Where(e => e.CourseId == courseId)
+                .To<AdministrationExamViewModel>()
+                .FirstOrDefault();
+
+            return new AdministrationCourseInfoViewModel
+            {
+                Lectures = lectures,
+                Exam = exam,
+            };
         }
     }
 }

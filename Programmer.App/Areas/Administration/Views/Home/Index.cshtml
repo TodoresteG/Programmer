@@ -4,5 +4,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Hello Administrator @this.User.Identity.Name</h1>
-
+<section class="page-section">
+    <div class="container-fluid">
+        <h1 class="page-section-heading">Hello Administrator @this.User.Identity.Name</h1>
+        <p class="lead">From here you can administrate Programmer web site. In academy you can create new courses, lectures and exams. In side activities you can create new documentations and events. In job section you can create new job tasks.</p>
+    </div>
+</section>
