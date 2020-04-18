@@ -7,6 +7,16 @@ SET IDENTITY_INSERT Exams OFF;
 SET IDENTITY_INSERT JobTasks OFF;
 SET IDENTITY_INSERT Lectures OFF;
 SET IDENTITY_INSERT RequiredSkills OFF;
+SET IDENTITY_INSERT AspNetRoles OFF;
+SET IDENTITY_INSERT AspNetUserRoles OFF;
+
+SET IDENTITY_INSERT AspNetRoles ON;
+
+INSERT INTO AspNetRoles (Id, [Name], CreatedOn, NormalizedName)
+VALUES (1, 'Administrator', GETDATE(), 'ADMINISTRATOR'),
+		(2, 'User', GETDATE(), 'USER')
+
+SET IDENTITY_INSERT AspNetRoles ON;
 
 SET IDENTITY_INSERT [dbo].Documentations ON;
 

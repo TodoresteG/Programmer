@@ -87,9 +87,10 @@ namespace ProgrammerDemo
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
                     var context = scope.ServiceProvider.GetService<ProgrammerDbContext>();
-                    var seeder = new ProgrammerDbContextSeeder(context);
+                    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ProgrammerUser>>();
+                    var seeder = new ProgrammerDbContextSeeder(context, userManager);
 
-                    seeder.SeedDb();
+                    seeder.SeedDb().GetAwaiter().GetResult();
                 }
             }
             else
@@ -110,7 +111,7 @@ namespace ProgrammerDemo
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("adminArea", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
