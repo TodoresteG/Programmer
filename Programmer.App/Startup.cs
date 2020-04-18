@@ -87,8 +87,7 @@ namespace ProgrammerDemo
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
                     var context = scope.ServiceProvider.GetService<ProgrammerDbContext>();
-                    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ProgrammerUser>>();
-                    var seeder = new ProgrammerDbContextSeeder(context, userManager);
+                    var seeder = new ProgrammerDbContextSeeder(context, scope.ServiceProvider);
 
                     seeder.SeedDb().GetAwaiter().GetResult();
                 }

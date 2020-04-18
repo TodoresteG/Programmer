@@ -84,6 +84,12 @@ namespace Programmer.App.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+
+                    if (Input.Username == "Admin") 
+                    {
+                        return RedirectToAction("Index", "Home", new { area = "Administration" });
+                    }
+
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

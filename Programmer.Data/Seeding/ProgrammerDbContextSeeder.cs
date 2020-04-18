@@ -2,7 +2,11 @@
 {
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Infrastructure;
+    using Microsoft.EntityFrameworkCore.Storage;
+    using Microsoft.Extensions.DependencyInjection;
     using Programmer.Data.Models;
+    using System;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
@@ -10,19 +14,21 @@
     public class ProgrammerDbContextSeeder
     {
         private readonly ProgrammerDbContext context;
-        private readonly UserManager<ProgrammerUser> userManager;
+        private readonly IServiceProvider serviceProvider;
 
         public ProgrammerDbContextSeeder(
             ProgrammerDbContext context,
-            UserManager<ProgrammerUser> userManager)
+            IServiceProvider serviceProvider)
         {
             this.context = context;
-            this.userManager = userManager;
+            this.serviceProvider = serviceProvider;
         }
 
         public async Task SeedDb()
         {
-            if (this.context.Roles.Any())
+            var isDbCreated = (this.context.Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator).Exists();
+
+            if (isDbCreated)
             {
                 return;
             }
@@ -38,13 +44,18 @@
 
         private async Task SeedAdmin() 
         {
-            var admin = new ProgrammerUser { UserName = "Admin Pesho" };
-            var result = await this.userManager.CreateAsync(admin, "asdasd");
+            var roleSeeder = new RoleSeeder();
+            await roleSeeder.SeedAsync(this.context, this.serviceProvider);
+
+            var admin = new ProgrammerUser { UserName = "Admin" };
+            var userManager = this.serviceProvider.GetRequiredService<UserManager<ProgrammerUser>>();
+            var result = await userManager.CreateAsync(admin, "asdasd");
 
             if (result.Succeeded)
             {
                 this.context.Users.Add(admin);
-                await this.userManager.AddToRoleAsync(admin, "Administrator");
+                await userManager.AddToRoleAsync(admin, "Administrator");
+                await this.context.SaveChangesAsync();
             }
         }
     }
