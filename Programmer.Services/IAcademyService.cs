@@ -2,6 +2,7 @@
 {
     using Programmer.App.ViewModels.Academy;
     using Programmer.App.ViewModels.Courses;
+    using Programmer.App.ViewModels.Exams;
 
     public interface IAcademyService
     {
@@ -16,5 +17,9 @@
         void CreateCourse(AdministrationCreateCourseInputModel inputModel);
 
         void CreateLecture(string name, int courseId);
+
+        AdministrationCreateExamInputModel GetRequiredSkillName(int courseId);
+
+        void CreateExam(AdministrationCreateExamInputModel inputModel);
     }
 }

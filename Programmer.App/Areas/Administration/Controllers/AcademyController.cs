@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using Programmer.App.ViewModels.Courses;
+    using Programmer.App.ViewModels.Exams;
     using Programmer.Services;
 
     public class AcademyController : AdministrationController
@@ -34,6 +35,24 @@
             }
 
             this.academyService.CreateCourse(inputModel);
+            return this.Redirect("/Administration/Academy/Index");
+        }
+
+        public IActionResult CreateExam(int id) 
+        {
+            var viewModel = this.academyService.GetRequiredSkillName(id);
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult CreateExam(AdministrationCreateExamInputModel inputModel) 
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(inputModel);
+            }
+
+            this.academyService.CreateExam(inputModel);
             return this.Redirect("/Administration/Academy/Index");
         }
     }

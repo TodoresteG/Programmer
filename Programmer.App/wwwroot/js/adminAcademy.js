@@ -51,7 +51,6 @@ function fillLectures(lectures, courseId) {
     addButton.classList.add('btn-success');
     addButton.classList.add('text-white');
     addButton.textContent = 'Create lecture';
-    // addButton.href = `/Administration/Academy/CreateLecture/${courseId}`;
     addButton.addEventListener('click', function (event) {
         createLectureForm(event, courseId);
     })
@@ -68,7 +67,7 @@ function fillExam(exam, courseId) {
         addButton.classList.add('btn');
         addButton.classList.add('btn-success');
         addButton.textContent = 'Create exam';
-        addButton.href = '...';
+        addButton.href = `/Administration/Academy/CreateExam/${courseId}`;
 
         parentDiv.appendChild(addButton);
         return;
@@ -82,7 +81,7 @@ function fillExam(exam, courseId) {
     examA.classList.add('btn');
     examA.classList.add('btn-warning');
     examA.classList.add('ml-3');
-    examA.href = '.....';
+    examA.href = `...`;
 
     examP.textContent = exam.name;
     examP.classList.add('lead');

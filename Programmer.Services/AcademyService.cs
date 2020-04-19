@@ -180,5 +180,35 @@
             this.context.Lectures.Add(lecture);
             this.context.SaveChanges();
         }
+
+        public AdministrationCreateExamInputModel GetRequiredSkillName(int courseId)
+        {
+            var hardSkillName = this.context.Courses
+                .Where(c => c.Id == courseId)
+                .Select(c => c.HardSkillName)
+                .FirstOrDefault();
+
+            return new AdministrationCreateExamInputModel
+            {
+                RequiredHardSkillName = hardSkillName,
+                CourseId = courseId,
+            };
+        }
+
+        public void CreateExam(AdministrationCreateExamInputModel inputModel) 
+        {
+            var exam = new Exam
+            {
+                CourseId = inputModel.CourseId,
+                CreatedOn = DateTime.UtcNow,
+                RequiredCodingSkill = inputModel.RequiredCodingSkill,
+                RequiredEnergy = inputModel.RequiredEnergy,
+                RequiredHardSkill = inputModel.RequiredHardSkill,
+                RequiredHardSkillName = inputModel.RequiredHardSkillName,
+            };
+
+            this.context.Exams.Add(exam);
+            this.context.SaveChanges();
+        }
     }
 }
