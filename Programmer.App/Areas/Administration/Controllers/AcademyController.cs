@@ -55,5 +55,23 @@
             this.academyService.CreateExam(inputModel);
             return this.Redirect("/Administration/Academy/Index");
         }
+
+        public IActionResult EditExam(int id) 
+        {
+            var viewModel = this.academyService.GetExamForEdit(id);
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult EditExam(AdministrationCreateExamInputModel inputModel) 
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(inputModel);
+            }
+
+            this.academyService.EditExam(inputModel);
+            return this.Redirect("/Administration/Academy/Index");
+        }
     }
 }

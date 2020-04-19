@@ -81,7 +81,7 @@ function fillExam(exam, courseId) {
     examA.classList.add('btn');
     examA.classList.add('btn-warning');
     examA.classList.add('ml-3');
-    examA.href = `...`;
+    examA.href = `/Administration/Academy/EditExam/${courseId}`;
 
     examP.textContent = exam.name;
     examP.classList.add('lead');

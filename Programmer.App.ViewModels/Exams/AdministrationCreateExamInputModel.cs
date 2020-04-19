@@ -1,8 +1,10 @@
 ﻿namespace Programmer.App.ViewModels.Exams
 {
     using System.ComponentModel.DataAnnotations;
+    using Programmer.Data.Models;
+    using Programmer.Services.Mapping;
 
-    public class AdministrationCreateExamInputModel
+    public class AdministrationCreateExamInputModel : IMapFrom<Exam>
     {
         [Range(0, 30, ErrorMessage = "{0} cannot be less than {1} and more than {2}")]
         public int RequiredEnergy { get; set; }

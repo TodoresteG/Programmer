@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewData["Title"] = "EditExam";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using Programmer.App.ViewModels.Exams
+@model AdministrationCreateExamInputModel
+
+<section class="page-section">
+    <div class="container-fluid">
+        <form asp-controller="Academy" asp-action="EditExam" method="post">
+            <div class="row justify-content-center">
+                <div class="row col-md-6">
+                    <h1>Create Exam</h1>
+                    <p>Create exam for the selected course</p>
+                    <div class="col-md-12">
+                        <label asp-for="RequiredEnergy"></label>
+                        <input asp-for="RequiredEnergy" type="number" class="form-control">
+                        <span asp-validation-for="RequiredEnergy" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="RequiredHardSkillName"></label>
+                        <input asp-for="RequiredHardSkillName" class="form-control" readonly>
+                        <span asp-validation-for="RequiredHardSkillName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="RequiredHardSkill"></label>
+                        <input asp-for="RequiredHardSkill" type="number" class="form-control">
+                        <span asp-validation-for="RequiredHardSkill" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-12">
+                        <label asp-for="RequiredCodingSkill"></label>
+                        <input asp-for="RequiredCodingSkill" type="number" class="form-control">
+                        <span asp-validation-for="RequiredCodingSkill" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 d-none">
+                        <label asp-for="CourseId"></label>
+                        <input asp-for="CourseId" class="form-control" readonly>
+                        <span asp-validation-for="CourseId" class="text-danger"></span>
+                    </div>
+                    <div class="row justify-content-center col-md-12 mt-5">
+                        <button type="submit" class="btn btn-primary col-md-2">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

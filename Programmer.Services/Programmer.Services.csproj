@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Programmer.App.ViewModels\Programmer.App.ViewModels.csproj" />
     <ProjectReference Include="..\Programmer.Data\Programmer.Data.csproj" />
     <ProjectReference Include="..\Programmer.Models\Programmer.Data.Models.csproj" />

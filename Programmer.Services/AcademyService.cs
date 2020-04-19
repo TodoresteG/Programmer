@@ -210,5 +210,28 @@
             this.context.Exams.Add(exam);
             this.context.SaveChanges();
         }
+
+        public AdministrationCreateExamInputModel GetExamForEdit(int courseId) 
+        {
+            var exam = this.context.Exams
+                .Where(e => e.CourseId == courseId)
+                .To<AdministrationCreateExamInputModel>()
+                .FirstOrDefault();
+
+            return exam;
+        }
+
+        public void EditExam(AdministrationCreateExamInputModel inputModel) 
+        {
+            var exam = this.context.Exams
+                .FirstOrDefault(e => e.CourseId == inputModel.CourseId);
+
+            exam.RequiredEnergy = inputModel.RequiredEnergy;
+            exam.RequiredCodingSkill = inputModel.RequiredCodingSkill;
+            exam.RequiredHardSkill = inputModel.RequiredHardSkill;
+
+            this.context.Exams.Update(exam);
+            this.context.SaveChanges();
+        }
     }
 }

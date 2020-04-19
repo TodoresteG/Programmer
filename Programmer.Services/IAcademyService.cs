@@ -21,5 +21,9 @@
         AdministrationCreateExamInputModel GetRequiredSkillName(int courseId);
 
         void CreateExam(AdministrationCreateExamInputModel inputModel);
+
+        AdministrationCreateExamInputModel GetExamForEdit(int courseId);
+
+        void EditExam(AdministrationCreateExamInputModel inputModel);
     }
 }
