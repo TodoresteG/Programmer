@@ -16,17 +16,16 @@ function courseInfo(event) {
 
     this.className += ' active';
     this.nextElementSibling.classList.add('d-inline');
-    console.log(this.nextElementSibling.className);
 
     fetch(`/api/admin/AcademyApi/GetCourseInfo/${courseId}`)
         .then(response => response.json())
         .then(data => {
-            fillLectures(data.lectures);
-            fillExam(data.exam);
+            fillLectures(data.lectures, data.courseId);
+            fillExam(data.exam, data.courseId);
         });
 }
 
-function fillLectures(lectures) {
+function fillLectures(lectures, courseId) {
     const parentDiv = document.querySelector('.lectures');
     parentDiv.innerHTML = '';
 
@@ -50,13 +49,17 @@ function fillLectures(lectures) {
     const addButton = document.createElement('a');
     addButton.classList.add('btn');
     addButton.classList.add('btn-success');
+    addButton.classList.add('text-white');
     addButton.textContent = 'Create lecture';
-    addButton.href = '...';
+    // addButton.href = `/Administration/Academy/CreateLecture/${courseId}`;
+    addButton.addEventListener('click', function (event) {
+        createLectureForm(event, courseId);
+    })
 
     parentDiv.appendChild(addButton);
 }
 
-function fillExam(exam) {
+function fillExam(exam, courseId) {
     const parentDiv = document.querySelector('.exam');
     parentDiv.innerHTML = '';
 
@@ -86,4 +89,63 @@ function fillExam(exam) {
     examP.appendChild(examA);
 
     parentDiv.appendChild(examP);
+}
+
+function createLectureForm(event, courseId) {
+    const lecturesDiv = document.querySelector('.lectures');
+    lecturesDiv.lastElementChild.classList.add('d-none');
+
+    const parentDiv = document.createElement('div');
+    const nameLabel = document.createElement('label');
+    const nameInput = document.createElement('input');
+    const validateSpan = document.createElement('span');
+    const submitButton = document.createElement('a');
+
+    nameLabel.htmlFor = 'name';
+    nameLabel.className = 'm-3';
+    nameLabel.textContent = 'Name';
+
+    nameInput.type = 'text';
+    nameInput.id = 'name';
+
+    validateSpan.className = 'name-error text-danger';
+
+    submitButton.classList.add('btn');
+    submitButton.classList.add('btn-success');
+    submitButton.classList.add('text-white');
+    submitButton.classList.add('ml-2');
+    submitButton.textContent = 'Create lecture';
+    submitButton.addEventListener('click', function (event) {
+        createLecture(event, courseId, nameInput.value);
+    });
+
+    parentDiv.appendChild(nameLabel);
+    parentDiv.appendChild(nameInput);
+    parentDiv.appendChild(validateSpan);
+    parentDiv.appendChild(submitButton);
+
+    lecturesDiv.appendChild(parentDiv);
+    console.log(courseId);
+}
+
+function createLecture(event, courseId, nameInput) {
+    if (nameInput && nameInput.length > 3) {
+        console.log(nameInput);
+        const formData = new FormData();
+        formData.append('name', nameInput);
+
+        fetch(`/api/admin/AcademyApi/CreateLecture/${courseId}`,
+            {
+                body: formData,
+                method: 'post',
+            })
+            .then(response => response.json)
+            .then(data => {
+                if (data) {
+                    location.reload();
+                }
+            });
+    } else {
+        document.querySelector('.name-error').textContent = 'Name cannot be empty or less than 4 symbols';
+    }
 }

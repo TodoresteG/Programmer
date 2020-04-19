@@ -9,5 +9,7 @@
         public IEnumerable<AdministrationLectureViewModel> Lectures { get; set; }
 
         public AdministrationExamViewModel Exam { get; set; }
+
+        public int CourseId { get; set; }
     }
 }

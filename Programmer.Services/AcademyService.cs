@@ -118,6 +118,7 @@
 
             return new AdministrationCourseInfoViewModel
             {
+                CourseId = courseId,
                 Lectures = lectures,
                 Exam = exam,
             };
@@ -164,6 +165,19 @@
             };
 
             this.context.Courses.Add(course);
+            this.context.SaveChanges();
+        }
+
+        public void CreateLecture(string name, int courseId)
+        {
+            var lecture = new Lecture
+            {
+                CourseId = courseId,
+                CreatedOn = DateTime.UtcNow,
+                Name = name,
+            };
+
+            this.context.Lectures.Add(lecture);
             this.context.SaveChanges();
         }
     }

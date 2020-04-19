@@ -5,26 +5,26 @@
 @using Programmer.App.ViewModels.Academy
 @model AdministrationAcademyAllCoursesViewModel
 
-<section class="page-section">
-    <div class="container-fluid row">
-        <div class="container-fluid col-4">
-            <h1>Courses</h1>
-            @foreach (var course in Model.Courses)
-            {
-                <p class="lead"><a id="@course.Id" class="btn btn-primary text-white course">@course.Name</a> <a class="btn btn-danger text-white d-none">Delete</a></p>
-            }
-            <a asp-controller="Academy" asp-action="CreateCourse" class="btn btn-success text-white">Create new course</a>
+    <section class="page-section">
+        <div class="container-fluid row">
+            <div class="container-fluid col-4">
+                <h1>Courses</h1>
+                @foreach (var course in Model.Courses)
+                {
+                    <p class="lead"><a id="@course.Id" class="btn btn-primary text-white course">@course.Name</a> <a class="btn btn-danger text-white d-none">Delete</a></p>
+                }
+                <a asp-controller="Academy" asp-action="CreateCourse" class="btn btn-success text-white">Create new course</a>
+            </div>
+            <div class="container-fluid col-4">
+                <h1>Lectures</h1>
+                <div class="lectures"></div>
+            </div>
+            <div class="container-fluid col-4">
+                <h1>Exam</h1>
+                <div class="exam"></div>
+            </div>
         </div>
-        <div class="container-fluid col-4">
-            <h1>Lectures</h1>
-            <div class="lectures"></div>
-        </div>
-        <div class="container-fluid col-4">
-            <h1>Exam</h1>
-            <div class="exam"></div>
-        </div>
-    </div>
-</section>
+    </section>
 
 @section Scripts {
     <script asp-cut-key="adminAcademyScriptKey" src="~/js/adminAcademy.js"></script>

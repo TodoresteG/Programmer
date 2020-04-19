@@ -14,5 +14,7 @@
         AdministrationCreateCourseInputModel GetSkillsForDropdowns();
 
         void CreateCourse(AdministrationCreateCourseInputModel inputModel);
+
+        void CreateLecture(string name, int courseId);
     }
 }
