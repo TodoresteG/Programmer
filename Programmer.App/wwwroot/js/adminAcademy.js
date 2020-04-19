@@ -61,6 +61,7 @@ function fillExam(exam) {
     parentDiv.innerHTML = '';
 
     if (!exam) {
+        const addButton = document.createElement('a');
         addButton.classList.add('btn');
         addButton.classList.add('btn-success');
         addButton.textContent = 'Create exam';
@@ -73,7 +74,6 @@ function fillExam(exam) {
 
     const examP = document.createElement('p');
     const examA = document.createElement('a');
-    const addButton = document.createElement('a');
 
     examA.textContent = 'Edit exam';
     examA.classList.add('btn');

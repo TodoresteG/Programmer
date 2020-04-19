@@ -11,6 +11,8 @@
     using Programmer.App.ViewModels.Lectures;
     using Programmer.App.ViewModels.Exams;
     using Programmer.Data.Models;
+    using System;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     public class AcademyService : IAcademyService
     {
@@ -126,20 +128,43 @@
             var softSkills = typeof(ProgrammerUser)
                 .GetProperties()
                 .Where(p => p.PropertyType == typeof(double) && p.Name != "CSharp")
-                .Select(p => p.Name)
+                .Select(p => new SelectListItem(p.Name, p.Name))
                 .ToList();
 
             var hardSkills = typeof(ProgrammerUser)
                 .GetProperties()
                 .Where(p => p.PropertyType == typeof(double?) || p.Name == "CSharp")
-                .Select(p => p.Name)
+                .Select(p => new SelectListItem(p.Name, p.Name))
                 .ToList();
 
             return new AdministrationCreateCourseInputModel
             {
-                HardSkillName = hardSkills,
-                SoftSkillName = softSkills,
+                HardSkillReward = 1,
+                XpReward = 1,
+                RequiredEnergy = 1,
+                SoftSkillReward = 1,
+                HardSkillNames = hardSkills,
+                SoftSkillNames = softSkills,
             };
+        }
+
+        public void CreateCourse(AdministrationCreateCourseInputModel inputModel)
+        {
+            var course = new Course
+            {
+                CreatedOn = DateTime.UtcNow,
+                Name = inputModel.Name,
+                Price = inputModel.Price,
+                HardSkillName = inputModel.HardSkillName,
+                HardSkillReward = inputModel.HardSkillReward,
+                SoftSkillName = inputModel.SoftSkillName,
+                SoftSkillReward = inputModel.SoftSkillReward,
+                RequiredEnergy = inputModel.RequiredEnergy,
+                XpReward = inputModel.XpReward,
+            };
+
+            this.context.Courses.Add(course);
+            this.context.SaveChanges();
         }
     }
 }

@@ -12,5 +12,7 @@
         AdministrationCourseInfoViewModel CourseInfo(int courseId);
 
         AdministrationCreateCourseInputModel GetSkillsForDropdowns();
+
+        void CreateCourse(AdministrationCreateCourseInputModel inputModel);
     }
 }

@@ -25,12 +25,7 @@
                     </div>
                     <div class="col-md-6">
                         <label asp-for="HardSkillName"></label>
-                        <select class="selectpicker col-md-12">
-                            @foreach (var skill in Model.HardSkillName)
-                            {
-                                <option>@skill</option>
-                            }
-                        </select>
+                        <select asp-for="HardSkillName" asp-items="@Model.HardSkillNames" class="selectpicker col-md-12"></select>
                     </div>
                     <div class="col-md-6">
                         <label asp-for="HardSkillReward"></label>
@@ -39,12 +34,7 @@
                     </div>
                     <div class="col-md-6 mt-4">
                         <label asp-for="SoftSkillName"></label>
-                        <select class="selectpicker col-md-12">
-                            @foreach (var skill in Model.SoftSkillName)
-                            {
-                                <option>@skill</option>
-                            }
-                        </select>
+                        <select asp-for="SoftSkillName" asp-items="@Model.SoftSkillNames" class="selectpicker col-md-12"></select>
                     </div>
                     <div class="col-md-6 mt-4">
                         <label asp-for="SoftSkillReward"></label>
