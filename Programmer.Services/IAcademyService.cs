@@ -10,5 +10,7 @@
         AdministrationAcademyAllCoursesViewModel GetAllCoursesForAdmin();
 
         AdministrationCourseInfoViewModel CourseInfo(int courseId);
+
+        AdministrationCreateCourseInputModel GetSkillsForDropdowns();
     }
 }

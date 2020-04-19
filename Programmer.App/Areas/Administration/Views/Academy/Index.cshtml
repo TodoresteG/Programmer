@@ -13,7 +13,7 @@
             {
                 <p class="lead"><a id="@course.Id" class="btn btn-primary text-white course">@course.Name</a> <a class="btn btn-danger text-white d-none">Delete</a></p>
             }
-            <a class="btn btn-success text-white">Create new course</a>
+            <a asp-controller="Academy" asp-action="CreateCourse" class="btn btn-success text-white">Create new course</a>
         </div>
         <div class="container-fluid col-4">
             <h1>Lectures</h1>

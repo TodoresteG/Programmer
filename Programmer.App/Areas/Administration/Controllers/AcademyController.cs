@@ -17,5 +17,11 @@
             var viewModel = this.academyService.GetAllCoursesForAdmin();
             return this.View(viewModel);
         }
+
+        public IActionResult CreateCourse() 
+        {
+            var viewModel = this.academyService.GetSkillsForDropdowns();
+            return this.View(viewModel);
+        }
     }
 }

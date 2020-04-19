@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "CreateCourse";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using Programmer.App.ViewModels.Courses
+@model AdministrationCreateCourseInputModel
+
+<section class="page-section">
+    <div class="container-fluid">
+        <form asp-controller="Academy" asp-action="CreateCourse" method="post">
+            <div class="row justify-content-center">
+                <div class="row col-md-6">
+                    <h1>Create new course</h1>
+                    <p>loremloremloremloremloremloremloremloremloremloremloremloremloremlorem</p>
+                    <div class="col-md-6">
+                        <label asp-for="Name"></label>
+                        <input asp-for="Name" type="text" class="form-control" placeholder="C# Web">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Price"></label>
+                        <input asp-for="Price" type="number" class="form-control" placeholder="500.00$">
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="HardSkillName"></label>
+                        <select class="selectpicker col-md-12">
+                            @foreach (var skill in Model.HardSkillName)
+                            {
+                                <option>@skill</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="HardSkillReward"></label>
+                        <input asp-for="HardSkillReward" type="number" class="form-control" placeholder="2.00">
+                        <span asp-validation-for="HardSkillReward" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mt-4">
+                        <label asp-for="SoftSkillName"></label>
+                        <select class="selectpicker col-md-12">
+                            @foreach (var skill in Model.SoftSkillName)
+                            {
+                                <option>@skill</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-6 mt-4">
+                        <label asp-for="SoftSkillReward"></label>
+                        <input asp-for="SoftSkillReward" type="number" class="form-control" placeholder="1.00">
+                        <span asp-validation-for="SoftSkillReward" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mt-4">
+                        <label asp-for="RequiredEnergy"></label>
+                        <input asp-for="RequiredEnergy" type="number" class="form-control" placeholder="5">
+                        <span asp-validation-for="RequiredEnergy" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mt-4">
+                        <label asp-for="XpReward"></label>
+                        <input asp-for="XpReward" type="number" class="form-control" placeholder="12">
+                        <span asp-validation-for="XpReward" class="text-danger"></span>
+                    </div>
+                    <div class="row justify-content-center col-md-12 mt-5">
+                        <button type="submit" class="btn btn-primary col-md-2">Create</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

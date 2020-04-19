@@ -10,6 +10,7 @@
     using Programmer.App.ViewModels.Courses;
     using Programmer.App.ViewModels.Lectures;
     using Programmer.App.ViewModels.Exams;
+    using Programmer.Data.Models;
 
     public class AcademyService : IAcademyService
     {
@@ -117,6 +118,27 @@
             {
                 Lectures = lectures,
                 Exam = exam,
+            };
+        }
+
+        public AdministrationCreateCourseInputModel GetSkillsForDropdowns()
+        {
+            var softSkills = typeof(ProgrammerUser)
+                .GetProperties()
+                .Where(p => p.PropertyType == typeof(double) && p.Name != "CSharp")
+                .Select(p => p.Name)
+                .ToList();
+
+            var hardSkills = typeof(ProgrammerUser)
+                .GetProperties()
+                .Where(p => p.PropertyType == typeof(double?) || p.Name == "CSharp")
+                .Select(p => p.Name)
+                .ToList();
+
+            return new AdministrationCreateCourseInputModel
+            {
+                HardSkillName = hardSkills,
+                SoftSkillName = softSkills,
             };
         }
     }
