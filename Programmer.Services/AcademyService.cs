@@ -109,7 +109,7 @@
         public AdministrationCourseInfoViewModel CourseInfo(int courseId)
         {
             var lectures = this.context.Lectures
-                .Where(l => l.CourseId == courseId)
+                .Where(l => l.CourseId == courseId && l.IsDeleted == false)
                 .To<AdministrationLectureViewModel>()
                 .ToList();
 
@@ -241,6 +241,14 @@
             var course = this.context.Courses.Find(courseId);
             course.DeletedOn = DateTime.UtcNow;
             course.IsDeleted = true;
+            this.context.SaveChanges();
+        }
+
+        public void DeleteLecture(int lectureId) 
+        {
+            var lecture = this.context.Lectures.Find(lectureId);
+            lecture.DeletedOn = DateTime.UtcNow;
+            lecture.IsDeleted = true;
             this.context.SaveChanges();
         }
     }

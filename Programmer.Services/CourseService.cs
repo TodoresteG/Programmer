@@ -70,7 +70,7 @@
                 .FirstOrDefault();
 
             course.Lectures = this.context.UserLectures
-                .Where(ul => ul.Lecture.CourseId == id && ul.ProgrammerUserId == userId)
+                .Where(ul => ul.Lecture.CourseId == id && ul.ProgrammerUserId == userId && ul.Lecture.IsDeleted == false)
                 .To<LectureCourseDetailsViewModel>()
                 .ToList();
 

@@ -46,11 +46,11 @@ function fillLectures(lectures, courseId) {
         const lectureP = document.createElement('p');
         const lectureA = document.createElement('a');
 
-        lectureA.textContent = 'Edit lecture';
+        lectureA.textContent = 'Delete lecture';
         lectureA.classList.add('btn');
-        lectureA.classList.add('btn-warning');
+        lectureA.classList.add('btn-danger');
         lectureA.classList.add('ml-3');
-        lectureA.href = `/Administration/.../Edit/${lecture.id}`;
+        lectureA.href = `/api/admin/AcademyApi/DeleteLecture/${lecture.id}`;
 
         lectureP.textContent = lecture.name;
         lectureP.classList.add('lead');

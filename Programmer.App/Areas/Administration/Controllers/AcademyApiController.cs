@@ -23,7 +23,7 @@
         }
 
         [HttpPost("CreateLecture/{courseId}")]
-        public ActionResult<bool> CreateLecture(int courseId) 
+        public ActionResult<bool> CreateLecture(int courseId)
         {
             var lectureName = this.HttpContext.Request.Form["name"][0];
             if (string.IsNullOrWhiteSpace(lectureName) || lectureName.Length < 3)
@@ -36,10 +36,17 @@
         }
 
         [HttpDelete("DeleteCourse/{courseId}")]
-        public ActionResult<bool> DeleteCourse(int courseId) 
+        public ActionResult DeleteCourse(int courseId)
         {
             this.academyService.DeleteCourse(courseId);
-            return true;
+            return Redirect("/Administration/Academy/Index");
+        }
+
+        [HttpGet("DeleteLecture/{lectureId}")]
+        public ActionResult DeleteLecture(int lectureId) 
+        {
+            this.academyService.DeleteLecture(lectureId);
+            return Redirect("/Administration/Academy/Index");
         }
     }
 }
