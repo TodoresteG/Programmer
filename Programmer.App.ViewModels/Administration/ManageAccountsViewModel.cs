@@ -6,5 +6,7 @@
     public class ManageAccountsViewModel
     {
         public IEnumerable<SelectListItem> Users { get; set; }
+
+        public IEnumerable<string> Admins { get; set; }
     }
 }

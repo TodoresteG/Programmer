@@ -16,7 +16,8 @@
 
         public IActionResult ManageAccounts() 
         {
-            var viewModel = this.administrationService.GetAllUserNames();
+            var adminName = this.User.Identity.Name;
+            var viewModel = this.administrationService.GetAllUserNames(adminName);
             return this.View(viewModel);
         }
 

@@ -4,7 +4,7 @@ namespace Programmer.Services
 {
     public interface IAdministrationService
     {
-        ManageAccountsViewModel GetAllUserNames();
+        ManageAccountsViewModel GetAllUserNames(string adminName);
 
         void MakeUserAdmin(string username);
     }

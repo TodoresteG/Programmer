@@ -18,13 +18,23 @@
             this.userManager = userManager;
         }
 
-        public ManageAccountsViewModel GetAllUserNames()
+        public ManageAccountsViewModel GetAllUserNames(string adminName)
         {
             var usernames = this.context.Users
+                .Where(u => u.UserName != adminName)
                 .Select(u => new SelectListItem(u.UserName, u.UserName))
                 .ToList();
 
-            return new ManageAccountsViewModel { Users = usernames };
+            var administrators = this.userManager
+                .GetUsersInRoleAsync("Administrator")
+                .Result
+                .Select(u => u.UserName);
+
+            return new ManageAccountsViewModel 
+            { 
+                Users = usernames,
+                Admins = administrators,
+            };
         }
 
         public void MakeUserAdmin(string username)

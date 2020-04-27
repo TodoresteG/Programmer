@@ -6,6 +6,13 @@
 
 <section class="page-section">
     <div class="container-fluid">
+        <ul>
+            @foreach (var admin in Model.Admins)
+            {
+                <li>@admin</li>
+            }
+        </ul>
+
         <form asp-area="Administration" asp-controller="Accounts" asp-action="MakeUserAdmin" method="post">
             <div class="row justify-content-center">
                 <div class="row col-md-6">
