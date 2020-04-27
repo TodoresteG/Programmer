@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model Programmer.App.ViewModels.Administration.ManageAccountsViewModel
+
+<section class="page-section">
+    <div class="container-fluid">
+        <form asp-area="Administration" asp-controller="Accounts" asp-action="MakeUserAdmin" method="post">
+            <div class="row justify-content-center">
+                <div class="row col-md-6">
+                    <div class="col-md-6">
+                        <label asp-for="Users"></label>
+                        <select asp-for="Users" asp-items="@Model.Users" class="selectpicker col-md-12"></select>
+                    </div>
+                    <div class="row justify-content-center col-md-12 mt-5">
+                        <button type="submit" class="btn btn-primary col-md-2">Create</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
