@@ -25,5 +25,7 @@
         AdministrationCreateExamInputModel GetExamForEdit(int courseId);
 
         void EditExam(AdministrationCreateExamInputModel inputModel);
+
+        void DeleteCourse(int courseId);
     }
 }

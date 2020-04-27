@@ -56,6 +56,8 @@ namespace ProgrammerDemo
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddAntiforgery();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
 

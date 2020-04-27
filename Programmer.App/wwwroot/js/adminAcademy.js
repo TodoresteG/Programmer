@@ -11,11 +11,13 @@ function courseInfo(event) {
     const currentActive = document.getElementsByClassName('active');
     if (currentActive.length > 0) {
         currentActive[0].nextElementSibling.classList.remove('d-inline');
+        currentActive[0].nextElementSibling.removeEventListener('click', deleteCourse());
         currentActive[0].className = currentActive[0].className.replace(' active', '');
     }
 
     this.className += ' active';
     this.nextElementSibling.classList.add('d-inline');
+    this.nextElementSibling.addEventListener('click', deleteCourse);
 
     fetch(`/api/admin/AcademyApi/GetCourseInfo/${courseId}`)
         .then(response => response.json())
@@ -23,6 +25,17 @@ function courseInfo(event) {
             fillLectures(data.lectures, data.courseId);
             fillExam(data.exam, data.courseId);
         });
+}
+
+function deleteCourse(event) {
+    const courseId = event.toElement.previousElementSibling.id;
+
+    fetch(`/api/admin/AcademyApi/DeleteCourse/${courseId}`,
+        {
+            method: 'delete'
+        })
+        .then(response => response.json())
+        .then(data => location.reload());
 }
 
 function fillLectures(lectures, courseId) {
@@ -72,7 +85,6 @@ function fillExam(exam, courseId) {
         parentDiv.appendChild(addButton);
         return;
     }
-
 
     const examP = document.createElement('p');
     const examA = document.createElement('a');

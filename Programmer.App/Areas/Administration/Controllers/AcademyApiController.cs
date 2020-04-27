@@ -34,5 +34,12 @@
             this.academyService.CreateLecture(lectureName, courseId);
             return true;
         }
+
+        [HttpDelete("DeleteCourse/{courseId}")]
+        public ActionResult<bool> DeleteCourse(int courseId) 
+        {
+            this.academyService.DeleteCourse(courseId);
+            return true;
+        }
     }
 }

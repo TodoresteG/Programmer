@@ -65,6 +65,7 @@
 
             // really bad query can't figure other way. It works for now
             var allCourses = this.context.Courses
+                .Where(c => c.IsDeleted == false)
                 .Select(c => new AcademyCourseViewModel 
                 {
                     Id = c.Id,
@@ -98,6 +99,7 @@
         public AdministrationAcademyAllCoursesViewModel GetAllCoursesForAdmin() 
         {
             var allCourses = this.context.Courses
+                .Where(c => c.IsDeleted == false)
                 .To<AdministrationAcademyCourseViewModel>()
                 .ToList();
 
@@ -231,6 +233,14 @@
             exam.RequiredHardSkill = inputModel.RequiredHardSkill;
 
             this.context.Exams.Update(exam);
+            this.context.SaveChanges();
+        }
+
+        public void DeleteCourse(int courseId) 
+        {
+            var course = this.context.Courses.Find(courseId);
+            course.DeletedOn = DateTime.UtcNow;
+            course.IsDeleted = true;
             this.context.SaveChanges();
         }
     }
