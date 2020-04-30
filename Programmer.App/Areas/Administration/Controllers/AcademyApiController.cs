@@ -36,10 +36,10 @@
         }
 
         [HttpDelete("DeleteCourse/{courseId}")]
-        public ActionResult DeleteCourse(int courseId)
+        public ActionResult<bool> DeleteCourse(int courseId)
         {
             this.academyService.DeleteCourse(courseId);
-            return Redirect("/Administration/Academy/Index");
+            return true;
         }
 
         [HttpGet("DeleteLecture/{lectureId}")]
